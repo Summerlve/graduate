@@ -8,14 +8,14 @@ import com.avaje.ebean.Model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "admin")
+@Table(name = "zh_admin")
 public class Admin extends Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "no",  nullable = false, unique = true, columnDefinition = "varchar(255) CHARACTER SET utf8 COLLATE utf8_bin")
-    private String no;
+    @Column(name = "sfz",  nullable = false, unique = true, columnDefinition = "varchar(255) CHARACTER SET utf8 COLLATE utf8_bin")
+    private String sfz;
 
     @Column(name = "name", nullable = false, columnDefinition = "varchar(255) CHARACTER SET utf8 COLLATE utf8_bin")
     private String name;

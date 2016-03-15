@@ -10,7 +10,7 @@ import java.util.Calendar;
  */
 
 @Entity
-@Table(name = "house")
+@Table(name = "zh_house")
 public class House extends Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

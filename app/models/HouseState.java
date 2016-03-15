@@ -10,7 +10,7 @@ import java.util.List;
  * Created by Summer on 2016/3/2.
  */
 @Entity
-@Table(name = "house_state")
+@Table(name = "zh_house_state")
 public class HouseState extends Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

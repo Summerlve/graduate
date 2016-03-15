@@ -10,14 +10,14 @@ import java.util.List;
  * Created by Summer on 2016/3/1.
  */
 @Entity
-@Table(name = "user")
+@Table(name = "zh_user")
 public class User extends Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "no",  nullable = false, unique = true, columnDefinition = "varchar(255) CHARACTER SET utf8 COLLATE utf8_bin")
-    private String no;
+    @Column(name = "sfz",  nullable = false, unique = true, columnDefinition = "varchar(255) CHARACTER SET utf8 COLLATE utf8_bin")
+    private String sfz;
 
     @Column(name = "name", nullable = false, columnDefinition = "varchar(255) CHARACTER SET utf8 COLLATE utf8_bin")
     private String name;
