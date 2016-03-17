@@ -2,18 +2,13 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
-# backend home page
+# backend
 GET     /dashboard                  controllers.backend.Application.dashboard()
-# frontend home page
+GET     /dashboard/charts           controllers.backend.Application.charts()
+GET     /dashboard/login            controllers.backend.Application.login()
+
+# frontend
 GET     /                           controllers.frontend.Application.index()
-
-#
-
-# User
-GET     /users                      controllers.UserController.index(page, limit)
-GET     /users/:id                  controllers.UserController.one(id: Long)
-
 
 
 # Map static resources from the /public folder to the /assets URL path
