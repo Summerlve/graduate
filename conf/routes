@@ -3,9 +3,12 @@
 # ~~~~
 
 # backend
-GET     /dashboard                  controllers.backend.Application.dashboard()
-GET     /dashboard/charts           controllers.backend.Application.charts()
-GET     /dashboard/login            controllers.backend.Application.login()
+GET     /dashboard                  controllers.backend.Dashboard.index()
+GET     /dashboard/charts           controllers.backend.Charts.index()
+GET     /dashboard/login            controllers.backend.Login.index()
+POST    /dashboard/login            controllers.backend.Login.auth()
+GET     /dashboard/data_manage      controllers.backend.DataManage.index()
+
 
 # frontend
 GET     /                           controllers.frontend.Application.index()

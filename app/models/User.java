@@ -28,5 +28,9 @@ public class User extends Model {
     @OneToMany(mappedBy = "user")
     private List<House> houses = new ArrayList<House>();
 
-    public static final Finder<Long, Admin> find = new Finder<Long, Admin>(Admin.class);
+    public static final Finder<Long, User> find = new Finder<Long, User>(User.class);
+
+    public static final User findUserByName (String username) {
+        return find.where().eq("name", username).findUnique();
+    }
 }
