@@ -11,6 +11,7 @@ libraryDependencies ++= Seq(
   cache,
   javaWs,
   "mysql" % "mysql-connector-java" % "5.1.18",
+  "be.objectify" %% "deadbolt-java" % "2.4.3"
 )
 
 // Play provides two styles of routers, one expects its actions to be injected, the

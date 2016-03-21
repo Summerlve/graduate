@@ -1,6 +1,10 @@
 package models;
 
+import be.objectify.deadbolt.core.models.Permission;
+import be.objectify.deadbolt.core.models.Role;
+import be.objectify.deadbolt.core.models.Subject;
 import com.avaje.ebean.Model;
+import com.avaje.ebean.text.StringFormatter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,7 +15,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "zh_user")
-public class User extends Model {
+public class User extends Model implements Subject{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,5 +36,24 @@ public class User extends Model {
 
     public static final User findUserByName (String username) {
         return find.where().eq("name", username).findUnique();
+    }
+    
+    @Override
+    public String getIdentifier() {
+        return String.valueOf(this.id);
+    }
+
+    @Override
+    public List<? extends Role> getRoles() {
+        List<Role> roles = new ArrayList<>();
+        roles.add(() -> "user");
+        return roles;
+    }
+
+    @Override
+    public List<? extends Permission> getPermissions() {
+        List<Permission> permissions = new ArrayList<>();
+        permissions.add(() -> "common_user");
+        return permissions;
     }
 }
