@@ -1,5 +1,6 @@
 package controllers.backend;
 
+import models.Admin;
 import models.User;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
@@ -18,16 +19,16 @@ public class Login extends Controller {
     @BodyParser.Of(BodyParser.FormUrlEncoded.class)
     public Result auth () {
         Map<String, String[]> form = request().body().asFormUrlEncoded();
-        String username = form.get("username")[0];
+        String adminId = form.get("user")[0];
 
-        if (username == null && username.equals("")) return badRequest("need valiead username");
+        if (adminId == null && adminId.equals("")) return badRequest("need valiead username");
 
-        if (username != null && !username.equals("")) {
-            User user = User.findUserByName(username);
-            if (user == null) {
+        if (adminId != null && !adminId.equals("")) {
+            Admin admin = Admin.find.byId(Long.valueOf(adminId));
+            if (admin == null) {
                 return unauthorized("用户未找到或者你没有登陆的权限");
             }
-            session("username", username);
+            session("user", String.valueOf(admin.getId()));
         }
 
         return ok();

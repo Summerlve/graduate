@@ -6,9 +6,11 @@
 create table zh_admin (
   id                        bigint auto_increment not null,
   sfz                       varchar(255) CHARACTER SET utf8 COLLATE utf8_bin not null,
-  name                      varchar(255) CHARACTER SET utf8 COLLATE utf8_bin not null,
+  username                  varchar(255) CHARACTER SET utf8 COLLATE utf8_bin not null,
+  password_hash             varchar(255) not null,
   telephone                 varchar(255) CHARACTER SET utf8 COLLATE utf8_bin not null,
   constraint uq_zh_admin_sfz unique (sfz),
+  constraint uq_zh_admin_username unique (username),
   constraint uq_zh_admin_telephone unique (telephone),
   constraint pk_zh_admin primary key (id))
 ;
