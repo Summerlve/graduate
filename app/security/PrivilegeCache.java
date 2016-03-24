@@ -12,8 +12,8 @@ import java.util.Map;
  */
 
 @Singleton
-public class MyHandlerCache implements HandlerCache {
-    private final DeadboltHandler defaultHandler = new MyDeadboltHandler();
+public class PrivilegeCache implements HandlerCache {
+    private final DeadboltHandler defaultHandler = new PrivilegeHandler();
     private final Map<String, DeadboltHandler> handlers = new HashMap<>();
 
     public enum HandlerKeys {
@@ -24,7 +24,7 @@ public class MyHandlerCache implements HandlerCache {
         }
     }
 
-    public MyHandlerCache() {
+    public PrivilegeCache() {
         handlers.put(HandlerKeys.DEFAULT.getName(), defaultHandler);
     }
 

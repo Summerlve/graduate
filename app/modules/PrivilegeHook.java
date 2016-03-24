@@ -7,14 +7,14 @@ import play.api.Environment;
 import play.api.inject.Binding;
 import play.api.inject.Module;
 import scala.collection.Seq;
-import security.MyHandlerCache;
+import security.PrivilegeCache;
 
 /**
  * Created by Summer on 3/22/16.
  */
-public class MyDeadboltHook extends Module {
+public class PrivilegeHook extends Module {
     @Override
     public Seq<Binding<?>> bindings(Environment environment, Configuration configuration) {
-        return seq(bind(HandlerCache.class).to(MyHandlerCache.class).in(Singleton.class));
+        return seq(bind(HandlerCache.class).to(PrivilegeCache.class).in(Singleton.class));
     }
 }

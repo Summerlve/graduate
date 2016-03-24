@@ -14,7 +14,7 @@ import views.html.backend.login;
 /**
  * Created by Summer on 3/22/16.
  */
-public class MyDeadboltHandler extends AbstractDeadboltHandler {
+public class PrivilegeHandler extends AbstractDeadboltHandler {
     @Override
     public F.Promise<Optional<Subject>> getSubject(Http.Context context) {
         String username = Optional.ofNullable(context.session().get("username")).orElse("");
