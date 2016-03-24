@@ -7,17 +7,15 @@ import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Results;
-import security.FakeRoles;
-import views.html.backend.index;
+import views.html.backend.dashboard;
 
 /**
  * Created by Summer on 16/3/17.
  */
 
-
+@Restrict(@Group("ADMIN"))
 public class Dashboard extends Controller {
-    @Restrict(@Group("ADMIN"))
     public F.Promise<Result> index () {
-        return F.Promise.promise(() -> Results.ok(index.render("管理中心", new User())));
+        return F.Promise.promise(() -> Results.ok(dashboard.render("管理中心", new User())));
     }
 }

@@ -7,9 +7,6 @@ import be.objectify.deadbolt.core.models.Permission;
 import be.objectify.deadbolt.core.models.Role;
 import be.objectify.deadbolt.core.models.Subject;
 import com.avaje.ebean.Model;
-import security.FakePermission;
-import security.FakeRoles;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,22 +32,30 @@ public class Admin extends Model implements Subject {
 
     public static final Finder<Long, Admin> find = new Finder<Long, Admin>(Admin.class);
 
+    public static final Boolean auth(String username, String password) {
+        return find.where().eq("username", username).eq("password_hash", password).findUnique() != null;
+    }
+
+    public static final Admin findbyUsername (String username) {
+        return find.where().eq("username", username).findUnique();
+    }
+
     @Override
     public String getIdentifier() {
-        return String.valueOf(this.id);
+        return this.username;
     }
 
     @Override
     public List<? extends Role> getRoles() {
-        List<Role> roles = new ArrayList<>();
-        roles.add(() -> FakeRoles.ADMIN.getName());
+        List<FakeRole> roles = new ArrayList<>();
+        roles.add(FakeRole.ADMIN);
         return roles;
     }
 
     @Override
     public List<? extends Permission> getPermissions() {
-        List<Permission> permissions = new ArrayList<>();
-        permissions.add(() -> FakePermission.ADMIN_PERMISSION.getValue());
+        List<FakePermission> permissions = new ArrayList<>();
+        permissions.add(FakePermission.ADMIN_PERMISSION);
         return permissions;
     }
 
