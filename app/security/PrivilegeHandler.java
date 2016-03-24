@@ -17,8 +17,8 @@ import views.html.backend.login;
 public class PrivilegeHandler extends AbstractDeadboltHandler {
     @Override
     public F.Promise<Optional<Subject>> getSubject(Http.Context context) {
-        String username = Optional.ofNullable(context.session().get("username")).orElse("");
-        return F.Promise.promise(() -> Optional.ofNullable(Admin.findbyUsername(username)));
+        Long userId = Optional.ofNullable(context.session().get("user_id")).map(value -> Long.valueOf(value)).orElse(-1l);
+        return F.Promise.promise(() -> Optional.ofNullable(Admin.find.byId(userId)));
     }
 
     @Override

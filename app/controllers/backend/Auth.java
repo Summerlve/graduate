@@ -13,23 +13,29 @@ import static java.lang.System.out;
  */
 public class Auth extends Controller {
     public Result index () {
-        if (session("username") != null) return redirect("/dashboard");
+        if (session("user_id") != null) return redirect("/dashboard");
         return ok(login.render("登陆"));
     }
 
     @BodyParser.Of(BodyParser.FormUrlEncoded.class)
-    public Result auth () {
+    public Result login () {
         Map<String, String[]> form = request().body().asFormUrlEncoded();
 
         String username = form.get("username")[0];
         String password = form.get("password")[0];
 
-        boolean isAccess = Admin.auth(username, password);
-        out.println(isAccess);
+        Map<String, Object> result = Admin.auth(username, password);
+        Boolean isAccess = (Boolean)result.get("isAccess");
+        Long id = (Long)result.get("id");
 
+        out.println(isAccess);
         if (!isAccess) return unauthorized("用户名或密码不正确");
 
-        session("username", username);
+        session("user_id", String.valueOf(id));
         return redirect("/dashboard");
+    }
+
+    public Result logout () {
+        return ok();
     }
 }
