@@ -28,7 +28,7 @@ public class MyDeadboltHandler extends AbstractDeadboltHandler {
 
     @Override
     public F.Promise<Result> onAuthFailure(Http.Context context, String content) {
-        return F.Promise.pure(unauthorized(login.render("请登录")));
+        return F.Promise.promise(() -> redirect("/dashboard/login"));
     }
 
     @Override

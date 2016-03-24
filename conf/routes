@@ -5,9 +5,9 @@
 # backend
 GET     /dashboard                  controllers.backend.Dashboard.index()
 GET     /dashboard/charts           controllers.backend.Charts.index()
-GET     /dashboard/login            controllers.backend.Login.index()
-POST    /dashboard/login            controllers.backend.Login.auth()
-GET     /dashboard/data_manager      controllers.backend.DataManager.index()
+GET     /dashboard/login            controllers.backend.Auth.index()
+POST    /dashboard/login            controllers.backend.Auth.auth()
+GET     /dashboard/data_manager     controllers.backend.DataManager.index()
 
 
 # frontend

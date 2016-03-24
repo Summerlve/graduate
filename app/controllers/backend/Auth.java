@@ -11,7 +11,7 @@ import static java.lang.System.out;
 /**
  * Created by Summer on 16/3/17.
  */
-public class Login extends Controller {
+public class Auth extends Controller {
     public Result index () {
         if (session("username") != null) return redirect("/dashboard");
         return ok(login.render("登陆"));
