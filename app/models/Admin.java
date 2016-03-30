@@ -8,10 +8,7 @@ import be.objectify.deadbolt.core.models.Role;
 import be.objectify.deadbolt.core.models.Subject;
 import com.avaje.ebean.Model;
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Entity
 @Table(name = "zh_admin")
@@ -34,21 +31,8 @@ public class Admin extends Model implements Subject {
 
     public static final Finder<Long, Admin> find = new Finder<Long, Admin>(Admin.class);
 
-    public static final Map<String, Object> auth(String username, String password) {
-        Admin admin = find.where().eq("username", username).eq("password_hash", password).findUnique();
-        Boolean isAccess = false;
-        Long id = -1l;
-
-        if (admin != null) {
-            isAccess = true;
-            id = admin.getId();
-        }
-
-        Map<String, Object> result = new HashMap<>();
-        result.put("isAccess", isAccess);
-        result.put("id", id);
-
-        return result;
+    public static final Optional<Admin> auth(String username, String password) {
+        return Optional.ofNullable(find.where().eq("username", username).eq("password_hash", password).findUnique());
     }
 
     public static final Admin findbyUsername (String username) {

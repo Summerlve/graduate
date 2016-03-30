@@ -7,7 +7,7 @@ GET     /dashboard                  controllers.backend.Dashboard.index()
 GET     /dashboard/charts           controllers.backend.Charts.index()
 GET     /dashboard/login            controllers.backend.Auth.index()
 POST    /dashboard/login            controllers.backend.Auth.login()
-DELETE  /dashboard/login            controllers.backend.Auth.logout()
+POST    /dashboard/login            controllers.backend.Auth.logout()
 GET     /dashboard/data_manager     controllers.backend.DataManager.index()
 
 

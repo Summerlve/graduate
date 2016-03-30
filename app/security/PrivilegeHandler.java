@@ -8,8 +8,6 @@ import play.libs.F;
 import play.mvc.Http;
 import play.mvc.Result;
 import java.util.Optional;
-import views.html.backend.login;
-
 
 /**
  * Created by Summer on 3/22/16.
@@ -17,8 +15,15 @@ import views.html.backend.login;
 public class PrivilegeHandler extends AbstractDeadboltHandler {
     @Override
     public F.Promise<Optional<Subject>> getSubject(Http.Context context) {
-        Long userId = Optional.ofNullable(context.session().get("user_id")).map(value -> Long.valueOf(value)).orElse(-1l);
-        return F.Promise.promise(() -> Optional.ofNullable(Admin.find.byId(userId)));
+        Long userId = Optional.ofNullable(context.session().get("user_id"))
+                            .map(value -> Long.valueOf(value))
+                            .orElse(-1l);
+
+        return F.Promise.promise(() -> {
+            Optional user = Optional.ofNullable(Admin.find.byId(userId));
+            context.args.put("user", user); // add to context
+            return user;
+        });
     }
 
     @Override
@@ -28,7 +33,7 @@ public class PrivilegeHandler extends AbstractDeadboltHandler {
 
     @Override
     public F.Promise<Result> onAuthFailure(Http.Context context, String content) {
-        return F.Promise.promise(() -> redirect("/dashboard/login"));
+        return F.Promise.promise(() -> redirect(controllers.backend.routes.Auth.index()));
     }
 
     @Override

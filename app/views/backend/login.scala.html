@@ -1,4 +1,4 @@
-@(title: String)
+@(title: String)(myForm: Form[form.AdminForm])
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,12 +11,12 @@
 <body>
     <div class="login-page">
         <div class="form">
-            <form class="login-form" action="/dashboard/login" method="POST">
+            @helper.form(action = controllers.backend.routes.Auth.login, 'class -> "login-form") {
                 <input type="text" placeholder="username" name="username"/>
                 <input type="password" placeholder="password" name="password"/>
                 <button>login</button>
                 <p class="message">Not registered? <a href="#">Create an account</a></p>
-            </form>
+            }
         </div>
     </div>
 

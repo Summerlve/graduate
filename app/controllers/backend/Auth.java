@@ -1,41 +1,46 @@
 package controllers.backend;
 
+import be.objectify.deadbolt.java.actions.Group;
+import be.objectify.deadbolt.java.actions.Restrict;
+import form.AdminForm;
 import models.Admin;
+import play.data.Form;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.backend.login;
-import java.util.Map;
-import static java.lang.System.out;
+import java.util.Optional;
 
 /**
  * Created by Summer on 16/3/17.
  */
 public class Auth extends Controller {
     public Result index () {
-        if (session("user_id") != null) return redirect("/dashboard");
-        return ok(login.render("登陆"));
+        if (session("user_id") != null) return redirect(controllers.backend.routes.Dashboard.index());
+        return ok(login.render("登陆", Form.form(AdminForm.class)));
     }
 
     @BodyParser.Of(BodyParser.FormUrlEncoded.class)
     public Result login () {
-        Map<String, String[]> form = request().body().asFormUrlEncoded();
+        Form<AdminForm> adminForm = Form.form(AdminForm.class).bindFromRequest();
 
-        String username = form.get("username")[0];
-        String password = form.get("password")[0];
+        if (adminForm.hasErrors()) return badRequest();
 
-        Map<String, Object> result = Admin.auth(username, password);
-        Boolean isAccess = (Boolean)result.get("isAccess");
-        Long id = (Long)result.get("id");
+        String username = adminForm.get().getUsername();
+        String password = adminForm.get().getPassword();
+        Optional<Admin> result = Admin.auth(username, password);
 
-        out.println(isAccess);
-        if (!isAccess) return unauthorized("用户名或密码不正确");
+        if (!result.isPresent()) return redirect(controllers.backend.routes.Auth.index());
 
-        session("user_id", String.valueOf(id));
+        session("user_id", String.valueOf(result.get().getId()));
+        session("user_name", String.valueOf(result.get().getUsername()));
+
         return redirect("/dashboard");
     }
 
+    @Restrict(@Group("ADMIN"))
     public Result logout () {
+        session("user_id", null);
         return ok();
     }
 }
