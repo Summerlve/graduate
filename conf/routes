@@ -12,7 +12,7 @@ GET     /dashboard/data_manager     controllers.backend.DataManager.index()
 
 
 # frontend
-GET     /                           controllers.frontend.Application.index()
+GET     /buy                        controllers.frontend.Application.index()
 
 
 # Map static resources from the /public folder to the /assets URL path

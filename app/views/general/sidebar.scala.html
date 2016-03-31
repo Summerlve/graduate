@@ -4,35 +4,35 @@
         @active match {
             case "dashboard" => {
                 <li class="active">
-                    <a href="/dashboard"><i class="fa fa-fw fa-dashboard"></i> 控制台</a>
+                    <a href="@controllers.backend.routes.Dashboard.index"><i class="fa fa-fw fa-dashboard"></i> 控制台</a>
                 </li>
                 <li>
-                    <a href="/dashboard/charts"><i class="fa fa-fw fa-bar-chart-o"></i> 图表</a>
+                    <a href="@controllers.backend.routes.Charts.index"><i class="fa fa-fw fa-bar-chart-o"></i> 图表</a>
                 </li>
                 <li>
-                    <a href="/dashboard/data_manager"><i class="fa fa-fw fa-table"></i> 数据管理</a>
+                    <a href="@controllers.backend.routes.DataManager.index"><i class="fa fa-fw fa-table"></i> 数据管理</a>
                 </li>
             }
             case "charts" => {
                 <li>
-                    <a href="/dashboard"><i class="fa fa-fw fa-dashboard"></i> 控制台</a>
+                    <a href="@controllers.backend.routes.Dashboard.index"><i class="fa fa-fw fa-dashboard"></i> 控制台</a>
                 </li>
                 <li class="active">
-                    <a href="/dashboard/charts"><i class="fa fa-fw fa-bar-chart-o"></i> 图表</a>
+                    <a href="@controllers.backend.routes.Charts.index"><i class="fa fa-fw fa-bar-chart-o"></i> 图表</a>
                 </li>
                 <li>
-                    <a href="/dashboard/data_manager"><i class="fa fa-fw fa-table"></i> 数据管理</a>
+                    <a href="@controllers.backend.routes.DataManager.index"><i class="fa fa-fw fa-table"></i> 数据管理</a>
                 </li>
             }
             case "data" => {
                 <li>
-                    <a href="/dashboard"><i class="fa fa-fw fa-dashboard"></i> 控制台</a>
+                    <a href="@controllers.backend.routes.Dashboard.index"><i class="fa fa-fw fa-dashboard"></i> 控制台</a>
                 </li>
                 <li>
-                    <a href="/dashboard/charts"><i class="fa fa-fw fa-bar-chart-o"></i> 图表</a>
+                    <a href="@controllers.backend.routes.Charts.index"><i class="fa fa-fw fa-bar-chart-o"></i> 图表</a>
                 </li>
                 <li class="active">
-                    <a href="/dashboard/data_manager"><i class="fa fa-fw fa-table"></i> 数据管理</a>
+                    <a href="@controllers.backend.routes.DataManager.index"><i class="fa fa-fw fa-table"></i> 数据管理</a>
                 </li>
             }
         }

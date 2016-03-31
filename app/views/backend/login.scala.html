@@ -12,9 +12,9 @@
     <div class="login-page">
         <div class="form">
             @helper.form(action = controllers.backend.routes.Auth.login, 'class -> "login-form", 'id -> "fake-login") {
-                <input type="text" placeholder="username" name="username"/>
-                <input type="password" placeholder="password" name="password"/>
-                <button>login</button>
+                <input type="text" placeholder="用户名" name="username"/>
+                <input type="password" placeholder="密码" name="password"/>
+                <button>登录</button>
             }
         </div>
     </div>
