@@ -9,6 +9,6 @@ import views.html.frontend.index;
  */
 public class Application extends Controller {
     public Result index () {
-        return ok(index.render("卖房子"));
+        return ok(index.render("买房子"));
     }
 }
