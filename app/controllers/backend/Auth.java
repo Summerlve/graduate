@@ -3,8 +3,10 @@ package controllers.backend;
 import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
 import form.AdminForm;
+import json.OperationResult;
 import models.Admin;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -24,23 +26,25 @@ public class Auth extends Controller {
     public Result login () {
         Form<AdminForm> adminForm = Form.form(AdminForm.class).bindFromRequest();
 
-        if (adminForm.hasErrors()) return badRequest();
+        if (adminForm.hasErrors()) return badRequest(Json.toJson(new OperationResult(400, 1)));
 
         String username = adminForm.get().getUsername();
         String password = adminForm.get().getPassword();
+
         Optional<Admin> result = Admin.auth(username, password);
 
-        if (!result.isPresent()) return redirect(controllers.backend.routes.Auth.index());
+        if (!result.isPresent()) return badRequest(Json.toJson(new OperationResult(400, 1)));
 
         session("user_id", String.valueOf(result.get().getId()));
         session("user_name", String.valueOf(result.get().getUsername()));
 
-        return redirect("/dashboard");
+        return ok(Json.toJson(new OperationResult(200, 0)));
     }
 
     @Restrict(@Group("ADMIN"))
     public Result logout () {
         session("user_id", null);
+        session("user_name", null);
         return ok();
     }
 }

@@ -11,11 +11,10 @@
 <body>
     <div class="login-page">
         <div class="form">
-            @helper.form(action = controllers.backend.routes.Auth.login, 'class -> "login-form") {
+            @helper.form(action = controllers.backend.routes.Auth.login, 'class -> "login-form", 'id -> "fake-login") {
                 <input type="text" placeholder="username" name="username"/>
                 <input type="password" placeholder="password" name="password"/>
                 <button>login</button>
-                <p class="message">Not registered? <a href="#">Create an account</a></p>
             }
         </div>
     </div>
@@ -28,6 +27,25 @@
       $('.message a').click(function(){
          $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
       });
+    </script>
+    <script>
+        $("#fake-login").submit(function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            $.ajax({
+                url: "@controllers.backend.routes.Auth.index",
+                method: "POST",
+                dataType: "json",
+                data: $("#fake-login").serialize(),
+                success: function (data, textStatus, jqXHR) {
+                    location.href = "@controllers.backend.routes.Dashboard.index";
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                   alert("用户名或密码错误");
+                   $("input").val("");
+                }
+            });
+        });
     </script>
 </body>
 </html>
