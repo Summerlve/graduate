@@ -7,12 +7,13 @@ GET     /dashboard                  controllers.backend.Dashboard.index()
 GET     /dashboard/charts           controllers.backend.Charts.index()
 GET     /dashboard/login            controllers.backend.Auth.index()
 POST    /dashboard/login            controllers.backend.Auth.login()
-POST    /dashboard/login            controllers.backend.Auth.logout()
+GET     /dashboard/logout           controllers.backend.Auth.logout()
 GET     /dashboard/data_manager     controllers.backend.DataManager.index()
 
 
 # frontend
 GET     /buy                        controllers.frontend.Application.index()
+GET     /                           controllers.frontend.Application.index()
 
 
 # Map static resources from the /public folder to the /assets URL path

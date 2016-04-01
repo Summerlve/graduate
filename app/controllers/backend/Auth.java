@@ -2,6 +2,7 @@ package controllers.backend;
 
 import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import form.AdminForm;
 import json.OperationResult;
 import models.Admin;
@@ -43,8 +44,9 @@ public class Auth extends Controller {
 
     @Restrict(@Group("ADMIN"))
     public Result logout () {
-        session("user_id", null);
-        session("user_name", null);
-        return ok();
+        // remove cookie
+        session().clear();
+
+        return redirect(controllers.backend.routes.Auth.login());
     }
 }
