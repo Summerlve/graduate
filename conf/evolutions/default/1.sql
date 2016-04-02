@@ -18,6 +18,8 @@ create table zh_admin (
 create table zh_area (
   id                        bigint auto_increment not null,
   name                      varchar(255) CHARACTER SET utf8 COLLATE utf8_bin not null,
+  description               varchar(255) not null,
+  img                       varchar(255) not null,
   management_company        varchar(255),
   building_num              integer,
   constraint pk_zh_area primary key (id))
