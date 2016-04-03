@@ -1,4 +1,4 @@
-@(title: String)(areas: List[Area])
+@(title: String)(areas: List[Area])(buildingKinds: List[BuildingKind])
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,22 +31,30 @@
 
     <!-- Page Content -->
     <div class="container">
-        <div class="row">
-            <div class="rol-md-3">
-                <form class="form-inline">
-                    <select class="form-control">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+        @helper.form(action = controllers.frontend.routes.Application.search) {
+            <div class="row">
+                <div class="col-md-2 col-sm-4 hero-feature">
+                    <select class="form-control" name="building_kind" required>
+                        @for(kind <- buildingKinds) {
+                        <option value="@kind.getId()">@kind.getName()</option>
+                        }
                     </select>
-                </form>
+                </div>
+
+                <div class="col-md-3 col-sm-6 hero-feature">
+                    <select class="form-control" name="space" required>
+                        <option value="<100">100 以下</option>
+                        <option value="100_140">100 - 140</option>
+                        <option value="140_200">140 - 200</option>
+                        <option value=">200">200 以上</option>
+                    </select>
+                </div>
+                <div class="col-md-3 col-sm-6 hero-feature">
+                    <button type="submit" class="btn btn-primary btn-block">搜索</button>
+                </div>
             </div>
-            <div class="rol-md-3"></div>
-            <div class="rol-md-3"></div>
-            <div class="rol-md-3"></div>
-        </div>
+        }
+
         <!-- Page Features -->
         <div class="row text-center">
             @for(area <- areas) {
