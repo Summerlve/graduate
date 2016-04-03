@@ -20,6 +20,7 @@ public class Application extends Controller {
     }
 
     public Result search () {
+
         return ok();
     }
 

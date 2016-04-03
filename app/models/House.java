@@ -48,5 +48,96 @@ public class House extends Model {
     @Temporal(TemporalType.TIMESTAMP)
     public Calendar inDate;
 
+    @Column(name = "sell_price_per_square_meter")
+    private Integer pricePerSM;
+
     public static final Finder<Long, House> find = new Finder<Long, House>(House.class);
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Building getBuildingId() {
+        return buildingId;
+    }
+
+    public void setBuildingId(Building buildingId) {
+        this.buildingId = buildingId;
+    }
+
+    public HouseState getState() {
+        return state;
+    }
+
+    public void setState(HouseState state) {
+        this.state = state;
+    }
+
+    public Integer getFloor() {
+        return floor;
+    }
+
+    public void setFloor(Integer floor) {
+        this.floor = floor;
+    }
+
+    public Integer getHouseNo() {
+        return houseNo;
+    }
+
+    public void setHouseNo(Integer houseNo) {
+        this.houseNo = houseNo;
+    }
+
+    public Number getBuyPrice() {
+        return buyPrice;
+    }
+
+    public void setBuyPrice(Number buyPrice) {
+        this.buyPrice = buyPrice;
+    }
+
+    public Integer getSpace() {
+        return space;
+    }
+
+    public void setSpace(Integer space) {
+        this.space = space;
+    }
+
+    public Calendar getBuyDate() {
+        return buyDate;
+    }
+
+    public void setBuyDate(Calendar buyDate) {
+        this.buyDate = buyDate;
+    }
+
+    public Calendar getInDate() {
+        return inDate;
+    }
+
+    public void setInDate(Calendar inDate) {
+        this.inDate = inDate;
+    }
+
+    public Integer getPricePerSM() {
+        return pricePerSM;
+    }
+
+    public void setPricePerSM(Integer pricePerSM) {
+        this.pricePerSM = pricePerSM;
+    }
 }
