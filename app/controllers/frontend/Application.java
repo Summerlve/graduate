@@ -1,7 +1,11 @@
 package controllers.frontend;
 
+import form.SearchHoustForm;
+import json.OperationResult;
 import models.Area;
 import models.BuildingKind;
+import play.data.Form;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.frontend.index;
@@ -20,6 +24,13 @@ public class Application extends Controller {
     }
 
     public Result search () {
+        Form<SearchHoustForm> searchForm = Form.form(SearchHoustForm.class).bindFromRequest();
+
+        if (searchForm.hasErrors()) return badRequest(Json.toJson(new OperationResult(400, 1)));
+
+        Integer building_kind = Integer.valueOf(searchForm.get().getBuilding_kind());
+        String space = searchForm.get().getSpace();
+
 
         return ok();
     }
