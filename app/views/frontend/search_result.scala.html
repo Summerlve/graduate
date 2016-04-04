@@ -1,11 +1,14 @@
-@(title: String)
+@(title: String)(houses: List[models.House])
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>@title</title>
 </head>
 <body>
-
+    @for(house <- houses) {
+        house.getId();
+    }
 </body>
 </html>

@@ -2,6 +2,7 @@ package models;
 
 import com.avaje.ebean.Model;
 import com.avaje.ebean.annotation.ColumnHstore;
+import play.core.Build;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -45,4 +46,77 @@ public class Building extends Model{
     @Column(name = "order_num")
     private Integer orderNum;
 
+    public static final Finder<Long, Building> find = new Finder<Long, Building>(Building.class);
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<House> getHouses() {
+        return houses;
+    }
+
+    public void setHouses(List<House> houses) {
+        this.houses = houses;
+    }
+
+    public Area getArea() {
+        return area;
+    }
+
+    public void setArea(Area area) {
+        this.area = area;
+    }
+
+    public BuildingKind getBuildingKind() {
+        return buildingKind;
+    }
+
+    public void setBuildingKind(BuildingKind buildingKind) {
+        this.buildingKind = buildingKind;
+    }
+
+    public Integer getAcreage() {
+        return acreage;
+    }
+
+    public void setAcreage(Integer acreage) {
+        this.acreage = acreage;
+    }
+
+    public Calendar getCompletionDate() {
+        return completionDate;
+    }
+
+    public void setCompletionDate(Calendar completionDate) {
+        this.completionDate = completionDate;
+    }
+
+    public Integer getHouseNum() {
+        return houseNum;
+    }
+
+    public void setHouseNum(Integer houseNum) {
+        this.houseNum = houseNum;
+    }
+
+    public Integer getSelledNum() {
+        return selledNum;
+    }
+
+    public void setSelledNum(Integer selledNum) {
+        this.selledNum = selledNum;
+    }
+
+    public Integer getOrderNum() {
+        return orderNum;
+    }
+
+    public void setOrderNum(Integer orderNum) {
+        this.orderNum = orderNum;
+    }
 }

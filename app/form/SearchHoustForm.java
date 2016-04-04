@@ -10,7 +10,7 @@ public class SearchHoustForm {
     private String building_kind;
 
     @Constraints.Required
-    private String space;
+    private String space_kind;
 
     public String getBuilding_kind() {
         return building_kind;
@@ -20,11 +20,11 @@ public class SearchHoustForm {
         this.building_kind = building_kind;
     }
 
-    public String getSpace() {
-        return space;
+    public String getSpace_kind() {
+        return space_kind;
     }
 
-    public void setSpace(String space) {
-        this.space = space;
+    public void setSpace_kind(String space_kind) {
+        this.space_kind = space_kind;
     }
 }
