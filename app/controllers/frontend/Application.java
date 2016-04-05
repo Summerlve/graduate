@@ -37,7 +37,7 @@ public class Application extends Controller {
         List<House> houses = new ArrayList<>();
 
         Optional.ofNullable(BuildingKind.find.where().eq("name", building_kind).findUnique())
-                .map(value -> value.getBuildings())
+                .map(BuildingKind::getBuildings)
                 .ifPresent(value -> {
                     value.stream().forEach(building -> {
                         building.getHouses().stream().forEach(house -> {
@@ -58,7 +58,7 @@ public class Application extends Controller {
                     });
                 });
 
-        return ok(search_result.render("搜索结果",houses));
+        return ok(search_result.render("搜索结果", houses));
     }
 
     public Result detail () {

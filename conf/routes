@@ -12,8 +12,8 @@ GET     /dashboard/data_manager     controllers.backend.DataManager.index()
 
 
 # frontend
-GET     /buy                        controllers.frontend.Application.buy()
 GET     /                           controllers.frontend.Application.index()
+GET     /buy                        controllers.frontend.Application.buy()
 POST    /search                     controllers.frontend.Application.search()
 
 

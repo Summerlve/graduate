@@ -21,4 +21,6 @@ public class HouseState extends Model {
 
     @OneToMany(mappedBy = "state", cascade = CascadeType.ALL)
     private List<House> houses = new ArrayList<House>();
+
+    public static final Finder<Long, HouseState> find = new Finder<Long, HouseState>(HouseState.class);
 }

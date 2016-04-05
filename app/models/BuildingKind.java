@@ -22,7 +22,7 @@ public class BuildingKind extends Model {
     @OneToMany(mappedBy = "buildingKind")
     private List<Building> buildings = new ArrayList<Building>();
 
-    public static final Model.Finder<Long, BuildingKind> find = new Model.Finder<>(BuildingKind.class);
+    public static final Finder<Long, BuildingKind> find = new Finder<>(BuildingKind.class);
 
     public Long getId() {
         return id;

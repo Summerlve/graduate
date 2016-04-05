@@ -7,3 +7,5 @@ target
 /.settings
 /RUNNING_PID
 .DS_store
+node_modules
+*.sql

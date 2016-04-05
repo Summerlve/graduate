@@ -36,7 +36,7 @@ CREATE TABLE `zh_building_kind` (
 
 LOCK TABLES `zh_building_kind` WRITE;
 /*!40000 ALTER TABLE `zh_building_kind` DISABLE KEYS */;
-INSERT INTO `zh_building_kind` VALUES (5,'公寓'),(4,'小高层'),(1,'独栋别墅'),(2,'联排别墅'),(3,'高层');
+INSERT INTO `zh_building_kind` VALUES (5,'公寓'),(1,'小高层'),(4,'独栋别墅'),(3,'联排别墅'),(2,'高层');
 /*!40000 ALTER TABLE `zh_building_kind` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-03 22:38:58
+-- Dump completed on 2016-04-05 16:13:32

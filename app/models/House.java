@@ -16,7 +16,7 @@ public class House extends Model {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
@@ -50,6 +50,9 @@ public class House extends Model {
 
     @Column(name = "sell_price_per_square_meter")
     private Integer pricePerSM;
+
+    @Column(name = "img", nullable = false)
+    private String img;
 
     public static final Finder<Long, House> find = new Finder<Long, House>(House.class);
 
@@ -139,5 +142,13 @@ public class House extends Model {
 
     public void setPricePerSM(Integer pricePerSM) {
         this.pricePerSM = pricePerSM;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 }

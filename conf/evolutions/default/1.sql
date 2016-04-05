@@ -46,7 +46,7 @@ create table zh_building_kind (
 
 create table zh_house (
   id                        bigint auto_increment not null,
-  user_id                   bigint not null,
+  user_id                   bigint,
   building_id               bigint not null,
   house_state_id            bigint not null,
   floor                     integer,
@@ -55,6 +55,7 @@ create table zh_house (
   buy_date                  datetime(6),
   in_date                   datetime(6),
   sell_price_per_square_meter integer,
+  img                       varchar(255) not null,
   constraint pk_zh_house primary key (id))
 ;
 
