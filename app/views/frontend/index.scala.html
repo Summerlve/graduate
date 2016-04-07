@@ -2,22 +2,16 @@
 <!--所有小区的展示-->
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
     <title>@title</title>
-
     <link href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")" rel="stylesheet">
     <link href="@routes.Assets.versioned("stylesheets/heroic-features.css")" rel="stylesheet">
-
 </head>
-
 <body>
 <!-- Jumbotron Header -->
     <header class="jumbotron">
@@ -36,7 +30,7 @@
                 <div class="col-md-offset-6 col-md-2 col-sm-3 hero-feature">
                     <select class="form-control" name="building_kind" required>
                         @for(kind <- buildingKinds) {
-                        <option value="@kind.getId()">@kind.getName()</option>
+                        <option value="@kind.getName()">@kind.getName()</option>
                         }
                     </select>
                 </div>
@@ -75,14 +69,7 @@
 
         <hr>
 
-        <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <p>Copyright &copy; 卖房子 2016</p>
-                </div>
-            </div>
-        </footer>
+        @general.footer()
 
     </div>
     <!-- /.container -->

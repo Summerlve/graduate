@@ -11,9 +11,8 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.frontend.index;
 import views.html.frontend.search_result;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import play.Logger;
+import java.util.*;
 
 /**
  * Created by Summer on 16/3/17.
@@ -33,6 +32,9 @@ public class Application extends Controller {
 
         String building_kind = searchForm.get().getBuilding_kind();
         String space_kind = searchForm.get().getSpace_kind();
+
+        Logger.info(building_kind);
+        Logger.info(space_kind);
 
         List<House> houses = new ArrayList<>();
 
@@ -62,10 +64,6 @@ public class Application extends Controller {
     }
 
     public Result detail () {
-        return ok();
-    }
-
-    public Result buy () {
         return ok();
     }
 }

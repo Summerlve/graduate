@@ -3,12 +3,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
     <title>@title</title>
+    <link href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")" rel="stylesheet">
+    <link href="@routes.Assets.versioned("stylesheets/heroic-features.css")" rel="stylesheet">
 </head>
 <body>
-    @for(house <- houses) {
-        house.getId();
-    }
+    <!-- Jumbotron Header -->
+    <header class="jumbotron">
+        <div class="container">
+            <h1>A Warm Welcome!</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis illo aspernatur vitae fugiat numquam repellat.</p>
+            <p><a class="btn btn-primary btn-large">Call to action!</a>
+            </p>
+        </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row text-center">
+            @for(house <- houses) {
+            <div class="col-md-3 col-sm-6 hero-feature">
+                <div class="thumbnail">
+                    <img src="@{val path = house.getImg(); routes.Assets.versioned("images/" + path)}" alt="">
+                    <div class="caption">
+                        <h4>@house.getSpace()平米 @house.getBuildingId().getBuildingKind().getName()</h4>
+                        <p>
+                            @house.getBuildingId().getArea().getDescription()
+                        </p>
+                        <p>
+                            <a href="/buy/@house.getId()" class="btn btn-primary btn-block">买买买!</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+
+        <hr>
+
+        @general.footer()
+    </div>
+    <!-- /.container -->
+
+    @general.import_js()
 </body>
 </html>

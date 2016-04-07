@@ -1,5 +1,5 @@
-@(title: String)(houses: List[models.House])
-<!--某个小区所有的房屋展示-->
+@(title: String)(house: models.House)
+<!--购买某间房-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +12,6 @@
     <link href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")" rel="stylesheet">
     <link href="@routes.Assets.versioned("stylesheets/heroic-features.css")" rel="stylesheet">
 </head>
-
 <body>
     <!-- Jumbotron Header -->
     <header class="jumbotron">
@@ -25,9 +24,23 @@
     </header>
 
     <div class="container">
-
-
+        <div class="row text-left">
+            <div class="col-md-12 col-sm-12 hero-feature">
+                <h2>@house.getBuildingId().getArea().getName() - @house.getBuildingId().getBuildingKind().getName()</h2>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-md-4 col-sm-4 hero-feature">
+                <div class="thumbnail">
+                    <img src="@{val path = house.getImg(); routes.Assets.versioned("images/" + path)}" alt="">
+                </div>
+            </div>
+            <div class="col-md-8 col-sm-8  hero-feature">
+                
+            </div>
+        </div>
         <!-- /.row -->
+
         <hr>
 
         @general.footer()
@@ -36,6 +49,5 @@
     <!-- /.container -->
 
     @general.import_js()
-
 </body>
 </html>

@@ -1,15 +1,14 @@
-@(title: String)
+@(title: String)(content: String)
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>@title</title>
-
-    @* import css *@
-    @general.import_css()
 </head>
 <body>
-    认证失败
+
+    @content
+
     @* import js *@
     @general.import_js()
 </body>
