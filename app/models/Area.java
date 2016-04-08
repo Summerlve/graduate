@@ -31,7 +31,7 @@ public class Area extends Model{
     @Column(name = "building_num")
     private Integer buildingNum;
 
-    @OneToMany(mappedBy = "area")
+    @OneToMany(mappedBy = "area", cascade = CascadeType.ALL)
     private List<Building> buildings = new ArrayList<Building>();
 
     public static final Finder<Long, Area> find = new Finder<Long, Area>(Area.class);

@@ -28,7 +28,7 @@ public class User extends Model {
     @Column(name = "telephone", nullable = false, unique = true, columnDefinition = "varchar(255) CHARACTER SET utf8 COLLATE utf8_bin")
     private String telephone;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<House> houses = new ArrayList<House>();
 
     public static final Finder<Long, User> find = new Finder<Long, User>(User.class);

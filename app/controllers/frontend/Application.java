@@ -1,12 +1,14 @@
 package controllers.frontend;
 
-import form.AdminForm;
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Transaction;
 import form.SearchHouseForm;
 import form.UserForm;
 import json.OperationResult;
 import models.Area;
 import models.BuildingKind;
 import models.House;
+import models.User;
 import play.data.Form;
 import play.db.ebean.Transactional;
 import play.libs.Json;
@@ -77,12 +79,14 @@ public class Application extends Controller {
         return ok(house_detail.render("购买", house));
     }
 
-    @Transactional
     public Result buy (Long id) {
-        Logger.info(id.toString());
+        Logger.info("buy" + id.toString());
 
         House house = House.find.byId(id);
+        Logger.info(house.getId().toString());
         if (house == null) return badRequest(Json.toJson(new OperationResult(400, 1)));
+
+        Logger.info("have this house");
 
         Form<UserForm> userForm = Form.form(UserForm.class).bindFromRequest();
         if (userForm.hasErrors()) return badRequest(Json.toJson(new OperationResult(400, 1)));
@@ -91,7 +95,25 @@ public class Application extends Controller {
         String name = userForm.get().getName();
         String phone = userForm.get().getPhone();
 
+        User user = new User();
+        user.setSfz(identifier);
+        user.setName(name);
+        user.setTelephone(phone);
+        user.getHouses().add(house);
 
+        Ebean.beginTransaction();
+        try {
+            user.save();
+            Ebean.commitTransaction();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            Ebean.rollbackTransaction();
+            return internalServerError(Json.toJson(new OperationResult(500, 1)));
+        }
+        finally {
+            Ebean.endTransaction();
+        }
 
         return ok(Json.toJson(new OperationResult(200, 0)));
     }

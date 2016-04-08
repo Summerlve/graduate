@@ -19,7 +19,7 @@ public class Building extends Model{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "buildingId")
+    @OneToMany(mappedBy = "buildingId", cascade = CascadeType.ALL)
     private List<House> houses = new ArrayList<House>();
 
     @ManyToOne(optional = false)

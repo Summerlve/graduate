@@ -19,7 +19,7 @@ public class BuildingKind extends Model {
     @Column(name = "name", nullable = false, unique = true, columnDefinition = "varchar(255) CHARACTER SET utf8 COLLATE utf8_bin")
     private String name;
 
-    @OneToMany(mappedBy = "buildingKind")
+    @OneToMany(mappedBy = "buildingKind", cascade = CascadeType.ALL)
     private List<Building> buildings = new ArrayList<Building>();
 
     public static final Finder<Long, BuildingKind> find = new Finder<>(BuildingKind.class);
