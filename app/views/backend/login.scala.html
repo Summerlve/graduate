@@ -33,7 +33,7 @@
             event.preventDefault();
             event.stopPropagation();
             $.ajax({
-                url: "@controllers.backend.routes.Auth.index",
+                url: "@controllers.backend.routes.Auth.login",
                 method: "POST",
                 dataType: "json",
                 data: $("#fake-login").serialize(),

@@ -1,6 +1,8 @@
 package controllers.frontend;
 
+import form.AdminForm;
 import form.SearchHouseForm;
+import form.UserForm;
 import json.OperationResult;
 import models.Area;
 import models.BuildingKind;
@@ -77,6 +79,20 @@ public class Application extends Controller {
 
     @Transactional
     public Result buy (Long id) {
+        Logger.info(id.toString());
+
+        House house = House.find.byId(id);
+        if (house == null) return badRequest(Json.toJson(new OperationResult(400, 1)));
+
+        Form<UserForm> userForm = Form.form(UserForm.class).bindFromRequest();
+        if (userForm.hasErrors()) return badRequest(Json.toJson(new OperationResult(400, 1)));
+
+        String identifier = userForm.get().getIdentifier();
+        String name = userForm.get().getName();
+        String phone = userForm.get().getPhone();
+
+
+
         return ok(Json.toJson(new OperationResult(200, 0)));
     }
 }

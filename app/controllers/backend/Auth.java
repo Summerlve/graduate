@@ -26,14 +26,12 @@ public class Auth extends Controller {
     @BodyParser.Of(BodyParser.FormUrlEncoded.class)
     public Result login () {
         Form<AdminForm> adminForm = Form.form(AdminForm.class).bindFromRequest();
-
         if (adminForm.hasErrors()) return badRequest(Json.toJson(new OperationResult(400, 1)));
 
         String username = adminForm.get().getUsername();
         String password = adminForm.get().getPassword();
 
         Optional<Admin> result = Admin.auth(username, password);
-
         if (!result.isPresent()) return badRequest(Json.toJson(new OperationResult(400, 1)));
 
         session("user_id", String.valueOf(result.get().getId()));
