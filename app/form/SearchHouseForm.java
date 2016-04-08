@@ -5,7 +5,7 @@ import play.data.validation.Constraints;
 /**
  * Created by Summer on 4/3/16.
  */
-public class SearchHoustForm {
+public class SearchHouseForm {
     @Constraints.Required
     private String building_kind;
 

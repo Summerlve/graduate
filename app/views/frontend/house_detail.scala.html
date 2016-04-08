@@ -1,0 +1,125 @@
+@(title: String)(house: models.House)
+<!--购买某间房-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>@title</title>
+    <link href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")" rel="stylesheet">
+    <link href="@routes.Assets.versioned("stylesheets/heroic-features.css")" rel="stylesheet">
+</head>
+<body>
+    <!-- Jumbotron Header -->
+    <header class="jumbotron">
+        <div class="container">
+            <h1>A Warm Welcome!</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis illo aspernatur vitae fugiat numquam repellat.</p>
+            <p><a class="btn btn-primary btn-large">Call to action!</a>
+            </p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="row text-right">
+            <div class="col-md-4 col-sm-4 hero-feature">
+                <h2>@house.getBuildingId().getArea().getName() - @house.getBuildingId().getBuildingKind().getName()</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-sm-4 hero-feature">
+                <div class="thumbnail">
+                    <img src="@{val path = house.getImg(); routes.Assets.versioned("images/" + path)}" alt="">
+                </div>
+            </div>
+            <div class="col-md-8 col-sm-8  hero-feature">
+                <h4>简介:</h4>
+                <strong><p>@house.getBuildingId().getDescription()</p></strong>
+                <hr>
+                <h4>详情:</h4>
+                <strong><p>面积: @house.getSpace() 平方米</p></strong>
+                <strong><p>楼层: @house.getFloor() 层</p></strong>
+                <strong><p>价格: @house.getPricePerSM() 每平,  成交均价 @{val price = house.getPricePerSM() * house.getSpace() / 10000; price} 万</p></strong>
+                <p>
+                    <button type="button"
+                            class="btn btn-primary btn-block"
+                            data-toggle="modal"
+                            data-target="#buy-modal">
+
+                            买买买!
+                    </button>
+                </p>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <hr>
+        <!-- Modal -->
+        <div class="modal fade" id="buy-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">购买</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="buy-data">
+                            <div class="form-group">
+                                <label for="identifier">身份证</label>
+                                <input type="text" class="form-control" id="identifier" placeholder="身份证">
+                            </div>
+                            <div class="form-group">
+                                <label for="name">姓名</label>
+                                <input type="text" class="form-control" id="name" placeholder="姓名">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">电话号码</label>
+                                <input type="text" class="form-control" id="phone" placeholder="电话号码">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button id="buy-buy-buy" data-link="@controllers.frontend.routes.Application.buy(house.getId())" type="button" class="btn btn-primary">预定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @general.footer()
+
+    </div>
+    <!-- /.container -->
+
+    @general.import_js()
+    <script>
+        $("#buy-buy-buy").click(function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            $.ajax({
+                url: "@controllers.frontend.routes.Application.buy(house.getId())",
+                method: "POST",
+                dataType: "json",
+                data: $("#buy-data").serialize(),
+                success: function (data, textStatus, jqXHR) {
+                    console.log(data);
+                    if (data.
+                    setTimeout(function () {
+                        $("#buy-modal").modal('hide');
+                    }, 500);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("非常抱歉, 购买出现错误了");
+                    setTimeout(function () {
+                        $("#buy-modal").modal('hide');
+                    }, 500);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

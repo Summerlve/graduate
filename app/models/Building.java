@@ -46,6 +46,9 @@ public class Building extends Model{
     @Column(name = "order_num")
     private Integer orderNum;
 
+    @Column(name = "description")
+    private String description;
+
     public static final Finder<Long, Building> find = new Finder<Long, Building>(Building.class);
 
     public Long getId() {
@@ -118,5 +121,13 @@ public class Building extends Model{
 
     public void setOrderNum(Integer orderNum) {
         this.orderNum = orderNum;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

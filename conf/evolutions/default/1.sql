@@ -34,6 +34,7 @@ create table zh_building (
   house_num                 integer,
   selled_num                integer,
   order_num                 integer,
+  description               varchar(255),
   constraint pk_zh_building primary key (id))
 ;
 

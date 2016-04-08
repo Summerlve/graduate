@@ -25,18 +25,18 @@
 
     <!-- Page Content -->
     <div class="container">
-        <div class="row text-center">
+        <div class="row">
             @for(house <- houses) {
             <div class="col-md-3 col-sm-6 hero-feature">
                 <div class="thumbnail">
                     <img src="@{val path = house.getImg(); routes.Assets.versioned("images/" + path)}" alt="">
                     <div class="caption">
-                        <h4>@house.getSpace()平米 @house.getBuildingId().getBuildingKind().getName()</h4>
-                        <p>
+                        <h4 class="text-center">@house.getSpace()平米 - @house.getBuildingId().getBuildingKind().getName()</h4>
+                        <p class="text-left">
                             @house.getBuildingId().getArea().getDescription()
                         </p>
                         <p>
-                            <a href="/buy/@house.getId()" class="btn btn-primary btn-block">买买买!</a>
+                            <a href="@controllers.frontend.routes.Application.house(house.getId())" class="btn btn-primary btn-block">买买买!</a>
                         </p>
                     </div>
                 </div>

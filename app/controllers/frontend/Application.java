@@ -1,16 +1,19 @@
 package controllers.frontend;
 
-import form.SearchHoustForm;
+import form.SearchHouseForm;
 import json.OperationResult;
 import models.Area;
 import models.BuildingKind;
 import models.House;
 import play.data.Form;
+import play.db.ebean.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.html.error.notFound;
 import views.html.frontend.index;
 import views.html.frontend.search_result;
+import views.html.frontend.house_detail;
 import play.Logger;
 import java.util.*;
 
@@ -26,7 +29,7 @@ public class Application extends Controller {
     }
 
     public Result search () {
-        Form<SearchHoustForm> searchForm = Form.form(SearchHoustForm.class).bindFromRequest();
+        Form<SearchHouseForm> searchForm = Form.form(SearchHouseForm.class).bindFromRequest();
 
         if (searchForm.hasErrors()) return badRequest(Json.toJson(new OperationResult(400, 1)));
 
@@ -63,7 +66,17 @@ public class Application extends Controller {
         return ok(search_result.render("搜索结果", houses));
     }
 
-    public Result detail () {
-        return ok();
+    public Result house (Long id) {
+        Logger.info(id.toString());
+
+        House house = House.find.byId(id);
+        if (house == null) return notFound(notFound.render("404", "你访问的页面不存在"));
+
+        return ok(house_detail.render("购买", house));
+    }
+
+    @Transactional
+    public Result buy (Long id) {
+        return ok(Json.toJson(new OperationResult(200, 0)));
     }
 }
