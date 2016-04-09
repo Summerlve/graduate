@@ -86,7 +86,7 @@ public class Application extends Controller {
         Logger.info(house.getId().toString());
         if (house == null) return badRequest(Json.toJson(new OperationResult(400, 1)));
 
-        Logger.info("have this house");
+        if (house.getState().getName() == "已售出") return badRequest(Json.toJson(new OperationResult(400, 1)));
 
         Form<UserForm> userForm = Form.form(UserForm.class).bindFromRequest();
         if (userForm.hasErrors()) return badRequest(Json.toJson(new OperationResult(400, 1)));
@@ -95,11 +95,17 @@ public class Application extends Controller {
         String name = userForm.get().getName();
         String phone = userForm.get().getPhone();
 
-        User user = new User();
-        user.setSfz(identifier);
-        user.setName(name);
-        user.setTelephone(phone);
-        user.getHouses().add(house);
+        User user = User.find.where().eq("sfz", identifier).findUnique();
+        if (user == null) {
+            user = new User();
+            user.setSfz(identifier);
+            user.setName(name);
+            user.setTelephone(phone);
+
+        }
+        else {
+            user.getHouses().add(house);
+        }
 
         Ebean.beginTransaction();
         try {
