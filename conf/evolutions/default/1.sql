@@ -35,6 +35,7 @@ create table zh_building (
   selled_num                integer,
   order_num                 integer,
   description               varchar(255),
+  img                       varchar(255) not null,
   constraint pk_zh_building primary key (id))
 ;
 

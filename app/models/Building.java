@@ -49,6 +49,9 @@ public class Building extends Model{
     @Column(name = "description")
     private String description;
 
+    @Column(name = "img", nullable = false)
+    private String img;
+
     public static final Finder<Long, Building> find = new Finder<Long, Building>(Building.class);
 
     public Long getId() {
@@ -129,5 +132,13 @@ public class Building extends Model{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 }

@@ -13,20 +13,12 @@
     <link href="@routes.Assets.versioned("stylesheets/heroic-features.css")" rel="stylesheet">
 </head>
 <body>
-    <!-- Jumbotron Header -->
-    <header class="jumbotron">
-        <div class="container">
-            <h1>A Warm Welcome!</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis illo aspernatur vitae fugiat numquam repellat.</p>
-            <p><a class="btn btn-primary btn-large">Call to action!</a>
-            </p>
-        </div>
-    </header>
+    @general.header()
 
     <div class="container">
         <div class="row text-right">
             <div class="col-md-4 col-sm-4 hero-feature">
-                <h2>@house.getBuildingId().getArea().getName() - @house.getBuildingId().getBuildingKind().getName()</h2>
+                <h2>@house.getBuildingId().getArea().getName() - @house.getBuildingId().getBuildingKind().getName() [@house.getState().getName()]</h2>
             </div>
         </div>
         <div class="row">
@@ -44,13 +36,24 @@
                 <strong><p>楼层: @house.getFloor() 层</p></strong>
                 <strong><p>价格: @house.getPricePerSM() 每平,  成交均价 @{val price = house.getPricePerSM() * house.getSpace() / 10000; price} 万</p></strong>
                 <p>
-                    <button type="button"
-                            class="btn btn-primary btn-block"
-                            data-toggle="modal"
-                            data-target="#buy-modal">
+                    @if(house.getState().getName().equals("已售出")) {
+                        <button type="button"
+                                class="btn btn-primary btn-block"
+                                data-toggle="modal"
+                                data-target="#buy-modal"
+                                disabled="disabled">
 
                             买买买!
-                    </button>
+                        </button>
+                    } else {
+                        <button type="button"
+                                class="btn btn-primary btn-block"
+                                data-toggle="modal"
+                                data-target="#buy-modal">
+
+                            买买买!
+                        </button>
+                    }
                 </p>
             </div>
         </div>
@@ -115,6 +118,7 @@
                     console.log(data);
                     console.log(textStatus);
 
+                    alert("购买成功!");
                     setTimeout(function () {
                         $("#buy-modal").modal('hide');
                     }, 500);

@@ -6,12 +6,14 @@ package json;
 public class OperationResult {
     private Integer error;
     private Integer status_code;
+    private String message;
 
     public OperationResult() {}
 
-    public OperationResult(Integer status_code, Integer error) {
+    public OperationResult(Integer status_code, Integer error, String message) {
         this.status_code = status_code;
         this.error = error;
+        this.message = message;
     }
 
     public Integer getError() {
@@ -28,5 +30,13 @@ public class OperationResult {
 
     public void setStatus_code(Integer status_code) {
         this.status_code = status_code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

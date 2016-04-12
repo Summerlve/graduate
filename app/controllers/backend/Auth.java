@@ -26,18 +26,18 @@ public class Auth extends Controller {
     @BodyParser.Of(BodyParser.FormUrlEncoded.class)
     public Result login () {
         Form<AdminForm> adminForm = Form.form(AdminForm.class).bindFromRequest();
-        if (adminForm.hasErrors()) return badRequest(Json.toJson(new OperationResult(400, 1)));
+        if (adminForm.hasErrors()) return badRequest(Json.toJson(new OperationResult(400, 1, "表单数据错误")));
 
         String username = adminForm.get().getUsername();
         String password = adminForm.get().getPassword();
 
         Optional<Admin> result = Admin.auth(username, password);
-        if (!result.isPresent()) return badRequest(Json.toJson(new OperationResult(400, 1)));
+        if (!result.isPresent()) return badRequest(Json.toJson(new OperationResult(400, 1, "认证错误")));
 
         session("user_id", String.valueOf(result.get().getId()));
         session("user_name", String.valueOf(result.get().getUsername()));
 
-        return ok(Json.toJson(new OperationResult(200, 0)));
+        return ok(Json.toJson(new OperationResult(200, 0, "操作成功")));
     }
 
     @Restrict(@Group("ADMIN"))

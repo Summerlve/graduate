@@ -13,15 +13,7 @@
     <link href="@routes.Assets.versioned("stylesheets/heroic-features.css")" rel="stylesheet">
 </head>
 <body>
-<!-- Jumbotron Header -->
-    <header class="jumbotron">
-        <div class="container">
-            <h1>A Warm Welcome!</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis illo aspernatur vitae fugiat numquam repellat.</p>
-            <p><a class="btn btn-primary btn-large">Call to action!</a>
-            </p>
-        </div>
-    </header>
+    @general.header()
 
     <!-- Page Content -->
     <div class="container">
@@ -58,7 +50,7 @@
                         <h3>@area.getName()</h3>
                         <p>@area.getDescription()</p>
                         <p>
-                            <a href="#" class="btn btn-primary">买买买!</a> <a href="#" class="btn btn-default">更多信息</a>
+                            <a href="@controllers.frontend.routes.Application.area(area.getId())" class="btn btn-primary btn-block">详情</a>
                         </p>
                     </div>
                 </div>

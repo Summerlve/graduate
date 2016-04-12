@@ -1,0 +1,68 @@
+@(title: String)(area: models.Area)
+<!--所有小区的展示-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>@title</title>
+    <link href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")" rel="stylesheet">
+    <link href="@routes.Assets.versioned("stylesheets/heroic-features.css")" rel="stylesheet">
+</head>
+<body>
+    @general.header()
+
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-4 hero-feature">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 hero-feature">
+                        <h3>@area.getName()</h3>
+                        <p>
+                            @area.getDescription()
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 hero-feature">
+                        <div class="thumbnail">
+                            <img src="@{val path = area.getImg(); routes.Assets.versioned("images/" + path)}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8 col-sm-8 hero-feature">
+                <div class="row">
+                    @for(building <- area.getBuildings()) {
+                        <div class="col-sm-12 col-xs-12 hero-feature">
+                            <div class="thumbnail">
+                                <img src="@{val path = building.getImg(); routes.Assets.versioned("images/" + path)}" alt="">
+                                <div class="caption">
+                                    <h5>@building.getDescription()</h5>
+                                    <p>
+                                        <a href="@controllers.frontend.routes.Application.building(building.getId())" class="btn-lg btn btn-primary btn-block">详情</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        @general.footer()
+
+    </div>
+    <!-- /.container -->
+
+    @general.import_js()
+
+</body>
+</html>
