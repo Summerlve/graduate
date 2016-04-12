@@ -19,6 +19,6 @@ import java.util.Optional;
 public class Dashboard extends Controller {
     public F.Promise<Result> index () {
         Optional<Admin> user = (Optional) ctx().args.get("user");
-        return F.Promise.promise(() -> Results.ok(dashboard.render("管理中心", user.get())));
+        return F.Promise.promise(() -> Results.ok(dashboard.render("控制台", user.get())));
     }
 }

@@ -2,9 +2,12 @@ package controllers.backend;
 
 import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
+import models.Admin;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.backend.data_manage;
+import views.html.backend.data_manager;
+
+import java.util.Optional;
 
 /**
  * Created by Summer on 16/3/17.
@@ -13,6 +16,7 @@ import views.html.backend.data_manage;
 @Restrict(@Group("ADMIN"))
 public class DataManager extends Controller {
     public Result index () {
-        return ok(data_manage.render());
+        Optional<Admin> user = (Optional) ctx().args.get("user");
+        return ok(data_manager.render("数据管理", user.get()));
     }
 }

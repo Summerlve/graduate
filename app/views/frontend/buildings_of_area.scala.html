@@ -36,19 +36,25 @@
                 </div>
             </div>
 
+            <div class="visible-xs-block">
+                <hr>
+            </div>
+
             <div class="col-md-8 col-sm-8 hero-feature">
                 <div class="row">
                     @for(house <- building.getHouses()) {
-                        <div class="col-sm-12 col-xs-12 hero-feature">
-                            <div class="thumbnail">
-                                <img src="@{val path = house.getImg(); routes.Assets.versioned("images/" + path)}" alt="">
-                                <div class="caption">
-                                    <p>
-                                        <a href="@controllers.frontend.routes.Application.house(house.getId())" class="btn-lg btn btn-primary btn-block">详情</a>
-                                    </p>
+                        @if(!house.getState().getName().equals("已售出")) {
+                            <div class="col-sm-12 col-xs-12 hero-feature">
+                                <div class="thumbnail">
+                                    <img src="@{val path = house.getImg(); routes.Assets.versioned("images/" + path)}" alt="">
+                                    <div class="caption">
+                                        <p>
+                                            <a href="@controllers.frontend.routes.Application.house(house.getId())" class="btn-lg btn btn-primary btn-block">详情</a>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        }
                     }
                 </div>
             </div>
