@@ -20,6 +20,7 @@ public class Charts extends Controller {
     }
 
     public Result data () {
+
         return ok();
     }
 }
