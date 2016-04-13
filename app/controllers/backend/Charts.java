@@ -3,7 +3,6 @@ package controllers.backend;
 import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
 import models.Admin;
-import models.User;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.backend.charts;

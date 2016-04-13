@@ -1,0 +1,121 @@
+@(title: String)(user: models.Admin)
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>@title</title>
+
+    @*
+    *  import js and css
+    *@
+    @general.import_css()
+    @general.import_js()
+
+    <style>
+        .content {
+            min-height: 800px;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            @general.navbar(title)(user)
+
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            @* import sidebar *@
+            @general.sidebar("info")
+            <!-- /.navbar-collapse -->
+        </nav>
+
+        <div id="page-wrapper">
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12 content">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h1 class="page-header">
+                                    个人信息与设置
+                                </h1>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12 text-left">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        @helper.form(action = controllers.backend.routes.Info.change, 'id -> "fuck-change") {
+                                            <div class="form-group">
+                                                <label for="sfz">身份证</label>
+                                                <input name="sfz" value="@user.getSfz()" type="text" class="form-control" id="sfz" placeholder="身份证">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="username">用户名</label>
+                                                <input name="username" value="@user.getUsername()" type="text" class="form-control" id="username" placeholder="用户名">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="password">密码</label>
+                                                <input name="password" value="@user.getPasswordHash()" type="password" class="form-control" id="password" placeholder="密码">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="phone">电话号码</label>
+                                                <input name="phone" value="@user.getTelephone()" type="text" class="form-control" id="phone" placeholder="电话号码">
+                                            </div>
+                                            <div class="row text-right">
+                                                <div class="col-md-12">
+                                                    <button type="submit" class="btn btn-default">修改</button>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- /#wrapper -->
+
+    <script>
+        $("#fuck-change").submit(function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            $.ajax({
+                url: "@controllers.backend.routes.Info.change",
+                method: "POST",
+                dataType: "json",
+                data: function () {
+                    return [
+                        "phone=" + encodeURIComponent($("#phone").val()),
+                        "sfz=" + encodeURIComponent($("#sfz").val()),
+                        "username=" + encodeURIComponent($("#username").val()),
+                        "password=" + encodeURIComponent($("#password").val())
+                    ].join("&");
+                }(),
+                success: function (data, textStatus, jqXHR) {
+                    alert("修改成功");
+                    location.href = "@controllers.backend.routes.Info.index";
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                   alert("修改失败");
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>

@@ -7,6 +7,7 @@
 
     @* import css *@
     @general.import_css()
+    <link href="@routes.Assets.versioned("stylesheets/login.css")" rel="stylesheet">
 </head>
 <body>
     <div class="login-page">
@@ -32,6 +33,7 @@
         $("#fake-login").submit(function (event) {
             event.preventDefault();
             event.stopPropagation();
+
             $.ajax({
                 url: "@controllers.backend.routes.Auth.login",
                 method: "POST",
