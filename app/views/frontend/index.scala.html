@@ -43,7 +43,7 @@
         <!-- Page Features -->
         <div class="row text-center">
             @for(area <- areas) {
-            <div class="col-md-3 col-sm-6 hero-feature">
+            <div class="col-md-4 col-sm-6 hero-feature">
                 <div class="thumbnail">
                     <img src="@{val path = area.getImg(); routes.Assets.versioned("images/" + path)}" alt="">
                     <div class="caption">

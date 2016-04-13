@@ -8,4 +8,3 @@ target
 /RUNNING_PID
 .DS_store
 node_modules
-/data/*.sql

@@ -39,7 +39,7 @@
             <div class="col-md-8 col-sm-8 hero-feature">
                 <div class="row">
                     @for(building <- area.getBuildings()) {
-                        <div class="col-sm-12 col-xs-12 hero-feature">
+                        <div class="col-md-offset-1 col-md-5 col-sm-5 col-xs-5 hero-feature">
                             <div class="thumbnail">
                                 <img src="@{val path = building.getImg(); routes.Assets.versioned("images/" + path)}" alt="">
                                 <div class="caption">

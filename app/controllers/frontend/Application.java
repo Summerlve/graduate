@@ -51,8 +51,8 @@ public class Application extends Controller {
                             building
                                 .getHouses().stream()
                                 .filter(house -> {
-                                    if (house.getState().getName().equals("已售出")) return false;
-                                    else return true;
+                                    if (house.getState().getName().equals("未售出")) return true;
+                                    else return false;
                                 }).forEach(house -> {
                                     Integer space = house.getSpace();
 

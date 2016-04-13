@@ -43,8 +43,8 @@
             <div class="col-md-8 col-sm-8 hero-feature">
                 <div class="row">
                     @for(house <- building.getHouses()) {
-                        @if(!house.getState().getName().equals("已售出")) {
-                            <div class="col-sm-12 col-xs-12 hero-feature">
+                        @if(house.getState().getName().equals("未售出")) {
+                            <div class="col-md-offset-1 col-md-5 col-sm-5 col-xs-5 hero-feature">
                                 <div class="thumbnail">
                                     <img src="@{val path = house.getImg(); routes.Assets.versioned("images/" + path)}" alt="">
                                     <div class="caption">

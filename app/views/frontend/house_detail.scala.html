@@ -36,23 +36,38 @@
                 <strong><p>楼层: @house.getFloor() 层</p></strong>
                 <strong><p>价格: @house.getPricePerSM() 每平,  成交均价 @{val price = house.getPricePerSM() * house.getSpace() / 10000; price} 万</p></strong>
                 <p>
-                    @if(house.getState().getName().equals("已售出")) {
-                        <button type="button"
-                                class="btn btn-primary btn-block"
-                                data-toggle="modal"
-                                data-target="#buy-modal"
-                                disabled="disabled">
+                    @house.getState().getName() match {
+                        case "已售出" => {
+                            <button type="button"
+                                    class="btn btn-primary btn-block"
+                                    data-toggle="modal"
+                                    data-target="#buy-modal"
+                                    disabled="disabled">
 
-                            已售出
-                        </button>
-                    } else {
-                        <button type="button"
-                                class="btn btn-primary btn-block"
-                                data-toggle="modal"
-                                data-target="#buy-modal">
+                                已售出
+                            </button>
+                        }
 
-                            买买买!
-                        </button>
+                        case "未售出" => {
+                            <button type="button"
+                                    class="btn btn-primary btn-block"
+                                    data-toggle="modal"
+                                    data-target="#buy-modal">
+
+                                买买买!
+                            </button>
+                        }
+
+                        case "已预订" => {
+                            <button type="button"
+                                    class="btn btn-primary btn-block"
+                                    data-toggle="modal"
+                                    data-target="#buy-modal"
+                                    disabled="disabled">
+
+                                已预订
+                            </button>
+                        }
                     }
                 </p>
             </div>
