@@ -27,72 +27,177 @@
 </head>
 
 <body>
+    <div id="wrapper">
 
-<div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            @general.navbar(title)(user)
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        @general.navbar(title)(user)
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            @* import sidebar *@
+            @general.sidebar("data")
+            <!-- /.navbar-collapse -->
+        </nav>
 
-        <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-        @* import sidebar *@
-        @general.sidebar("data")
-        <!-- /.navbar-collapse -->
-    </nav>
+        <div id="page-wrapper">
 
-    <div id="page-wrapper">
+            <div class="container-fluid">
 
-        <div class="container-fluid">
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            数据管理
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li>
+                                <i class="fa fa-dashboard"></i>  <a href="@controllers.backend.routes.Dashboard.index">控制台</a>
+                            </li>
+                            <li class="active">
+                                <i class="fa fa-table"></i> 数据管理
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- /.row -->
 
-            <!-- Page Heading -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">
-                        Charts
-                    </h1>
-                    <ol class="breadcrumb">
-                        <li>
-                            <i class="fa fa-dashboard"></i>  <a href="@controllers.backend.routes.Dashboard.index">控制台</a>
-                        </li>
-                        <li class="active">
-                            <i class="fa fa-table"></i> 数据管理
-                        </li>
-                    </ol>
+                <div class="row  content">
+                    <div class="col-lg-12">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#add" role="tab" data-toggle="tab">数据备份</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#backup" role="tab" data-toggle="tab">数据备份</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#restore" role="tab" data-toggle="tab">数据恢复</a>
+                            </li>
+                        </ul>
+                        <br>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="add">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">添加小区</div>
+                                    <div class="panel-body">
+                                        <form>
+                                            <div class="form-group">
+                                                <label for="name">小区名字</label>
+                                                <input type="email" class="form-control" id="name" placeholder="小区名字">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="description">小区简介</label>
+                                                <input type="password" class="form-control" id="description" placeholder="小区简介">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="picture">小区图片</label>
+                                                <input type="file" id="picture">
+                                            </div>
+
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading">添加楼栋</div>
+                                                <div class="panel-body">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-body">
+                                                            <div class="form-group">
+                                                                <label>楼栋简介</label>
+                                                                <input type="email" class="form-control" placeholder="楼栋简介">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>楼栋简介</label>
+                                                                <input type="password" class="form-control" placeholder="楼栋类型">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>楼栋照片</label>
+                                                                <input type="file">
+                                                            </div>
+
+                                                            <div class="panel panel-warning">
+                                                                <div class="panel-heading">添加房屋</div>
+                                                                <div class="panel-body">
+                                                                    <div class="panel panel-default">
+                                                                        <div class="panel-body">
+                                                                            <div class="form-group">
+                                                                                <label>房屋简介</label>
+                                                                                <input type="email" class="form-control" placeholder="楼栋简介">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label>房屋简介</label>
+                                                                                <input type="password" class="form-control" placeholder="楼栋类型">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="panel-footer">
+                                                                    <div class="row text-right">
+                                                                        <div class="col-md-12">
+                                                                            <button type="submit" class="btn btn-warning">删除</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row text-right">
+                                                                <div class="col-md-offset-10 col-md-2">
+                                                                    <button type="button" class="btn btn-warning btn-block">
+                                                                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="panel-footer">
+                                                            <div class="row text-right">
+                                                                <div class="col-md-12">
+                                                                    <button type="submit" class="btn btn-info">删除</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row text-right">
+                                                        <div class="col-md-offset-10 col-md-2">
+                                                            <button type="button" class="btn btn-info btn-block">
+                                                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <div class="row text-right">
+                                            <div class="col-md-12">
+                                                <button type="submit" class="btn btn-primary">添加</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="backup">
+                                4
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="restore">
+                                5
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <!-- /.row -->
+            <!-- /.container-fluid -->
 
-            <div class="row  content">
-                <div class="col-lg-12">
-                <!-- Nav tabs -->
-                <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#add" aria-controls="home" role="tab" data-toggle="tab">添加数据</a></li>
-                    <li role="presentation"><a href="#backup" aria-controls="profile" role="tab" data-toggle="tab">数据备份</a></li>
-                    <li role="presentation"><a href="#restore" aria-controls="messages" role="tab" data-toggle="tab">数据恢复</a></li>
-                </ul>
-
-                <!-- Tab panes -->
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="add">
-
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="backup">
-
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="restore">
-
-                    </div>
-                </div>
-                </div>
-            </div>
         </div>
-        <!-- /.container-fluid -->
+        <!-- /#page-wrapper -->
 
     </div>
-    <!-- /#page-wrapper -->
+    <!-- /#wrapper -->
 
-</div>
-<!-- /#wrapper -->
+
+    <script>
+
+
+    </script>
 </body>
 
 </html>
