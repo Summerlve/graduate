@@ -4,6 +4,7 @@
 
 # backend
 GET     /dashboard                  controllers.backend.Dashboard.index()
+GET     /dashboard/dashboard_data   controllers.backend.Dashboard.data()
 GET     /dashboard/charts           controllers.backend.Charts.index()
 GET     /dashboard/login            controllers.backend.Auth.index()
 POST    /dashboard/login            controllers.backend.Auth.login()
@@ -11,7 +12,8 @@ GET     /dashboard/logout           controllers.backend.Auth.logout()
 GET     /dashboard/data_manager     controllers.backend.DataManager.index()
 GET     /dashboard/info             controllers.backend.Info.index()
 POST    /dashboard/info             controllers.backend.Info.change()
-
+GET     /dashboard/search           controllers.backend.Search.index()
+POST    /dashboard/search           controllers.backend.Search.search()
 
 # frontend
 GET     /                           controllers.frontend.Application.index()
