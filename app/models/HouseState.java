@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class HouseState extends Model {
     private String name;
 
     @OneToMany(mappedBy = "state", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<House> houses = new ArrayList<House>();
 
     public static final Finder<Long, HouseState> find = new Finder<Long, HouseState>(HouseState.class);

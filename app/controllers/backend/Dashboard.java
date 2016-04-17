@@ -2,13 +2,18 @@ package controllers.backend;
 
 import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
+import form.SearchUserForm;
 import json.DashboardData;
+import json.OperationResult;
+import json.UserSearchResult;
 import models.Admin;
 import models.House;
 import models.User;
 import play.Logger;
+import play.data.Form;
 import play.libs.F;
 import play.libs.Json;
+import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Results;
@@ -79,5 +84,26 @@ public class Dashboard extends Controller {
         data.unfinished = unfinish;
 
         return F.Promise.promise(() -> ok(Json.toJson(data)));
+    }
+
+    @BodyParser.Of(BodyParser.FormUrlEncoded.class)
+    public F.Promise<Result> search () {
+        Form<SearchUserForm> searchUserForm = Form.form(SearchUserForm.class).bindFromRequest();
+        if (searchUserForm.hasErrors()) return F.Promise.promise(() -> badRequest(Json.toJson(new OperationResult(400, 1, "表单数据错误"))));
+
+        // check user is exist
+        User user = User.findBySfz(searchUserForm.get().getSfz());
+        if (user == null) return F.Promise.promise(() -> badRequest(Json.toJson(new OperationResult(400, 1, "用户不存在"))));
+
+        Logger.info(String.valueOf(user.getHouses().size()));
+
+        // gen json result
+        UserSearchResult result = new UserSearchResult();
+        result.houses = user.getHouses();
+        result.sfz = user.getSfz();
+        result.name = user.getName();
+        result.phone = user.getTelephone();
+
+        return F.Promise.promise(() -> ok(Json.toJson(result)));
     }
 }

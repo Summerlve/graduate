@@ -4,10 +4,12 @@ import be.objectify.deadbolt.core.models.Permission;
 import be.objectify.deadbolt.core.models.Role;
 import be.objectify.deadbolt.core.models.Subject;
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Summer on 2016/3/1.
@@ -29,12 +31,18 @@ public class User extends Model {
     private String telephone;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<House> houses = new ArrayList<House>();
 
     public static final Finder<Long, User> find = new Finder<Long, User>(User.class);
 
     public static final User findUserByName (String username) {
         return find.where().eq("name", username).findUnique();
+    }
+
+    public static final User findBySfz (String sfz) {
+        Objects.requireNonNull(sfz);
+        return find.where().eq("sfz", sfz).findUnique();
     }
 
     public Long getId() {

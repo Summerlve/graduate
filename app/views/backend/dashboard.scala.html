@@ -123,7 +123,7 @@
                     </div>
                 </div>
 
-                <div class="row content">
+                <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">购买排行榜</div>
@@ -148,9 +148,37 @@
                         </div>
                     </div>
                 </div>
+                <div class="row content">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">搜索</div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <form class="form">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" placeholder="身份证号" id="search-sfz">
+                                                    <div class="input-group-addon" id="search-button">
+                                                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <ul class="list-group" id="search-result">
+                                            <a class="list-group-item">...</a>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- /.row -->
-
-
             </div>
             <!-- /.container-fluid -->
 
@@ -160,6 +188,27 @@
     </div>
     <!-- /#wrapper -->
     <script>
+        $("#search-button").click(_ => {
+            $.ajax({
+                url: "@controllers.backend.routes.Dashboard.search",
+                method: "POST",
+                dataType: "json",
+                data: "sfz=" + encodeURIComponent($("#search-sfz").val()),
+                success: function (data, textStatus, jqXHR) {
+                    let houses = data.houses;
+                    let gen = "";
+
+                    houses.forEach(house => {
+                        gen += `<a href="/houses/${house.id}" class="list-group-item">楼层:${house.floor} 房间号:${house.houseNo}</a>`;
+                    });
+
+                    $("#search-result").html($(gen));
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                   alert("搜索失败");
+                }
+            });
+        });
 
         $.ajax({
             url: "@controllers.backend.routes.Dashboard.data",

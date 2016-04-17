@@ -2,6 +2,7 @@ package models;
 
 import com.avaje.ebean.Model;
 import com.avaje.ebean.annotation.ColumnHstore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import play.core.Build;
 
 import javax.persistence.*;
@@ -20,6 +21,7 @@ public class Building extends Model{
     private Long id;
 
     @OneToMany(mappedBy = "buildingId", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<House> houses = new ArrayList<House>();
 
     @ManyToOne(optional = false)

@@ -3,17 +3,18 @@
 # ~~~~
 
 # backend
-GET     /dashboard                  controllers.backend.Dashboard.index()
-GET     /dashboard/dashboard_data   controllers.backend.Dashboard.data()
-GET     /dashboard/charts           controllers.backend.Charts.index()
-GET     /dashboard/login            controllers.backend.Auth.index()
-POST    /dashboard/login            controllers.backend.Auth.login()
-GET     /dashboard/logout           controllers.backend.Auth.logout()
-GET     /dashboard/data_manager     controllers.backend.DataManager.index()
-GET     /dashboard/info             controllers.backend.Info.index()
-POST    /dashboard/info             controllers.backend.Info.change()
-GET     /dashboard/search           controllers.backend.Search.index()
-POST    /dashboard/search           controllers.backend.Search.search()
+GET     /dashboard                          controllers.backend.Dashboard.index()
+GET     /dashboard/dashboard_data           controllers.backend.Dashboard.data()
+GET     /dashboard/charts                   controllers.backend.Charts.index()
+GET     /dashboard/login                    controllers.backend.Auth.index()
+POST    /dashboard/login                    controllers.backend.Auth.login()
+GET     /dashboard/logout                   controllers.backend.Auth.logout()
+GET     /dashboard/data_manager             controllers.backend.DataManager.index()
+GET     /dashboard/info                     controllers.backend.Info.index()
+POST    /dashboard/info                     controllers.backend.Info.change()
+POST    /dashboard/search                   controllers.backend.Dashboard.search()
+GET     /dashboard/data_manager/backup      controllers.backend.DataManager.backup()
+GET     /dashboard/data_manager/restore     controllers.backend.DataManager.restore()
 
 # frontend
 GET     /                           controllers.frontend.Application.index()

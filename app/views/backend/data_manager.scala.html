@@ -66,7 +66,7 @@
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active">
-                                <a href="#add" role="tab" data-toggle="tab">数据备份</a>
+                                <a href="#add" role="tab" data-toggle="tab">添加数据</a>
                             </li>
                             <li role="presentation">
                                 <a href="#backup" role="tab" data-toggle="tab">数据备份</a>
@@ -176,10 +176,10 @@
                                 </div>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="backup">
-                                4
+                                <button class="btn btn-default" id="data-backup-btn">数据备份</button>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="restore">
-                                5
+                                <button class="btn btn-default" id="data-restore-btn">数据恢复</button>
                             </div>
                         </div>
                     </div>
@@ -195,7 +195,33 @@
 
 
     <script>
+        $("#data-backup-btn").click(_ => {
+            $.ajax({
+                url: "@controllers.backend.routes.DataManager.backup",
+                method: "GET",
+                dataType: "json",
+                success: function (data, textStatus, jqXHR) {
+                    console.log(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                   alert("数据备份失败");
+                }
+            });
+        });
 
+        $("#data-restore-btn").click(_ => {
+             $.ajax({
+                url: "@controllers.backend.routes.DataManager.restore",
+                method: "GET",
+                dataType: "json",
+                success: function (data, textStatus, jqXHR) {
+                    console.log(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                   alert("数据恢复失败");
+                }
+            });
+        });
 
     </script>
 </body>
