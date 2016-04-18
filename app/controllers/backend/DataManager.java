@@ -5,7 +5,6 @@ import be.objectify.deadbolt.java.actions.Restrict;
 import json.OperationResult;
 import models.Admin;
 import play.Logger;
-import play.libs.F;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -25,50 +24,57 @@ public class DataManager extends Controller {
         return ok(data_manager.render("数据管理", user.get()));
     }
 
-    public F.Promise<Result> backup () {
-        return F.Promise.promise(() -> {
-            boolean isSucceed = false; // record cmd exec result
+    public Result backup () {
+        boolean isSucceed = false; // record cmd exec result
 
-            try {
-                Process process = Runtime.getRuntime().exec("node ./data/backup.script.js ./data");
-                process.waitFor();
+        try {
+            Process process = Runtime.getRuntime().exec(new String[] {"node", "./data/backup.script.js", "./data"});
+            process.waitFor();
 
-                BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream(), "utf-8"));
+            BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream(), "utf-8"));
 
-                String line = null;
+            String line = null;
 
-                while ((line = input.readLine()) != null) {
-                    Logger.info(line);
-                }
-
-
-                if (process.exitValue() == 0) isSucceed = true;
-            }
-            catch (Exception e) {
-                e.printStackTrace();
+            while ((line = input.readLine()) != null) {
+                Logger.info(line);
             }
 
-            if (isSucceed) return ok(Json.toJson(new OperationResult(200, 0, "数据备份成功")));
-            else return internalServerError(Json.toJson(new OperationResult(500, 1, "数据备份失败")));
-        });
+            if (process.exitValue() == 0) isSucceed = true;
+
+            process.destroy();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (isSucceed) return ok(Json.toJson(new OperationResult(200, 0, "数据备份成功")));
+        else return internalServerError(Json.toJson(new OperationResult(500, 1, "数据备份失败")));
     }
 
-    public F.Promise<Result> restore () {
-        return F.Promise.promise(() -> {
-            boolean isSucceed = false; // record cmd exec result
+    public Result restore () {
+        boolean isSucceed = false; // record cmd exec result
 
-            try {
-                Process process = Runtime.getRuntime().exec("node ./data/restore.script.js ./data");
-                process.waitFor();
+        try {
+            Process process = Runtime.getRuntime().exec("node ./data/restore.script.js ./data/");
+            process.waitFor();
 
-                if (process.exitValue() == 0) isSucceed = true;
+            BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream(), "utf-8"));
+
+            String line = null;
+
+            while ((line = input.readLine()) != null) {
+                Logger.info(line);
             }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
 
-            if (isSucceed) return ok(Json.toJson(new OperationResult(200, 0, "数据恢复成功")));
-            else return internalServerError(Json.toJson(new OperationResult(500, 1, "数据恢复失败")));
-        });
+            if (process.exitValue() == 0) isSucceed = true;
+
+            process.destroy();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (isSucceed) return ok(Json.toJson(new OperationResult(200, 0, "数据恢复成功")));
+        else return internalServerError(Json.toJson(new OperationResult(500, 1, "数据恢复失败")));
     }
 }

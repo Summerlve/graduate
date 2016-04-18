@@ -49,7 +49,7 @@ public class Dashboard extends Controller {
 
         List<House> houses = House.find.all();
 
-        Long selled = houses.stream()
+        Long sold = houses.stream()
                 .filter(value -> {
                     if (value.getState().getName().equals("已售出")) return true;
                     else return false;
@@ -63,14 +63,14 @@ public class Dashboard extends Controller {
                 })
                 .count();
 
-        Long unselled = houses.stream()
+        Long unsold = houses.stream()
                 .filter(value -> {
                     if (value.getState().getName().equals("未售出")) return true;
                     else return false;
                 })
                 .count();
 
-        Long unfinish = houses.stream()
+        Long unfinished = houses.stream()
                 .filter(value -> {
                     if (value.getState().getName().equals("未完成")) return true;
                     else return false;
@@ -78,10 +78,10 @@ public class Dashboard extends Controller {
                 .count();
 
         data.setTop_owner(topowner);
-        data.sold = selled;
+        data.sold = sold;
         data.ordered = ordered;
-        data.unsold = unselled;
-        data.unfinished = unfinish;
+        data.unsold = unsold;
+        data.unfinished = unfinished;
 
         return F.Promise.promise(() -> ok(Json.toJson(data)));
     }

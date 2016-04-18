@@ -4,6 +4,11 @@ const exec = require("child_process").exec;
 const path = require("path");
 const mainPath = process.argv[2];
 
+if (!mainPath) {
+    process.stderr.write(`Invalid Argument\nthis script need a main path to store sql file\n`);
+    process.exit(9) // Invalid Argument
+}
+
 console.log("mainPath:", mainPath);
 
 let coll = [];
@@ -17,15 +22,6 @@ let files = [
     "zh_admin.sql",
     "zh_building.sql"
 ];
-
-let touch = new Promise((resolve, reject) => {
-    exec(files.map(_ => `touch ${_}`).join("&"), (error, stdout, stderr) => {
-        if (!error) resolve(true);
-        else reject(error);
-
-        if (stderr) reject(stderr);
-    });
-});
 
 let zh_user = new Promise((resolve, reject) => {
     exec(`mysqldump -u root -p123456 graduate zh_user > ${path.join(mainPath, "zh_user.sql")}`, (error, stdout, stderr) => {
@@ -90,7 +86,6 @@ let zh_building = new Promise((resolve, reject) => {
     });
 });
 
-coll.push(touch);
 coll.push(zh_admin);
 coll.push(zh_area);
 coll.push(zh_building);
@@ -100,7 +95,8 @@ coll.push(zh_house_state);
 coll.push(zh_user);
 
 Promise.all(coll)
-        .then(_ => console.log("ok"), _ => console.error(_));
+        .then(_ => console.log("ok"),
+              _ => console.error(_));
 
 
 

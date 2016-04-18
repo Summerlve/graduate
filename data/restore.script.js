@@ -4,6 +4,13 @@ const exec = require("child_process").exec;
 const path = require("path");
 const mainPath = process.argv[2];
 
+if (!mainPath) {
+    process.stderr.write(`Invalid Argument\nthis script need a main path to find sql file to restore\n`);
+    process.exit(9) // Invalid Argument
+}
+
+console.log("mainPath:", mainPath);
+
 let coll = [];
 
 let zh_user = new Promise((resolve, reject) => {

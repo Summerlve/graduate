@@ -199,7 +199,7 @@
                     let gen = "";
 
                     houses.forEach(house => {
-                        gen += `<a href="/houses/${house.id}" class="list-group-item">楼层:${house.floor} 房间号:${house.houseNo}</a>`;
+                        gen += `<a href="/houses/${house.id}" class="list-group-item">楼层:${house.floor} 房间号:${house.house_no}</a>`;
                     });
 
                     $("#search-result").html($(gen));

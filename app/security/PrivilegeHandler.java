@@ -14,10 +14,11 @@ import java.util.Optional;
  */
 public class PrivilegeHandler extends AbstractDeadboltHandler {
     @Override
+    @SuppressWarnings(value = "unchecked")
     public F.Promise<Optional<Subject>> getSubject(Http.Context context) {
         Long userId = Optional.ofNullable(context.session().get("user_id"))
-                            .map(value -> Long.valueOf(value))
-                            .orElse(-1l);
+                            .map(Long::valueOf)
+                            .orElse(-1L);
 
         return F.Promise.promise(() -> {
             Optional user = Optional.ofNullable(Admin.find.byId(userId));

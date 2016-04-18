@@ -2,6 +2,7 @@ package models;
 
 import com.avaje.ebean.Model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.*;
 import java.util.Calendar;
 
@@ -24,6 +25,7 @@ public class House extends Model {
     @ManyToOne(optional = false)
     @JoinColumn(name = "building_id", referencedColumnName = "id")
     @JsonBackReference
+    @JsonProperty("building_id")
     private Building buildingId;
 
     @ManyToOne(optional = false)
@@ -35,9 +37,11 @@ public class House extends Model {
     private Integer floor;
 
     @Column(name = "house_no")
+    @JsonProperty("house_no")
     private Integer houseNo;
 
     @Column(name = "buy_price")
+    @JsonProperty("buy_price")
     private Number buyPrice;
 
     @Column(name = "space")
@@ -45,13 +49,16 @@ public class House extends Model {
 
     @Column(name = "buy_date")
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonProperty("buy_date")
     private Calendar buyDate;
 
     @Column(name = "in_date")
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonProperty("in_date")
     private Calendar inDate;
 
     @Column(name = "sell_price_per_square_meter")
+    @JsonProperty("price_per_sm")
     private Integer pricePerSM;
 
     @Column(name = "img", nullable = false)

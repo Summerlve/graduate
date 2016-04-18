@@ -10,6 +10,7 @@ libraryDependencies ++= Seq(
   javaJdbc,
   cache,
   javaWs,
+  filters,
   "mysql" % "mysql-connector-java" % "5.1.18",
   "be.objectify" %% "deadbolt-java" % "2.4.3"
 )
