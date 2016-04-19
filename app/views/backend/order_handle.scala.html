@@ -21,7 +21,7 @@
 
     <style>
 
-        .row:last-of-type {
+        .tail {
             min-height: 420px;
         }
 
@@ -30,63 +30,110 @@
 
 <body>
 
-<div id="wrapper">
+    <div id="wrapper">
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        @general.navbar(title)(user)
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            @general.navbar(title)(user)
 
-        <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-        @* import sidebar *@
-        @general.sidebar("orders")
-        <!-- /.navbar-collapse -->
-    </nav>
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            @* import sidebar *@
+            @general.sidebar("orders")
+            <!-- /.navbar-collapse -->
+        </nav>
 
-    <div id="page-wrapper">
+        <div id="page-wrapper">
 
-        <div class="container-fluid">
-            <!-- Page Heading -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">
-                        订单处理
-                    </h1>
-                    <ol class="breadcrumb">
-                        <li>
-                            <i class="fa fa-dashboard"></i>  <a href="@controllers.backend.routes.Dashboard.index">控制台</a>
-                        </li>
-                        <li class="active">
-                            <i class="fa fa-tasks"></i> 订单处理
-                        </li>
-                    </ol>
-                </div>
-            </div>
-
-            @for(house <- houses) {
-
+            <div class="container-fluid">
+                <!-- Page Heading -->
                 <div class="row">
-                    <div class="col-md-12">
-                        <a href="@controllers.backend.routes.OrderHandle.handle(house.getId())">
-                            <div class="well well-sm">
-                                门牌号: @house.getHouseNo(), 预订人: @house.getUser().getName(), 电话: @house.getUser().getTelephone()
-                            </div>
-                        </a>
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            订单处理
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li>
+                                <i class="fa fa-dashboard"></i>  <a href="@controllers.backend.routes.Dashboard.index">控制台</a>
+                            </li>
+                            <li class="active">
+                                <i class="fa fa-tasks"></i> 订单处理
+                            </li>
+                        </ol>
                     </div>
                 </div>
 
-            }
-            <div class="row">
-                <div class="col-md-12">
+                <div class="row content">
+                    <div class="col-lg-12">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#to-handle" role="tab" data-toggle="tab">未处理订单</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#handled" role="tab" data-toggle="tab">已处理订单</a>
+                            </li>
+                        </ul>
+                        <br>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="to-handle">
+                                @for(house <- houses) {
+                                    @if(house.getState().getName() == "已预订") {
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="well well-sm">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            门牌号: @house.getHouseNo(), 预订人: @house.getUser().getName(), 电话: @house.getUser().getTelephone()
+                                                        </div>
+                                                        <div class="col-md-offset-4 col-md-2">
+                                                            <a href="@controllers.backend.routes.OrderHandle.handle(house.getId())" class="btn btn-primary btn-block btn-xs">
+                                                                完成
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="handled">
+                                @for(house <- houses) {
+                                    @if(house.getState().getName() == "预订已处理") {
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="well well-sm">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        门牌号: @house.getHouseNo(), 预订人: @house.getUser().getName(), 电话: @house.getUser().getTelephone()
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="row tail">
+                    <div class="col-md-12">
+
+                    </div>
                 </div>
             </div>
+            <!-- /.container-fluid -->
+
         </div>
-        <!-- /.container-fluid -->
+        <!-- /#page-wrapper -->
 
     </div>
-    <!-- /#page-wrapper -->
+    <!-- /#wrapper -->
+    <script>
 
-</div>
-<!-- /#wrapper -->
+    </script>
 </body>
 </html>

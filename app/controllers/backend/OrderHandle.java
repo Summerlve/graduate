@@ -24,8 +24,10 @@ import java.util.Optional;
 public class OrderHandle extends Controller {
     @SuppressWarnings("unchecked")
     public Result index () {
-        HouseState houseState = HouseState.find.where().eq("name", "已预订").findUnique();
-        List<House> houses = House.find.where().eq("house_state_id", houseState.getId()).findList();
+        HouseState ordered = HouseState.find.where().eq("name", "已预订").findUnique();
+        HouseState orderHandled = HouseState.find.where().eq("name", "预订已处理").findUnique();
+
+        List<House> houses = House.find.where().in("house_state_id", new Object[]{ordered.getId(), orderHandled.getId()}).findList();
 
         Logger.info(String.valueOf(houses.size()));
 
