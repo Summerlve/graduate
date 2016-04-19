@@ -18,7 +18,7 @@ import java.util.Optional;
  */
 @Restrict(@Group("ADMIN"))
 public class Charts extends Controller {
-    @SuppressWarnings(value = "unchecked")
+    @SuppressWarnings("unchecked")
     public Result index () {
         Optional<Admin> user = (Optional<Admin>) ctx().args.get("user");
         return ok(charts.render("图表", user.get()));

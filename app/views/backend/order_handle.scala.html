@@ -1,0 +1,92 @@
+@(title: String)(user: models.Admin)(houses: List[models.House])
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>@title</title>
+
+    @*
+    *  import js and css
+    *@
+
+    @general.import_css()
+    @general.import_js()
+
+    <style>
+
+        .row:last-of-type {
+            min-height: 420px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div id="wrapper">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        @general.navbar(title)(user)
+
+        <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+        @* import sidebar *@
+        @general.sidebar("orders")
+        <!-- /.navbar-collapse -->
+    </nav>
+
+    <div id="page-wrapper">
+
+        <div class="container-fluid">
+            <!-- Page Heading -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">
+                        订单处理
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li>
+                            <i class="fa fa-dashboard"></i>  <a href="@controllers.backend.routes.Dashboard.index">控制台</a>
+                        </li>
+                        <li class="active">
+                            <i class="fa fa-tasks"></i> 订单处理
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            @for(house <- houses) {
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <a href="@controllers.backend.routes.OrderHandle.handle(house.getId())">
+                            <div class="well well-sm">
+                                门牌号: @house.getHouseNo(), 预订人: @house.getUser().getName(), 电话: @house.getUser().getTelephone()
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+            }
+            <div class="row">
+                <div class="col-md-12">
+
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- /#page-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+</body>
+</html>

@@ -27,7 +27,7 @@ CREATE TABLE `zh_house_state` (
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_zh_house_state_name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +36,7 @@ CREATE TABLE `zh_house_state` (
 
 LOCK TABLES `zh_house_state` WRITE;
 /*!40000 ALTER TABLE `zh_house_state` DISABLE KEYS */;
-INSERT INTO `zh_house_state` VALUES (4,'出租'),(1,'已售出'),(6,'已预订'),(2,'未售出'),(3,'未完成');
+INSERT INTO `zh_house_state` VALUES (4,'出租'),(1,'已售出'),(6,'已预订'),(2,'未售出'),(3,'未完成'),(7,'预订已处理');
 /*!40000 ALTER TABLE `zh_house_state` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-18 10:53:25
+-- Dump completed on 2016-04-19 14:50:56
