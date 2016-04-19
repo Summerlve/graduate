@@ -87,7 +87,7 @@
                                                             门牌号: @house.getHouseNo(), 预订人: @house.getUser().getName(), 电话: @house.getUser().getTelephone()
                                                         </div>
                                                         <div class="col-md-offset-4 col-md-2">
-                                                            <a href="@controllers.backend.routes.OrderHandle.handle(house.getId())" class="btn btn-primary btn-block btn-xs">
+                                                            <a href="@controllers.backend.routes.OrderHandle.handle(house.getId())" class="btn btn-primary btn-block btn-xs order-finish-btn">
                                                                 完成
                                                             </a>
                                                         </div>
@@ -133,7 +133,11 @@
     </div>
     <!-- /#wrapper -->
     <script>
-
+        $(".order-finish-btn").click(_ => {
+            let __ = confirm("你确定已联系预订的客户吗?");
+            if (__) return true;
+            else return false;
+        });
     </script>
 </body>
 </html>

@@ -30,7 +30,6 @@ public class House extends Model {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "house_state_id", referencedColumnName = "id")
-    @JsonBackReference
     private HouseState state;
 
     @Column(name = "floor")

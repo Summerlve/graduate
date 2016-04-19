@@ -107,65 +107,92 @@
                 ]
             };
 
-            function randomData() {
-                now = new Date(+now + oneDay);
-                value = value + Math.random() * 21 - 10;
-                return {
-                    name: now.toString(),
-                    value: [
-                        [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('-'),
-                        Math.round(value)
-                    ]
-                }
-            }
-
-            var data = [];
-            var now = +new Date(1997, 9, 3);
-            var oneDay = 24 * 3600 * 1000;
-            var value = Math.random() * 1000;
-            for (var i = 0; i < 1000; i++) {
-                data.push(randomData());
-            }
-
-            var chart_3_option = {
-                title: {
-                    text: '动态数据 + 时间坐标轴'
-                },
-                tooltip: {
+            var chart_3_option  = {
+                tooltip : {
                     trigger: 'axis',
-                    formatter: function (params) {
-                        params = params[0];
-                        var date = new Date(params.name);
-                        return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1];
-                    },
-                    axisPointer: {
-                        animation: false
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
                     }
                 },
-                xAxis: {
-                    type: 'time',
-                    splitLine: {
-                        show: false
-                    }
+                legend: {
+                    data: ['已售出', '未售出','已预订','未完成', "出租"]
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis:  {
+                    type: 'value'
                 },
                 yAxis: {
-                    type: 'value',
-                    boundaryGap: [0, '100%'],
-                    splitLine: {
-                        show: false
-                    }
+                    type: 'category',
+                    data: ['小高层','高层','公寓','联排别墅','独栋别墅']
                 },
-                series: [{
-                    name: '模拟数据',
-                    type: 'line',
-                    showSymbol: false,
-                    hoverAnimation: false,
-                    data: data
-                }]
+                series: [
+                    {
+                        name: '已售出',
+                        type: 'bar',
+                        stack: '总量',
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'insideRight'
+                            }
+                        },
+                        data: [320, 302, 301, 334, 390]
+                    },
+                    {
+                        name: '未售出',
+                        type: 'bar',
+                        stack: '总量',
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'insideRight'
+                            }
+                        },
+                        data: [120, 132, 101, 134, 90]
+                    },
+                    {
+                        name: '已预订',
+                        type: 'bar',
+                        stack: '总量',
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'insideRight'
+                            }
+                        },
+                        data: [220, 182, 191, 234, 290]
+                    },
+                    {
+                        name: '未完成',
+                        type: 'bar',
+                        stack: '总量',
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'insideRight'
+                            }
+                        },
+                        data: [150, 212, 201, 154, 190]
+                    },
+                    {
+                        name: '出租',
+                        type: 'bar',
+                        stack: '总量',
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'insideRight'
+                            }
+                        },
+                        data: [820, 832, 901, 934, 1290]
+                    }
+                ]
             };
-
-
-
 
             chart_1.hideLoading();
             chart_1.setOption(chart_1_option);
