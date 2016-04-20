@@ -2,6 +2,7 @@ package models;
 
 import com.avaje.ebean.Model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.*;
 import java.util.Calendar;
@@ -19,13 +20,13 @@ public class House extends Model {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @JsonBackReference
+    @JsonBackReference("houses")
     private User user;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "building_id", referencedColumnName = "id")
-    @JsonBackReference
-    @JsonProperty("building_id")
+    @JsonManagedReference("building")
+    @JsonProperty("building_info")
     private Building buildingId;
 
     @ManyToOne(optional = false)

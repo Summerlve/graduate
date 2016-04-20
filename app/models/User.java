@@ -31,7 +31,7 @@ public class User extends Model {
     private String telephone;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference("houses")
     private List<House> houses = new ArrayList<House>();
 
     public static final Finder<Long, User> find = new Finder<Long, User>(User.class);

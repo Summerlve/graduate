@@ -107,6 +107,9 @@
                 ]
             };
 
+            var defaultValue = [0, 0, 0, 0, 0];
+            var {sold = defaultValue, unsold = defaultValue, ordered = defaultValue, unfinished = defaultValue} = chart_3_handler(data.houses);
+
             var chart_3_option  = {
                 tooltip : {
                     trigger: 'axis',
@@ -115,7 +118,7 @@
                     }
                 },
                 legend: {
-                    data: ['已售出', '未售出','已预订','未完成', "出租"]
+                    data: ['已售出', '未售出','已预订','未完成']
                 },
                 grid: {
                     left: '3%',
@@ -141,7 +144,7 @@
                                 position: 'insideRight'
                             }
                         },
-                        data: [320, 302, 301, 334, 390]
+                        data: sold
                     },
                     {
                         name: '未售出',
@@ -153,7 +156,7 @@
                                 position: 'insideRight'
                             }
                         },
-                        data: [120, 132, 101, 134, 90]
+                        data: unsold
                     },
                     {
                         name: '已预订',
@@ -165,7 +168,7 @@
                                 position: 'insideRight'
                             }
                         },
-                        data: [220, 182, 191, 234, 290]
+                        data: ordered
                     },
                     {
                         name: '未完成',
@@ -177,19 +180,7 @@
                                 position: 'insideRight'
                             }
                         },
-                        data: [150, 212, 201, 154, 190]
-                    },
-                    {
-                        name: '出租',
-                        type: 'bar',
-                        stack: '总量',
-                        label: {
-                            normal: {
-                                show: true,
-                                position: 'insideRight'
-                            }
-                        },
-                        data: [820, 832, 901, 934, 1290]
+                        data: unfinished
                     }
                 ]
             };
@@ -274,5 +265,32 @@
         }
 
         return {keys, values};
+    }
+
+    function chart_3_handler (value) {
+        var ddbs = new Set();
+        var lpbs = new Set();
+        var gy = new Set();
+        var gc = new Set();
+        var xgc = new Set();
+
+        value
+            .forEach(_ => {
+                switch (_.building_info) {
+                    case "独栋别墅": ddbs.add(_) break;
+                    case "联排别墅": lpbs.add(_) break;
+                    case "公寓": gy.add(_) break;
+                    case "高层": gc.add(_) break;
+                    case "小高层": xgc.add(_) break;
+                }
+            });
+
+        var statistics = value => {
+            value.forEach(_ => {
+                
+            });
+        };
+
+        return {};
     }
 }(window, $, echarts));

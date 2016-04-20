@@ -1,10 +1,9 @@
 package models;
 
 import com.avaje.ebean.Model;
-import com.avaje.ebean.annotation.ColumnHstore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import play.core.Build;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,40 +17,51 @@ import java.util.List;
 public class Building extends Model{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonBackReference("building")
     private Long id;
 
     @OneToMany(mappedBy = "buildingId", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonBackReference("building")
     private List<House> houses = new ArrayList<House>();
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "area_id", referencedColumnName = "id")
+    @JsonBackReference("building")
     private Area area;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "building_kind_id", referencedColumnName = "id")
+    @JsonManagedReference("building_kind")
+    @JsonProperty("building_kind")
     private BuildingKind buildingKind;
 
     @Column(name = "acreage")
+    @JsonBackReference("building")
     private Integer acreage;
 
     @Column(name = "completion_date")
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonBackReference("building")
     public Calendar completionDate;
 
     @Column(name = "house_num")
+    @JsonBackReference("building")
     private Integer houseNum;
 
     @Column(name = "selled_num")
+    @JsonBackReference("building")
     private Integer selledNum;
 
     @Column(name = "order_num")
+    @JsonBackReference("building")
     private Integer orderNum;
 
     @Column(name = "description")
+    @JsonBackReference("building")
     private String description;
 
     @Column(name = "img", nullable = false)
+    @JsonBackReference("building")
     private String img;
 
     public static final Finder<Long, Building> find = new Finder<Long, Building>(Building.class);
