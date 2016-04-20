@@ -276,21 +276,51 @@
 
         value
             .forEach(_ => {
-                switch (_.building_info) {
-                    case "独栋别墅": ddbs.add(_) break;
-                    case "联排别墅": lpbs.add(_) break;
-                    case "公寓": gy.add(_) break;
-                    case "高层": gc.add(_) break;
-                    case "小高层": xgc.add(_) break;
+                switch (_.building_info.building_kind.name) {
+                    case "独栋别墅": ddbs.add(_)
+                    break;
+
+                    case "联排别墅": lpbs.add(_)
+                    break;
+
+                    case "公寓": gy.add(_)
+                    break;
+
+                    case "高层": gc.add(_)
+                    break;
+
+                    case "小高层": xgc.add(_)
+                    break;
                 }
             });
 
-        var statistics = value => {
-            value.forEach(_ => {
-                
+        let sold = [0, 0, 0, 0, 0];
+        let unsold = [0, 0, 0, 0, 0];
+        let ordered = [0, 0, 0, 0, 0];
+        let unfinished = [0, 0, 0, 0, 0];
+
+        let counter = (_, index) => {
+            _.forEach(_ => {
+                if (_.state.name = "已售出") sold[index] = sold[index] + 1;
+                else if (_.state.name = "未售出") unsold[index] = unsold[index] + 1;
+                else if (_.state.name = "已预订") ordered[index] = ordered[index] + 1;
+                else if (_.state.name = "未完成") unfinished[index] = unfinished[index] + 1;
             });
         };
 
-        return {};
+        counter(ddbs, 4);
+        counter(lpbs, 3);
+        counter(gy, 2);
+        counter(gc, 1);
+        counter(xgc, 0);
+
+        console.log(unfinished);
+
+        return {
+            sold,
+            unfinished,
+            unsold,
+            ordered
+        };
     }
 }(window, $, echarts));

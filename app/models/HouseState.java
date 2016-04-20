@@ -1,8 +1,10 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -16,14 +18,15 @@ import java.util.List;
 public class HouseState extends Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
+    @JsonBackReference("state")
     private Long id;
 
     @Column(name = "name", nullable = false, unique = true, columnDefinition = "varchar(255) CHARACTER SET utf8 COLLATE utf8_bin")
+    @JsonProperty("name")
     private String name;
 
     @OneToMany(mappedBy = "state", cascade = CascadeType.ALL)
-    @JsonIgnore
+    @JsonBackReference("state")
     private List<House> houses = new ArrayList<House>();
 
     public static final Finder<Long, HouseState> find = new Finder<Long, HouseState>(HouseState.class);

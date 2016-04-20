@@ -31,6 +31,8 @@ public class House extends Model {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "house_state_id", referencedColumnName = "id")
+    @JsonManagedReference("state")
+    @JsonProperty("state")
     private HouseState state;
 
     @Column(name = "floor")
