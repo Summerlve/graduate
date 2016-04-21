@@ -32,7 +32,7 @@ CREATE TABLE `zh_admin` (
   UNIQUE KEY `uq_zh_admin_sfz` (`sfz`),
   UNIQUE KEY `uq_zh_admin_username` (`username`),
   UNIQUE KEY `uq_zh_admin_telephone` (`telephone`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `zh_admin` (
 
 LOCK TABLES `zh_admin` WRITE;
 /*!40000 ALTER TABLE `zh_admin` DISABLE KEYS */;
-INSERT INTO `zh_admin` VALUES (1,'2222222','test','123456','123123');
+INSERT INTO `zh_admin` VALUES (1,'2222222','test','123456','123123'),(2,'3333333','test2','123456','1231231');
 /*!40000 ALTER TABLE `zh_admin` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-21 17:35:38
+-- Dump completed on 2016-04-22  7:11:45
