@@ -268,6 +268,8 @@
     }
 
     function chart_3_handler (value) {
+        // value is houses array
+
         var ddbs = new Set();
         var lpbs = new Set();
         var gy = new Set();
@@ -294,6 +296,8 @@
                 }
             });
 
+        console.log(ddbs);
+
         let sold = [0, 0, 0, 0, 0];
         let unsold = [0, 0, 0, 0, 0];
         let ordered = [0, 0, 0, 0, 0];
@@ -301,10 +305,10 @@
 
         let counter = (_, index) => {
             _.forEach(_ => {
-                if (_.state.name = "已售出") sold[index] = sold[index] + 1;
-                else if (_.state.name = "未售出") unsold[index] = unsold[index] + 1;
-                else if (_.state.name = "已预订") ordered[index] = ordered[index] + 1;
-                else if (_.state.name = "未完成") unfinished[index] = unfinished[index] + 1;
+                if (_.state.name === "已售出") sold[index] = sold[index] + 1;
+                else if (_.state.name === "未售出") unsold[index] = unsold[index] + 1;
+                else if (_.state.name === "已预订") ordered[index] = ordered[index] + 1;
+                else if (_.state.name ==="未完成") unfinished[index] = unfinished[index] + 1;
             });
         };
 
@@ -314,7 +318,11 @@
         counter(gc, 1);
         counter(xgc, 0);
 
-        console.log(unfinished);
+        console.log("sold:", sold);
+        console.log("unsold:", unsold);
+        console.log("ordered:", ordered);
+        console.log("unfinished:", unfinished);
+
 
         return {
             sold,
