@@ -42,7 +42,7 @@ public class Building extends Model{
     @Column(name = "completion_date")
     @Temporal(TemporalType.TIMESTAMP)
     @JsonBackReference("building")
-    public Calendar completionDate;
+    private Calendar completionDate;
 
     @Column(name = "house_num")
     @JsonBackReference("building")
@@ -50,11 +50,11 @@ public class Building extends Model{
 
     @Column(name = "selled_num")
     @JsonBackReference("building")
-    private Integer selledNum;
+    private Integer sold = 0;
 
     @Column(name = "order_num")
     @JsonBackReference("building")
-    private Integer orderNum;
+    private Integer orderNum = 0;
 
     @Column(name = "description")
     @JsonBackReference("building")
@@ -122,12 +122,12 @@ public class Building extends Model{
         this.houseNum = houseNum;
     }
 
-    public Integer getSelledNum() {
-        return selledNum;
+    public Integer getSold() {
+        return sold;
     }
 
-    public void setSelledNum(Integer selledNum) {
-        this.selledNum = selledNum;
+    public void setSold(Integer sold) {
+        this.sold = sold;
     }
 
     public Integer getOrderNum() {
