@@ -5,7 +5,7 @@ import play.data.validation.Constraints;
 /**
  * Created by Summer on 16/4/27.
  */
-public class AddArea {
+public class OperationOfArea {
     @Constraints.Required
     private String area_name;
 
@@ -14,6 +14,9 @@ public class AddArea {
 
     @Constraints.Required
     private String description;
+
+    @Constraints.Required
+    private String management;
 
     public String getArea_name() {
         return area_name;
@@ -37,5 +40,13 @@ public class AddArea {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getManagement() {
+        return management;
+    }
+
+    public void setManagement(String management) {
+        this.management = management;
     }
 }

@@ -1,4 +1,4 @@
-@(title: String)(user: models.Admin)(areas: List[models.Area])(buildingKinds: List[models.BuildingKind])
+@(title: String)(user: models.Admin)(areas: List[models.Area])(buildingKinds: List[models.BuildingKind])(houseStates: List[models.HouseState])(buildings: List[models.Building])
 <!DOCTYPE html>
 <html lang="en">
 
@@ -197,12 +197,12 @@
                                                     <a href="#add-building" role="tab" data-toggle="tab">添加楼栋</a>
                                                 </li>
                                                 <li role="presentation">
-                                                    <a href="#add-house" role="tab" data-toggle="tab">数据房屋</a>
+                                                    <a href="#add-house" role="tab" data-toggle="tab">添加房屋</a>
                                                 </li>
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="col-md-10">
+                                    <div class="col-md-11">
                                         <div class="tab-content">
                                             <div role="tabpanel" class="tab-pane active" id="add-area">
                                                 @helper.form(action = controllers.backend.routes.DataManager.addArea, 'class -> "form-horizontal", 'enctype -> "multipart/form-data") {
@@ -225,6 +225,12 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
+                                                        <label for="add-area-management" class="col-sm-2 control-label">物业公司名称</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" id="add-area-management" name="management">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
                                                         <label for="add-area-img" class="col-sm-2 control-label">小区图片</label>
                                                         <div class="col-sm-10">
                                                             <input type="file" id="add-area-img" name="img">
@@ -239,25 +245,230 @@
                                                 }
                                             </div>
                                             <div role="tabpanel" class="tab-pane" id="add-building">
-                                                添加楼栋
+                                                @helper.form(action = controllers.backend.routes.DataManager.addBuilding, 'class -> "form-horizontal", 'enctype -> "multipart/form-data") {
+                                                    <div class="form-group">
+                                                        <label for="add-building-area" class="col-sm-2 control-label">所属小区</label>
+                                                        <div class="col-sm-10">
+                                                            <select class="form-control" id="add-building-area" name="area">
+                                                                @for(area <- areas) {
+                                                                    <option value="@area.getId()">@area.getName()</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="add-building-kind" class="col-sm-2 control-label">楼栋类型</label>
+                                                        <div class="col-sm-10">
+                                                            <select class="form-control" id="add-building-kind" name="kind">
+                                                                @for(buildingKind <- buildingKinds) {
+                                                                    <option value="@buildingKind.getId()">@buildingKind.getName()</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="add-building-house-num" class="col-sm-2 control-label">房屋数量</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" id="add-building-house-num" name="house_num">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="add-building-acreage" class="col-sm-2 control-label">楼栋占地面积</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" id="add-building-acreage" name="acreage">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="add-building-description" class="col-sm-2 control-label">楼栋简介</label>
+                                                        <div class="col-sm-10">
+                                                            <textarea class="form-control" rows="3" id="add-building-description" name="description"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="add-building-completion" class="col-sm-2 control-label">楼栋完成时间</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" id="add-building-completion" name="completion_date">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="add-building-img" class="col-sm-2 control-label">楼栋图片</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="file" id="add-building-img" name="img">
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-offset-10 col-sm-2 text-right">
+                                                            <button type="submit" class="btn btn-default btn-block">添加</button>
+                                                        </div>
+                                                    </div>
+                                                }
                                             </div>
                                             <div role="tabpanel" class="tab-pane" id="add-house">
-                                                添加房屋
+                                                @helper.form(action = controllers.backend.routes.DataManager.addHouse, 'class -> "form-horizontal", 'enctype -> "multipart/form-data") {
+                                                    <div class="form-group">
+                                                        <label for="add-house-of-building" class="col-sm-2 control-label">所属楼栋</label>
+                                                        <div class="col-sm-10">
+                                                            <select class="form-control" id="add-house-of-building" name="building">
+                                                                @for(building <- buildings) {
+                                                                <option value="@building.getId()">@building.getArea().getName() - @building.getId()</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="add-house-floor" class="col-sm-2 control-label">房屋所属楼层</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" id="add-house-floor" name="floor">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="add-house-no" class="col-sm-2 control-label">房屋门牌号</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" id="add-house-no" name="no">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="add-house-state" class="col-sm-2 control-label">房屋状态</label>
+                                                        <div class="col-sm-10">
+                                                            <select class="form-control" id="add-house-state" name="state">
+                                                                @for(houseState <- houseStates) {
+                                                                <option value="@houseState.getId()">@houseState.getName()</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="add-house-space" class="col-sm-2 control-label">房屋面积</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" id="add-house-space" name="space">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="add-house-price" class="col-sm-2 control-label">房屋每平方单价</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" id="add-house-price" name="price">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="add-house-img" class="col-sm-2 control-label">房屋图片</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="file" id="add-house-img" name="img">
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-offset-10 col-sm-2 text-right">
+                                                            <button type="submit" class="btn btn-default btn-block">添加</button>
+                                                        </div>
+                                                    </div>
+                                                }
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="change">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title">修改数据</h3>
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <div class="tabbable tabs-left">
+                                            <ul class="nav nav-tabs" role="tablist">
+                                                <li role="presentation" class="active">
+                                                    <a href="#update-area" role="tab" data-toggle="tab">修改小区</a>
+                                                </li>
+                                                <li role="presentation">
+                                                    <a href="#update-building" role="tab" data-toggle="tab">修改楼栋</a>
+                                                </li>
+                                                <li role="presentation">
+                                                    <a href="#update-house" role="tab" data-toggle="tab">修改房屋</a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                    <div class="panel-body">
-                                        Panel content
-                                    </div>
-                                    <div class="panel-footer">
-
+                                    <div class="col-md-11">
+                                        <div class="tab-content">
+                                            <div role="tabpanel" class="tab-pane active" id="update-area">
+                                                @helper.form(action = controllers.backend.routes.DataManager.updateArea(0), 'class -> "form-horizontal", 'enctype -> "multipart/form-data", 'id -> "update-area-form") {
+                                                    <div class="form-group">
+                                                        <label for="update-area-select" class="col-sm-2 control-label">选择小区</label>
+                                                        <div class="col-sm-10">
+                                                            <select class="form-control" id="update-area-select">
+                                                                <option selected="selected">-----</option>
+                                                                @for(area <- areas) {
+                                                                <option value="@area.getId()">
+                                                                    <a href="@area.getId()">@area.getName()</a>
+                                                                </option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-offset-2 col-sm-10" id="update-area-alert">
+                                                            <div class="alert alert-info" role="alert">
+                                                                请选择小区!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group update-area-hidden">
+                                                        <label for="update-area-name" class="col-sm-2 control-label">小区名称</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" id="update-area-name" name="area_name">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group update-area-hidden">
+                                                        <label for="update-area-description" class="col-sm-2 control-label">小区简介</label>
+                                                        <div class="col-sm-10">
+                                                            <textarea class="form-control" rows="3" id="update-area-description" name="description"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group update-area-hidden">
+                                                        <label for="update-area-management" class="col-sm-2 control-label">物业公司名称</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" id="update-area-management" name="management">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group update-area-hidden">
+                                                        <label for="update-area-building-num" class="col-sm-2 control-label">楼栋数量</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" id="update-area-building-num" name="building_num">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group update-area-hidden">
+                                                        <label for="update-area-img" class="col-sm-2 control-label">小区图片</label>
+                                                        <div class="col-sm-10">
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+                                                                    <input type="file" id="update-area-img" name="img">
+                                                                </div>
+                                                            </div>
+                                                            <br>
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+                                                                    <p>原有图片:</p>
+                                                                    <img alt="" id="update-overview-img" style="width: 80px; height: 80px;">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="form-group update-area-hidden">
+                                                        <div class="col-sm-offset-8 col-sm-2 text-right">
+                                                            <button type="button" class="btn btn-warning btn-block" id="update-area-delete">删除此小区</button>
+                                                        </div>
+                                                        <div class="col-sm-2 text-right">
+                                                            <button type="submit" class="btn btn-default btn-block">提交修改</button>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane" id="update-building">
+                                                修改楼栋
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane" id="update-house">
+                                                修改房屋
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -281,6 +492,9 @@
 
 
     <script>
+        $(".update-area-hidden").hide();
+        window.currentOption = {};
+
         $("#data-backup-btn").click(_ => {
             $.ajax({
                 url: "@controllers.backend.routes.DataManager.backup",
@@ -311,6 +525,67 @@
             });
         });
 
+        $("#update-area-select").on("change", event => {
+            let select =  event.currentTarget;
+            let index = select.selectedIndex;
+            let currentOption = select.options[index];
+            window.currentOption = currentOption;
+
+            let data = currentOption.getAttribute("value");
+            if (data === null) {
+                $(".update-area-hidden").hide();
+                $("#update-area-alert").show();
+                return ;
+            }
+            console.log(data);
+
+            $.ajax({
+                url: "/dashboard/data_manager/get_area?id=" + data,
+                method: "GET",
+                dataType: "json",
+                success: function (data, textStatus, jqXHR) {
+                    $("#update-area-alert").hide();
+
+                    $("#update-area-name").val(data.name);
+                    $("#update-area-description").val(data.description);
+                    $("#update-area-management").val(data.management || "无");
+                    $("#update-area-building-num").val(data.buildingNum);
+                    document.querySelector("#update-overview-img").setAttribute("src", "/assets/images/" + data.img);
+
+                    $(".update-area-hidden").show();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                   alert("获取数据失败");
+                }
+            });
+        });
+
+        $("#update-area-form").submit(event => {
+            let currentOption = window.currentOption
+            let data = currentOption.getAttribute("value");
+
+            if (data === null) {
+                alert("请选择小区");
+                return false;
+            }
+
+            event.currentTarget.setAttribute("action", "/dashboard/data_manager/update_area/" + data);
+            return true;
+        });
+
+        $("#update-area-delete").click(event => {
+            let currentOption = window.currentOption
+            let data = currentOption.getAttribute("value");
+
+            if (data === null) {
+                alert("请选择小区");
+                return false;
+            }
+
+            let wantDelete = confirm("删除此小区会连带删除此小区中的所有楼栋, 你确认要删除吗?");
+            if (wantDelete) location.href = "/dashboard/data_manager/delete_area/" + data;
+            else return true;
+        });
     </script>
 </body>
 

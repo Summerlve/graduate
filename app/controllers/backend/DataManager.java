@@ -3,13 +3,11 @@ package controllers.backend;
 import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
 import com.avaje.ebean.Ebean;
-import form.AddArea;
-import form.AddBuilding;
+import form.OperationOfArea;
+import form.OperationOfBuilding;
+import form.OperationOfHouse;
 import json.OperationResult;
-import models.Admin;
-import models.Area;
-import models.Building;
-import models.BuildingKind;
+import models.*;
 import play.Logger;
 import play.Play;
 import play.data.Form;
@@ -38,9 +36,11 @@ public class DataManager extends Controller {
         // get necessary data from db
         List<Area> areas = Area.find.all();
         List<BuildingKind> buildingKinds = BuildingKind.find.all();
+        List<HouseState> houseStates = HouseState.find.all();
+        List<Building> buildings = Building.find.all();
 
         Optional<Admin> user = (Optional) ctx().args.get("user");
-        return ok(data_manager.render("数据管理", user.get(), areas, buildingKinds));
+        return ok(data_manager.render("数据管理", user.get(), areas, buildingKinds, houseStates, buildings));
     }
 
     public Result backup () {
@@ -99,18 +99,22 @@ public class DataManager extends Controller {
 
     @BodyParser.Of(BodyParser.MultipartFormData.class)
     public Result addArea () {
-        Form<AddArea> areaForm = Form.form(AddArea.class).bindFromRequest();
+        Form<OperationOfArea> areaForm = Form.form(OperationOfArea.class).bindFromRequest();
         if (areaForm.hasErrors()) return badRequest(Json.toJson(new OperationResult(400, 1, "表单数据错误")));
 
-        String areaName = areaForm.get().getArea_name();
-        Integer buildingNum = areaForm.get().getBuilding_num();
-        String description = areaForm.get().getDescription();
+        // get data from form
+        OperationOfArea data = areaForm.get();
+        String areaName = data.getArea_name();
+        Integer buildingNum = data.getBuilding_num();
+        String description = data.getDescription();
+        String management = data.getManagement();
 
         // get upload path
         String uploadPath = Play.application().configuration().getString("uploadPath");
 
         // get img
         FilePart filepart = request().body().asMultipartFormData().getFile("img");
+        if (filepart == null) return badRequest(Json.toJson(new OperationResult(400, 1, "需要图片")));
         File image = filepart.getFile();
         String extensionName = filepart.getFilename().split("\\.")[1];
         String uuid = UUID.randomUUID().toString();
@@ -127,6 +131,7 @@ public class DataManager extends Controller {
             area.setDescription(description);
             area.setName(areaName);
             area.setImg(imageName);
+            area.setManagement(management);
 
             // 先存img在写入db
             ImageIO.write(ImageIO.read(image), extensionName, new File(imageStorePath));
@@ -148,15 +153,16 @@ public class DataManager extends Controller {
 
     @BodyParser.Of(BodyParser.MultipartFormData.class)
     public Result addBuilding () {
-        Form<AddBuilding> buildingForm = Form.form(AddBuilding.class).bindFromRequest();
+        Form<OperationOfBuilding> buildingForm = Form.form(OperationOfBuilding.class).bindFromRequest();
         if (buildingForm.hasErrors()) return badRequest(Json.toJson(new OperationResult(400, 1, "表单数据错误")));
 
         // get info from form data
-        Long areaId = buildingForm.get().getArea();
-        Long buildingKindId = buildingForm.get().getKind();
-        Integer houseNum = buildingForm.get().getHouse_num();
-        String description = buildingForm.get().getDescription();
-        Integer acreage = buildingForm.get().getAcreage();
+        OperationOfBuilding data = buildingForm.get();
+        Long areaId = data.getArea();
+        Long buildingKindId = data.getKind();
+        Integer houseNum = data.getHouse_num();
+        String description = data.getDescription();
+        Integer acreage = data.getAcreage();
 
         // parse String to Calendar
         String timeString = buildingForm.get().getCompletion_date();
@@ -166,7 +172,7 @@ public class DataManager extends Controller {
             completionDate.setTime(new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA).parse(timeString));
         }
         catch (Exception e) {
-            return internalServerError(Json.toJson(new OperationResult(400, 1, "时间格式不对")));
+            return badRequest(Json.toJson(new OperationResult(400, 1, "时间格式不对")));
         }
 
         // get upload path
@@ -174,6 +180,7 @@ public class DataManager extends Controller {
 
         // get image
         FilePart filepart = request().body().asMultipartFormData().getFile("img");
+        if (filepart == null) return badRequest(Json.toJson(new OperationResult(400, 1, "需要图片")));
         File image = filepart.getFile();
         String extensionName = filepart.getFilename().split("\\.")[1];
         String uuid = UUID.randomUUID().toString();
@@ -184,9 +191,11 @@ public class DataManager extends Controller {
 
         // get area ref
         Area area = Area.find.byId(areaId);
+        if (area == null) return badRequest(Json.toJson(new OperationResult(400, 1, "小区不存在")));
 
         // get building kind ref
         BuildingKind buildingKind = BuildingKind.find.byId(buildingKindId);
+        if (buildingKind == null) return badRequest(Json.toJson(new OperationResult(400, 1, "楼栋类型不存在")));
 
         // store to db
         Building building = new Building();
@@ -198,7 +207,6 @@ public class DataManager extends Controller {
             building.setDescription(description);
             building.setCompletionDate(completionDate);
             building.setHouseNum(houseNum);
-            building.setImg(imageName);
             building.setImg(imageName);
 
             // 先存img在写入db
@@ -221,11 +229,163 @@ public class DataManager extends Controller {
 
     @BodyParser.Of(BodyParser.MultipartFormData.class)
     public Result addHouse () {
-        return ok();
+        Form<OperationOfHouse> houseForm = Form.form(OperationOfHouse.class).bindFromRequest();
+        if (houseForm.hasErrors()) return badRequest(Json.toJson(new OperationResult(400, 1, "表单数据错误")));
+
+        // get data from form
+        OperationOfHouse data = houseForm.get();
+        Long buildingId = data.getBuilding();
+        Integer floor = data.getFloor();
+        Integer no = data.getNo();
+        Long stateId = data.getState();
+        Integer space = data.getSpace();
+        Integer price = data.getPrice();
+
+        // get of building ref
+        Building building = Building.find.byId(buildingId);
+        if (building == null) return badRequest(Json.toJson(new OperationResult(400, 1, "楼栋不存在")));
+
+        // get house state ref
+        HouseState state = HouseState.find.byId(stateId);
+        if (state == null) return badRequest(Json.toJson(new OperationResult(400, 1, "房屋状态不存在")));
+
+        // get upload path
+        String uploadPath = Play.application().configuration().getString("uploadPath");
+
+        // get image
+        FilePart filepart = request().body().asMultipartFormData().getFile("img");
+        if (filepart == null) return badRequest(Json.toJson(new OperationResult(400, 1, "需要图片")));
+        File image = filepart.getFile();
+        String extensionName = filepart.getFilename().split("\\.")[1];
+        String uuid = UUID.randomUUID().toString();
+        String imageName = uuid + "." + extensionName;
+        String imageStorePath = uploadPath + imageName;
+
+        Logger.info(imageStorePath);
+
+        // save to db
+        House house = new House();
+        Ebean.beginTransaction();
+        try {
+            house.setBuildingId(building);
+            house.setState(state);
+            house.setPricePerSM(price);
+            house.setImg(imageName);
+            house.setFloor(floor);
+            house.setHouseNo(no);
+            house.setSpace(space);
+
+            // 先存img在写入db
+            ImageIO.write(ImageIO.read(image), extensionName, new File(imageStorePath));
+            house.save();
+
+            Ebean.commitTransaction();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            Ebean.rollbackTransaction();
+            return internalServerError(Json.toJson(new OperationResult(500, 1, "服务器端错误")));
+        }
+        finally {
+            Ebean.endTransaction();
+        }
+
+        return this.index();
     }
 
-    @BodyParser.Of(BodyParser.FormUrlEncoded.class)
-    public Result change () {
-        return ok();
+    public Result getArea (Long id) {
+        Area area = Area.find.byId(id);
+        if (area == null) return notFound(Json.toJson(new OperationResult(404, 1, "未找到此小区")));
+
+        return ok(Json.toJson(area));
+    }
+
+    @BodyParser.Of(BodyParser.MultipartFormData.class)
+    public Result updateArea (Long id) {
+        Form<OperationOfArea> areaForm = Form.form(OperationOfArea.class).bindFromRequest();
+        if (areaForm.hasErrors()) return badRequest(Json.toJson(new OperationResult(400, 1, "表单数据错误")));
+
+        // get data from form
+        OperationOfArea data = areaForm.get();
+        String areaName = data.getArea_name();
+        Integer buildingNum = data.getBuilding_num();
+        String description = data.getDescription();
+        String management = data.getManagement();
+
+        // get upload path
+        String uploadPath = Play.application().configuration().getString("uploadPath");
+
+        // get img
+        boolean isImgNeedToUpdate = true;
+
+        FilePart filepart = request().body().asMultipartFormData().getFile("img");
+        if (filepart == null) isImgNeedToUpdate = false;
+
+        File image = null;
+        String imageName = "";
+        String imageStorePath = "";
+        String extensionName = "";
+
+        if (isImgNeedToUpdate) {
+            image = filepart.getFile();
+            extensionName = filepart.getFilename().split("\\.")[1];
+            String uuid = UUID.randomUUID().toString();
+            imageName = uuid + "." + extensionName;
+            imageStorePath = uploadPath + imageName;
+        }
+
+        Logger.info(imageStorePath);
+
+        // get area ref
+        Area area = Area.find.byId(id);
+        if (area == null) return badRequest(Json.toJson(new OperationResult(400, 1, "小区不存在")));
+
+        // update value and store to db
+        Ebean.beginTransaction();
+        try {
+            area.setBuildingNum(buildingNum);
+            area.setDescription(description);
+            area.setName(areaName);
+            if (isImgNeedToUpdate) area.setImg(imageName);
+            area.setManagement(management);
+
+            // 先存img再写入db
+            if (isImgNeedToUpdate) ImageIO.write(ImageIO.read(image), extensionName, new File(imageStorePath));
+            area.save();
+
+            Ebean.commitTransaction();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            Ebean.rollbackTransaction();
+            return internalServerError(Json.toJson(new OperationResult(500, 1, "服务器端错误")));
+        }
+        finally {
+            Ebean.endTransaction();
+        }
+
+        return redirect(controllers.backend.routes.DataManager.index());
+    }
+
+    @BodyParser.Of(BodyParser.MultipartFormData.class)
+    public Result updateBuilding (Long id) {
+        return this.index();
+    }
+
+    @BodyParser.Of(BodyParser.MultipartFormData.class)
+    public Result updateHouse (Long id) {
+        return this.index();
+    }
+
+    public Result deleteArea(Long id) {
+        return redirect(controllers.backend.routes.DataManager.index());
+    }
+
+    public Result deleteBuilding(Long id) {
+        return redirect(controllers.backend.routes.DataManager.index());
+    }
+
+    public Result deleteHouse(Long id) {
+        return redirect(controllers.backend.routes.DataManager.index());
     }
 }

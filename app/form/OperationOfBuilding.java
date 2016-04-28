@@ -5,7 +5,7 @@ import play.data.validation.Constraints;
 /**
  * Created by Summer on 16/4/27.
  */
-public class AddBuilding {
+public class OperationOfBuilding {
     @Constraints.Required
     private Long area;
 

@@ -1,6 +1,9 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -32,6 +35,7 @@ public class Area extends Model{
     private Integer buildingNum;
 
     @OneToMany(mappedBy = "area", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Building> buildings = new ArrayList<Building>();
 
     public static final Finder<Long, Area> find = new Finder<Long, Area>(Area.class);
