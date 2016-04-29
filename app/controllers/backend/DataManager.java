@@ -19,9 +19,9 @@ import views.html.backend.data_manager;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
 import play.mvc.Http.MultipartFormData.FilePart;
 import javax.imageio.ImageIO;
 
@@ -46,8 +46,12 @@ public class DataManager extends Controller {
     public Result backup () {
         boolean isSucceed = false; // record cmd exec result
 
+        String root = Play.application().path().toString();
+        String dataFilePath = Paths.get(root, "data").toString();
+        String scriptPath = Paths.get(root, "data", "backup.script.js").toString();
+
         try {
-            Process process = Runtime.getRuntime().exec(new String[] {"node", "./data/backup.script.js", "./data"});
+            Process process = Runtime.getRuntime().exec(new String[] {"node", scriptPath, dataFilePath});
             process.waitFor();
 
             BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream(), "utf-8"));
@@ -73,8 +77,12 @@ public class DataManager extends Controller {
     public Result restore () {
         boolean isSucceed = false; // record cmd exec result
 
+        String root = Play.application().path().toString();
+        String dataFilePath = Paths.get(root, "data").toString();
+        String scriptPath = Paths.get(root, "data", "restore.script.js").toString();
+
         try {
-            Process process = Runtime.getRuntime().exec("node ./data/restore.script.js ./data/");
+            Process process = Runtime.getRuntime().exec(new String[] {"node", scriptPath, dataFilePath});
             process.waitFor();
 
             BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream(), "utf-8"));
