@@ -85,24 +85,30 @@
                         <h4 class="modal-title" id="myModalLabel">购买</h4>
                     </div>
                     <div class="modal-body">
-                        @helper.form(action = controllers.frontend.routes.Application.buy(house.getId()), 'id -> "buy-house") {
+                        @helper.form(action = controllers.frontend.routes.Application.order(house.getId()), 'id -> "buy-house", 'class -> "form-horizontal") {
                             <div class="form-group">
-                                <label for="identifier">身份证</label>
-                                <input type="text" class="form-control" id="identifier" placeholder="身份证">
+                                <label for="identifier"class="col-sm-2 control-label">身份证</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="identifier" placeholder="身份证">
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label for="name">姓名</label>
-                                <input type="text" class="form-control" id="name" placeholder="姓名">
+                                <label for="name" class="col-sm-2 control-label">姓名</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="name" placeholder="姓名">
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label for="phone">电话号码</label>
-                                <input type="text" class="form-control" id="phone" placeholder="电话号码">
+                                <label for="phone" class="col-sm-2 control-label">电话号码</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="phone" placeholder="电话号码">
+                                </div>
                             </div>
                         }
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button id="buy-buy-buy" data-link="@controllers.frontend.routes.Application.buy(house.getId())" type="button" class="btn btn-primary">预定</button>
+                        <button id="buy-buy-buy" data-link="@controllers.frontend.routes.Application.order(house.getId())" type="button" class="btn btn-primary">预定</button>
                     </div>
                 </div>
             </div>
@@ -120,7 +126,7 @@
             event.stopPropagation();
 
             $.ajax({
-                url: "@controllers.frontend.routes.Application.buy(house.getId())",
+                url: "@controllers.frontend.routes.Application.order(house.getId())",
                 method: "POST",
                 dataType: "json",
                 data: function () {
@@ -134,13 +140,14 @@
                     console.log(data);
                     console.log(textStatus);
 
-                    alert("购买成功!");
+                    alert("预定成功!");
                     setTimeout(function () {
                         $("#buy-modal").modal('hide');
+                        location.reload(true);
                     }, 500);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    alert("非常抱歉, 购买出现错误了");
+                    alert("非常抱歉, 预定出现错误了");
                     setTimeout(function () {
                         $("#buy-modal").modal('hide');
                     }, 300);

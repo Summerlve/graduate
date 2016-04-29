@@ -22,7 +22,7 @@ public class OperationOfBuilding {
     private Integer acreage;
 
     @Constraints.Required
-    public String completion_date;
+    private String completion_date;
 
     public Long getArea() {
         return area;

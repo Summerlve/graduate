@@ -19,8 +19,8 @@ GET                 /dashboard/data_manager/restore                 controllers.
 GET                 /dashboard/orders                               controllers.backend.OrderHandle.index()
 GET                 /dashboard/orders_state/:id                     controllers.backend.OrderHandle.handle(id: Long)
 GET                 /dashboard/data_manager/get_area                controllers.backend.DataManager.getArea(id: Long)
-GET                 /dashboard/data_manager/get_building            controllers.backend.DataManager.getArea(id: Long)
-GET                 /dashboard/data_manager/get_house               controllers.backend.DataManager.getArea(id: Long)
+GET                 /dashboard/data_manager/get_building            controllers.backend.DataManager.getBuilding(id: Long)
+GET                 /dashboard/data_manager/get_house               controllers.backend.DataManager.getHouse(id: Long)
 POST                /dashboard/data_manager/add_area                controllers.backend.DataManager.addArea()
 POST                /dashboard/data_manager/add_building            controllers.backend.DataManager.addBuilding()
 POST                /dashboard/data_manager/add_house               controllers.backend.DataManager.addHouse()
@@ -32,13 +32,13 @@ GET                 /dashboard/data_manager/delete_building/:id     controllers.
 GET                 /dashboard/data_manager/delete_house/:id        controllers.backend.DataManager.deleteHouse(id: Long)
 
 # frontend
-GET                 /                                           controllers.frontend.Application.index()
-GET                 /index                                      controllers.frontend.Application.index()
-GET                 /search                                     controllers.frontend.Application.search()
-GET                 /houses/:id                                 controllers.frontend.Application.house(id: Long)
-POST                /buy/:id                                    controllers.frontend.Application.buy(id: Long)
-GET                 /areas/:id                                  controllers.frontend.Application.area(id: Long)
-GET                 /buildings/:id                              controllers.frontend.Application.building(id: Long)
+GET                 /                                               controllers.frontend.Application.index()
+GET                 /index                                          controllers.frontend.Application.index()
+GET                 /search                                         controllers.frontend.Application.search()
+GET                 /houses/:id                                     controllers.frontend.Application.house(id: Long)
+POST                /order/:id                                      controllers.frontend.Application.order(id: Long)
+GET                 /areas/:id                                      controllers.frontend.Application.area(id: Long)
+GET                 /buildings/:id                                  controllers.frontend.Application.building(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                       controllers.Assets.versioned(path="/public", file: Asset)

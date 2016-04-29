@@ -1,11 +1,7 @@
 package models;
 
-import be.objectify.deadbolt.core.models.Permission;
-import be.objectify.deadbolt.core.models.Role;
-import be.objectify.deadbolt.core.models.Subject;
 import com.avaje.ebean.Model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;

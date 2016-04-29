@@ -84,8 +84,8 @@ public class Application extends Controller {
         return ok(house_detail.render("购买", house));
     }
 
-    public Result buy (Long id) {
-        Logger.info("buy" + id.toString());
+    public Result order(Long id) {
+        Logger.info("order" + id.toString());
 
         House house = House.find.byId(id);
         Logger.info(house.getId().toString());
@@ -119,7 +119,7 @@ public class Application extends Controller {
             user.save();
 
             house.setUser(user);
-            house.setState(HouseState.find.where().eq("name", "已售出").findUnique());
+            house.setState(HouseState.find.where().eq("name", "已预订").findUnique());
             house.save();
 
             Ebean.commitTransaction();

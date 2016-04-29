@@ -6,13 +6,18 @@ import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import form.AdminForm;
 import json.OperationResult;
 import models.Admin;
+import org.apache.commons.codec.binary.Hex;
+import play.Logger;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.backend.login;
+
+import java.security.MessageDigest;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Summer on 16/3/17.
@@ -30,8 +35,20 @@ public class Auth extends Controller {
 
         String username = adminForm.get().getUsername();
         String password = adminForm.get().getPassword();
+        String passwordHash = "";
 
-        Optional<Admin> result = Admin.auth(username, password);
+        // get password hash
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] temp = md.digest(password.getBytes("UTF8"));
+            passwordHash = new String(Hex.encodeHex(temp));
+            Logger.info(passwordHash);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Optional<Admin> result = Admin.auth(username, passwordHash);
         if (!result.isPresent()) return badRequest(Json.toJson(new OperationResult(400, 1, "认证错误")));
 
         session("user_id", String.valueOf(result.get().getId()));

@@ -6,6 +6,7 @@ import com.avaje.ebean.Ebean;
 import form.OperationOfArea;
 import form.OperationOfBuilding;
 import form.OperationOfHouse;
+import json.BuildingData;
 import json.OperationResult;
 import models.*;
 import play.Logger;
@@ -301,13 +302,6 @@ public class DataManager extends Controller {
         return this.index();
     }
 
-    public Result getArea (Long id) {
-        Area area = Area.find.byId(id);
-        if (area == null) return notFound(Json.toJson(new OperationResult(404, 1, "未找到此小区")));
-
-        return ok(Json.toJson(area));
-    }
-
     @BodyParser.Of(BodyParser.MultipartFormData.class)
     public Result updateArea (Long id) {
         Form<OperationOfArea> areaForm = Form.form(OperationOfArea.class).bindFromRequest();
@@ -359,6 +353,7 @@ public class DataManager extends Controller {
 
             // 先存img再写入db
             if (isImgNeedToUpdate) ImageIO.write(ImageIO.read(image), extensionName, new File(imageStorePath));
+
             area.save();
 
             Ebean.commitTransaction();
@@ -377,12 +372,138 @@ public class DataManager extends Controller {
 
     @BodyParser.Of(BodyParser.MultipartFormData.class)
     public Result updateBuilding (Long id) {
-        return this.index();
+        Form<OperationOfBuilding> buildingForm = Form.form(OperationOfBuilding.class).bindFromRequest();
+        if (buildingForm.hasErrors()) return badRequest(Json.toJson(new OperationResult(400, 1, "表单数据错误")));
+
+        // get info from form data
+        OperationOfBuilding data = buildingForm.get();
+        Long areaId = data.getArea();
+        Long buildingKindId = data.getKind();
+        Integer houseNum = data.getHouse_num();
+        String description = data.getDescription();
+        Integer acreage = data.getAcreage();
+
+        // parse String to Calendar
+        String timeString = buildingForm.get().getCompletion_date();
+        Calendar completionDate = Calendar.getInstance();
+
+        try {
+            completionDate.setTime(new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA).parse(timeString));
+        }
+        catch (Exception e) {
+            return badRequest(Json.toJson(new OperationResult(400, 1, "时间格式不对")));
+        }
+
+        // get upload path
+        String uploadPath = Play.application().configuration().getString("uploadPath");
+
+        // get img
+        boolean isImgNeedToUpdate = true;
+
+        FilePart filepart = request().body().asMultipartFormData().getFile("img");
+        if (filepart == null) isImgNeedToUpdate = false;
+
+        File image = null;
+        String imageName = "";
+        String imageStorePath = "";
+        String extensionName = "";
+
+        if (isImgNeedToUpdate) {
+            image = filepart.getFile();
+            extensionName = filepart.getFilename().split("\\.")[1];
+            String uuid = UUID.randomUUID().toString();
+            imageName = uuid + "." + extensionName;
+            imageStorePath = uploadPath + imageName;
+        }
+
+        Logger.info(imageStorePath);
+
+        // get building ref
+        Building building = Building.find.byId(id);
+        if (building == null) return badRequest(Json.toJson(new OperationResult(400, 1, "楼栋不存在")));
+
+        // get area ref
+        Area area = null;
+        if (areaId != -1) {
+            area = Area.find.byId(areaId);
+            if (area == null) return badRequest(Json.toJson(new OperationResult(400, 1, "小区不存在")));
+        }
+
+
+        // get building kind ref
+        BuildingKind buildingKind = null;
+        if (buildingKindId != -1) {
+            buildingKind = BuildingKind.find.byId(buildingKindId);
+            if (buildingKind == null) return badRequest(Json.toJson(new OperationResult(400, 1, "楼栋类型不存在")));
+        }
+
+        // store to db
+        Ebean.beginTransaction();
+        try {
+            if (areaId != -1) building.setArea(area);
+            if (buildingKindId != -1) building.setBuildingKind(buildingKind);
+            building.setAcreage(acreage);
+            building.setDescription(description);
+            building.setCompletionDate(completionDate);
+            building.setHouseNum(houseNum);
+            if (isImgNeedToUpdate) building.setImg(imageName);
+
+            // 先存img再写入db
+            if (isImgNeedToUpdate) ImageIO.write(ImageIO.read(image), extensionName, new File(imageStorePath));
+
+            building.save();
+
+            Ebean.commitTransaction();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            Ebean.rollbackTransaction();
+            return internalServerError(Json.toJson(new OperationResult(500, 1, "服务器端错误")));
+        }
+        finally {
+            Ebean.endTransaction();
+        }
+
+        return redirect(controllers.backend.routes.DataManager.index());
     }
 
     @BodyParser.Of(BodyParser.MultipartFormData.class)
     public Result updateHouse (Long id) {
         return this.index();
+    }
+
+    public Result getArea (Long id) {
+        Area area = Area.find.byId(id);
+        if (area == null) return notFound(Json.toJson(new OperationResult(404, 1, "未找到此小区")));
+
+        return ok(Json.toJson(area));
+    }
+
+    public Result getBuilding (Long id) {
+        Building building = Building.find.byId(id);
+        if (building == null) return notFound(Json.toJson(new OperationResult(404, 1, "未找到此楼栋")));
+
+        BuildingData data = new BuildingData();
+        data.setAcreage(building.getAcreage());
+        data.setArea(building.getArea().getName());
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String completionDate = sdf.format(building.getCompletionDate().getTime());
+        data.setCompletion_date(completionDate);
+
+        data.setDescription(building.getDescription());
+        data.setHouse_num(building.getHouseNum());
+        data.setImg(building.getImg());
+        data.setKind(building.getBuildingKind().getName());
+
+        return ok(Json.toJson(data));
+    }
+
+    public Result getHouse (Long id) {
+        House house = House.find.byId(id);
+        if (house == null) return notFound(Json.toJson(new OperationResult(404, 1, "未找到此房屋")));
+
+        return ok(Json.toJson(house));
     }
 
     public Result deleteArea(Long id) {
