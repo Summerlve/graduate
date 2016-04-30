@@ -6,7 +6,9 @@ import com.avaje.ebean.Ebean;
 import form.OperationOfArea;
 import form.OperationOfBuilding;
 import form.OperationOfHouse;
+import form.UpdateHouse;
 import json.BuildingData;
+import json.HouseData;
 import json.OperationResult;
 import models.*;
 import play.Logger;
@@ -39,9 +41,10 @@ public class DataManager extends Controller {
         List<BuildingKind> buildingKinds = BuildingKind.find.all();
         List<HouseState> houseStates = HouseState.find.all();
         List<Building> buildings = Building.find.all();
+        List<House> houses = House.find.all();
 
         Optional<Admin> user = (Optional) ctx().args.get("user");
-        return ok(data_manager.render("数据管理", user.get(), areas, buildingKinds, houseStates, buildings));
+        return ok(data_manager.render("数据管理", user.get(), areas, buildingKinds, houseStates, buildings, houses));
     }
 
     public Result backup () {
@@ -176,12 +179,12 @@ public class DataManager extends Controller {
         // parse String to Calendar
         String timeString = buildingForm.get().getCompletion_date();
         Calendar completionDate = Calendar.getInstance();
-
-        try {
-            completionDate.setTime(new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA).parse(timeString));
-        }
-        catch (Exception e) {
-            return badRequest(Json.toJson(new OperationResult(400, 1, "时间格式不对")));
+        if (!timeString.equals("无")) {
+            try {
+                completionDate.setTime(new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA).parse(timeString));
+            } catch (Exception e) {
+                return badRequest(Json.toJson(new OperationResult(400, 1, "时间格式不对")));
+            }
         }
 
         // get upload path
@@ -214,7 +217,8 @@ public class DataManager extends Controller {
             building.setBuildingKind(buildingKind);
             building.setAcreage(acreage);
             building.setDescription(description);
-            building.setCompletionDate(completionDate);
+            if (timeString.equals("无")) building.setCompletionDate(null);
+            else building.setCompletionDate(completionDate);
             building.setHouseNum(houseNum);
             building.setImg(imageName);
 
@@ -385,13 +389,14 @@ public class DataManager extends Controller {
 
         // parse String to Calendar
         String timeString = buildingForm.get().getCompletion_date();
+        Logger.info(timeString.equals("无") + "");
         Calendar completionDate = Calendar.getInstance();
-
-        try {
-            completionDate.setTime(new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA).parse(timeString));
-        }
-        catch (Exception e) {
-            return badRequest(Json.toJson(new OperationResult(400, 1, "时间格式不对")));
+        if (!timeString.equals("无")) {
+            try {
+                completionDate.setTime(new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA).parse(timeString));
+            } catch (Exception e) {
+                return badRequest(Json.toJson(new OperationResult(400, 1, "时间格式不对")));
+            }
         }
 
         // get upload path
@@ -429,7 +434,6 @@ public class DataManager extends Controller {
             if (area == null) return badRequest(Json.toJson(new OperationResult(400, 1, "小区不存在")));
         }
 
-
         // get building kind ref
         BuildingKind buildingKind = null;
         if (buildingKindId != -1) {
@@ -441,11 +445,18 @@ public class DataManager extends Controller {
         Ebean.beginTransaction();
         try {
             if (areaId != -1) building.setArea(area);
+
             if (buildingKindId != -1) building.setBuildingKind(buildingKind);
+
             building.setAcreage(acreage);
+
             building.setDescription(description);
-            building.setCompletionDate(completionDate);
+
+            if (timeString.equals("无")) building.setCompletionDate(null);
+            else building.setCompletionDate(completionDate);
+
             building.setHouseNum(houseNum);
+
             if (isImgNeedToUpdate) building.setImg(imageName);
 
             // 先存img再写入db
@@ -469,7 +480,107 @@ public class DataManager extends Controller {
 
     @BodyParser.Of(BodyParser.MultipartFormData.class)
     public Result updateHouse (Long id) {
-        return this.index();
+        Form<UpdateHouse> houseForm = Form.form(UpdateHouse.class).bindFromRequest();
+        if (houseForm.hasErrors()) return badRequest(Json.toJson(new OperationResult(400, 1, "表单数据错误")));
+
+        // get data from form
+        UpdateHouse data = houseForm.get();
+
+        Integer floor = data.getFloor();
+        Integer no = data.getNo();
+        Long stateId = data.getState();
+        Integer space = data.getSpace();
+        Integer price = data.getPrice();
+
+        String buyDate = data.getBuy_date();
+        Calendar buyDateCal = Calendar.getInstance();
+        if (!buyDate.equals("无")) {
+            try {
+                buyDateCal.setTime(new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA).parse(buyDate));
+            } catch (Exception e) {
+                return badRequest(Json.toJson(new OperationResult(400, 1, "时间格式不对")));
+            }
+        }
+
+        String inDate = data.getIn_date();
+        Calendar inDateCal = Calendar.getInstance();
+        if (!inDate.equals("无")) {
+            try {
+                inDateCal.setTime(new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA).parse(inDate));
+            } catch (Exception e) {
+                return badRequest(Json.toJson(new OperationResult(400, 1, "时间格式不对")));
+            }
+        }
+
+        // get house state ref
+        HouseState state = null;
+        if (stateId != -1) {
+            state = HouseState.find.byId(stateId);
+            if (state == null) return badRequest(Json.toJson(new OperationResult(400, 1, "小区不存在")));
+        }
+
+        // get upload path
+        String uploadPath = Play.application().configuration().getString("uploadPath");
+
+        // get image
+        boolean isImgNeedToUpdate = true;
+
+        FilePart filepart = request().body().asMultipartFormData().getFile("img");
+        if (filepart == null) isImgNeedToUpdate = false;
+
+        File image = null;
+        String imageName = "";
+        String imageStorePath = "";
+        String extensionName = "";
+
+        if (isImgNeedToUpdate) {
+            image = filepart.getFile();
+            extensionName = filepart.getFilename().split("\\.")[1];
+            String uuid = UUID.randomUUID().toString();
+            imageName = uuid + "." + extensionName;
+            imageStorePath = uploadPath + imageName;
+        }
+
+        Logger.info(imageStorePath);
+
+        // get house ref
+        House house = House.find.byId(id);
+        if (house == null) return badRequest(Json.toJson(new OperationResult(400, 1, "房屋不存在")));
+
+        // save to db
+        Ebean.beginTransaction();
+        try {
+            if (stateId != -1) house.setState(state);
+            house.setPricePerSM(price);
+            house.setFloor(floor);
+            house.setHouseNo(no);
+            house.setSpace(space);
+
+            if (inDate.equals("无")) house.setInDate(null);
+            else house.setInDate(inDateCal);
+
+            if (buyDate.equals("无")) house.setBuyDate(null);
+            else house.setBuyDate(buyDateCal);
+
+            if (isImgNeedToUpdate) house.setImg(imageName);
+
+            // 先存img再写入db
+            if (isImgNeedToUpdate) ImageIO.write(ImageIO.read(image), extensionName, new File(imageStorePath));
+
+            house.save();
+
+            Ebean.commitTransaction();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            Ebean.rollbackTransaction();
+            return internalServerError(Json.toJson(new OperationResult(500, 1, "服务器端错误")));
+        }
+        finally {
+            Ebean.endTransaction();
+        }
+
+        return redirect(controllers.backend.routes.DataManager.index());
     }
 
     public Result getArea (Long id) {
@@ -488,7 +599,10 @@ public class DataManager extends Controller {
         data.setArea(building.getArea().getName());
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String completionDate = sdf.format(building.getCompletionDate().getTime());
+        Calendar completionDateCal = building.getCompletionDate();
+        String completionDate = "无";
+        if (completionDateCal != null) completionDate = sdf.format(completionDateCal.getTime());
+
         data.setCompletion_date(completionDate);
 
         data.setDescription(building.getDescription());
@@ -503,7 +617,26 @@ public class DataManager extends Controller {
         House house = House.find.byId(id);
         if (house == null) return notFound(Json.toJson(new OperationResult(404, 1, "未找到此房屋")));
 
-        return ok(Json.toJson(house));
+        HouseData data = new HouseData();
+        data.setFloor(house.getFloor());
+        data.setNo(house.getHouseNo());
+        data.setState(house.getState().getName());
+        data.setSpace(house.getSpace());
+        data.setPrice(house.getPricePerSM());
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar buyDateCal = house.getBuyDate();
+        Calendar inDateCal = house.getInDate();
+        String buyDate = "无";
+        String inDate = "无";
+        if (buyDateCal != null) buyDate = sdf.format(buyDateCal.getTime());
+        if (inDateCal != null) inDate = sdf.format(inDateCal.getTime());
+
+        data.setBuy_date(buyDate);
+        data.setIn_date(inDate);
+        data.setImg(house.getImg());
+
+        return ok(Json.toJson(data));
     }
 
     public Result deleteArea(Long id) {

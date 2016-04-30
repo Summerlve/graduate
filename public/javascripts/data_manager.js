@@ -1,8 +1,15 @@
 $(".update-area-hidden").hide();
 $(".update-building-hidden").hide();
+$(".update-house-hidden").hide();
+
+$("#update-area-delete").hide();
+$("#update-building-delete").hide();
+$("#update-house-delete").hide();
+
 
 window.currentOption = {}; // this is update area
 window.currentUpdateBuildingOption = {};
+window.currentUpdateHouseOption = {};
 
 // update area
 $("#update-area-select").on("change", event => {
@@ -131,5 +138,73 @@ $("#update-building-delete").click(event => {
 
     let wantDelete = confirm("删除此楼栋会连带删除此楼栋中的所有房屋, 你确认要删除吗?");
     if (wantDelete) location.href = "/dashboard/data_manager/delete_building/" + data;
+    else return true;
+});
+
+// update house
+$("#update-house-select").on("change", event => {
+    let select = event.currentTarget;
+    let index = select.selectedIndex;
+    let currentUpdateHouseOption = select.options[index];
+    window.currentUpdateHouseOption = currentUpdateHouseOption;
+
+    let data = currentUpdateHouseOption.getAttribute("value");
+    if (data === null) {
+        $(".update-house-hidden").hide();
+        $("#update-house-alert").show();
+        return ;
+    }
+    console.log(data);
+
+    $.ajax({
+        url: "/dashboard/data_manager/get_house?id=" + data,
+        method: "GET",
+        dataType: "json",
+        success: function (data, textStatus, jqXHR) {
+            $("#update-house-alert").hide();
+
+            $("#update-house-default-state").html(`当前状态: ${data.state}`);
+            $("#update-house-floor").val(data.floor);
+            $("#update-house-no").val(data.no);
+
+            $("#update-house-space").val(data.space);
+            $("#update-house-buy-date").val(data.buy_date);
+            $("#update-house-in-date").val(data.in_date);
+            $("#update-house-price").val(data.price);
+
+            document.querySelector("#update-house-overview-img").setAttribute("src", "/assets/images/" + data.img);
+
+            $(".update-house-hidden").show();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+           alert("获取数据失败");
+        }
+    });
+});
+
+$("#update-house-form").submit(event => {
+    let currentOption = window.currentUpdateHouseOption
+    let data = currentOption.getAttribute("value");
+
+    if (data === null) {
+        alert("请选择房屋");
+        return false;
+    }
+
+    event.currentTarget.setAttribute("action", "/dashboard/data_manager/update_house/" + data);
+    return true;
+});
+
+$("#update-house-delete").click(event => {
+    let currentOption = window.currentUpdateHouseOption
+    let data = currentOption.getAttribute("value");
+
+    if (data === null) {
+        alert("请选择房屋");
+        return false;
+    }
+
+    let wantDelete = confirm("你确认要删除此房屋吗?");
+    if (wantDelete) location.href = "/dashboard/data_manager/delete_house/" + data;
     else return true;
 });

@@ -81,7 +81,7 @@ public class Application extends Controller {
         House house = House.find.byId(id);
         if (house == null) return notFound(not_found.render("404", "你访问的页面不存在"));
 
-        return ok(house_detail.render("购买", house));
+        return ok(house_detail.render("预订", house));
     }
 
     public Result order(Long id) {

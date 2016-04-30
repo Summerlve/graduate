@@ -3,11 +3,11 @@ package form;
 import play.data.validation.Constraints;
 
 /**
- * Created by Summer on 16/4/27.
+ * Created by Summer on 16/4/30.
  */
-public class OperationOfHouse {
+public class UpdateHouse {
     @Constraints.Required
-    private Long building;
+    private Long state;
 
     @Constraints.Required
     private Integer floor;
@@ -16,20 +16,23 @@ public class OperationOfHouse {
     private Integer no;
 
     @Constraints.Required
-    private Long state;
+    private Integer space;
 
     @Constraints.Required
-    private Integer space;
+    private String buy_date;
+
+    @Constraints.Required
+    private String in_date;
 
     @Constraints.Required
     private Integer price;
 
-    public Long getBuilding() {
-        return building;
+    public Long getState() {
+        return state;
     }
 
-    public void setBuilding(Long building) {
-        this.building = building;
+    public void setState(Long state) {
+        this.state = state;
     }
 
     public Integer getFloor() {
@@ -48,20 +51,28 @@ public class OperationOfHouse {
         this.no = no;
     }
 
-    public Long getState() {
-        return state;
-    }
-
-    public void setState(Long state) {
-        this.state = state;
-    }
-
     public Integer getSpace() {
         return space;
     }
 
     public void setSpace(Integer space) {
         this.space = space;
+    }
+
+    public String getBuy_date() {
+        return buy_date;
+    }
+
+    public void setBuy_date(String buy_date) {
+        this.buy_date = buy_date;
+    }
+
+    public String getIn_date() {
+        return in_date;
+    }
+
+    public void setIn_date(String in_date) {
+        this.in_date = in_date;
     }
 
     public Integer getPrice() {
