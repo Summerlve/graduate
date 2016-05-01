@@ -49,8 +49,10 @@
                                 <div class="thumbnail">
                                     <img src="@{val path = house.getImg(); routes.Assets.versioned("images/" + path)}" alt="">
                                     <div class="caption">
+                                        <p>面积: @house.getSpace()平方</p>
+                                        <p>楼层: @house.getFloor()层</p>
                                         <p>
-                                            <a href="@controllers.frontend.routes.Application.house(house.getId())" class="btn-lg btn btn-primary btn-block">详情</a>
+                                            <a href="@controllers.frontend.routes.Application.house(house.getId())" class="btn-sm btn btn-primary btn-block">预订</a>
                                         </p>
                                     </div>
                                 </div>

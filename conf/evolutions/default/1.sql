@@ -22,6 +22,7 @@ create table zh_area (
   img                       varchar(255) not null,
   management_company        varchar(255),
   building_num              integer,
+  territory                 varchar(255),
   constraint pk_zh_area primary key (id))
 ;
 

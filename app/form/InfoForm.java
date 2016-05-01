@@ -12,6 +12,9 @@ public class InfoForm extends AdminForm{
     @Constraints.Required
     private String sfz;
 
+    @Constraints.Required
+    private String password_again;
+
     public String getPhone() {
         return phone;
     }
@@ -26,5 +29,13 @@ public class InfoForm extends AdminForm{
 
     public void setSfz(String sfz) {
         this.sfz = sfz;
+    }
+
+    public String getPassword_again() {
+        return password_again;
+    }
+
+    public void setPassword_again(String password_again) {
+        this.password_again = password_again;
     }
 }

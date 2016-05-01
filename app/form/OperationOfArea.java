@@ -18,6 +18,9 @@ public class OperationOfArea {
     @Constraints.Required
     private String management;
 
+    @Constraints.Required
+    private String territory;
+
     public String getArea_name() {
         return area_name;
     }
@@ -48,5 +51,13 @@ public class OperationOfArea {
 
     public void setManagement(String management) {
         this.management = management;
+    }
+
+    public String getTerritory() {
+        return territory;
+    }
+
+    public void setTerritory(String territory) {
+        this.territory = territory;
     }
 }

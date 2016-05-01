@@ -46,6 +46,7 @@ public class Auth extends Controller {
         }
         catch (Exception e) {
             e.printStackTrace();
+            return internalServerError(Json.toJson(new OperationResult(500, 1, "服务器端错误")));
         }
 
         Optional<Admin> result = Admin.auth(username, passwordHash);

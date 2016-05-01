@@ -36,7 +36,9 @@ $("#update-area-select").on("change", event => {
             $("#update-area-name").val(data.name);
             $("#update-area-description").val(data.description);
             $("#update-area-management").val(data.management || "无");
+            $("#update-area-territory").val(data.territory || "无");
             $("#update-area-building-num").val(data.buildingNum);
+
             document.querySelector("#update-area-overview-img").setAttribute("src", "/assets/images/" + data.img);
 
             $(".update-area-hidden").show();

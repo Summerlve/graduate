@@ -120,6 +120,7 @@ public class DataManager extends Controller {
         Integer buildingNum = data.getBuilding_num();
         String description = data.getDescription();
         String management = data.getManagement();
+        String territory = data.getTerritory();
 
         // get upload path
         String uploadPath = Play.application().configuration().getString("uploadPath");
@@ -144,6 +145,7 @@ public class DataManager extends Controller {
             area.setName(areaName);
             area.setImg(imageName);
             area.setManagement(management);
+            area.setTerritory(territory);
 
             // 先存img在写入db
             ImageIO.write(ImageIO.read(image), extensionName, new File(imageStorePath));
@@ -160,7 +162,7 @@ public class DataManager extends Controller {
             Ebean.endTransaction();
         }
 
-        return this.index();
+        return redirect(controllers.backend.routes.DataManager.index());
     }
 
     @BodyParser.Of(BodyParser.MultipartFormData.class)
@@ -237,7 +239,7 @@ public class DataManager extends Controller {
             Ebean.endTransaction();
         }
 
-        return this.index();
+        return redirect(controllers.backend.routes.DataManager.index());
     }
 
     @BodyParser.Of(BodyParser.MultipartFormData.class)
@@ -303,7 +305,7 @@ public class DataManager extends Controller {
             Ebean.endTransaction();
         }
 
-        return this.index();
+        return redirect(controllers.backend.routes.DataManager.index());
     }
 
     @BodyParser.Of(BodyParser.MultipartFormData.class)
@@ -317,6 +319,7 @@ public class DataManager extends Controller {
         Integer buildingNum = data.getBuilding_num();
         String description = data.getDescription();
         String management = data.getManagement();
+        String territory = data.getTerritory();
 
         // get upload path
         String uploadPath = Play.application().configuration().getString("uploadPath");
@@ -352,6 +355,7 @@ public class DataManager extends Controller {
             area.setBuildingNum(buildingNum);
             area.setDescription(description);
             area.setName(areaName);
+            area.setTerritory(territory);
             if (isImgNeedToUpdate) area.setImg(imageName);
             area.setManagement(management);
 

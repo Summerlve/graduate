@@ -6,6 +6,8 @@ import com.avaje.ebean.Ebean;
 import form.InfoForm;
 import json.OperationResult;
 import models.Admin;
+import org.apache.commons.codec.binary.Hex;
+import play.Logger;
 import play.data.Form;
 import play.libs.F;
 import play.libs.Json;
@@ -14,6 +16,8 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Results;
 import views.html.backend.info;
+
+import java.security.MessageDigest;
 import java.util.Optional;
 
 /**
@@ -32,17 +36,34 @@ public class Info extends Controller {
         Form<InfoForm> infoForm = Form.form(InfoForm.class).bindFromRequest();
         if (infoForm.hasErrors()) return F.Promise.promise(() -> badRequest(Json.toJson(new OperationResult(400, 1, "表单数据错误"))));
 
+        // get data from form
         String username = infoForm.get().getUsername();
         String password = infoForm.get().getPassword();
+        String passwordAgain = infoForm.get().getPassword_again();
         String sfz = infoForm.get().getSfz();
         String phone = infoForm.get().getPhone();
 
+        if (!password.equals(passwordAgain)) return F.Promise.promise(() -> internalServerError(Json.toJson(new OperationResult(400, 1, "两次输入的密码不一样"))));
+
         Admin admin = (Admin)((Optional) ctx().args.get("user")).get();
+
+        // get password hash
+        String passwordHash;
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] temp = md.digest(password.getBytes("UTF8"));
+            passwordHash = new String(Hex.encodeHex(temp));
+            Logger.info(passwordHash);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return F.Promise.promise(() -> internalServerError(Json.toJson(new OperationResult(500, 1, "服务器端错误"))));
+        }
 
         // save to db
         Ebean.beginTransaction();
         try {
-            admin.setPasswordHash(password);
+            admin.setPasswordHash(passwordHash);
             admin.setSfz(sfz);
             admin.setTelephone(phone);
             admin.setUsername(username);

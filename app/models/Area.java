@@ -29,10 +29,13 @@ public class Area extends Model{
     private String img;
 
     @Column(name = "management_company")
-    private String management;
+    private String management = "无";
 
     @Column(name = "building_num")
     private Integer buildingNum;
+
+    @Column(name = "territory")
+    private String territory = "无";
 
     @OneToMany(mappedBy = "area", cascade = CascadeType.ALL)
     @JsonIgnore
@@ -94,5 +97,13 @@ public class Area extends Model{
 
     public void setBuildings(List<Building> buildings) {
         this.buildings = buildings;
+    }
+
+    public String getTerritory() {
+        return territory;
+    }
+
+    public void setTerritory(String territory) {
+        this.territory = territory;
     }
 }

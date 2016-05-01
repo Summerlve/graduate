@@ -13,6 +13,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.backend.order_handle;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,9 +28,10 @@ public class OrderHandle extends Controller {
         HouseState ordered = HouseState.find.where().eq("name", "已预订").findUnique();
         HouseState orderHandled = HouseState.find.where().eq("name", "预订已处理").findUnique();
 
-        if (ordered == null || ordered == null) return internalServerError(Json.toJson(new OperationResult(500, 1, "数据存在问题")));
+        List<House> houses;
 
-        List<House> houses = House.find.where().in("house_state_id", new Object[]{ordered.getId(), orderHandled.getId()}).findList();
+        if (ordered == null || ordered == null) houses = new ArrayList<>();
+        else  houses = House.find.where().in("house_state_id", new Object[]{ordered.getId(), orderHandled.getId()}).findList();
 
         Logger.info(String.valueOf(houses.size()));
 
