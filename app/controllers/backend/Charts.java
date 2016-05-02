@@ -4,14 +4,15 @@ import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
 import json.ChartData;
 import models.Admin;
+import models.Area;
 import models.House;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.backend.charts;
 
-import java.util.List;
-import java.util.Optional;
+import java.lang.reflect.Array;
+import java.util.*;
 
 /**
  * Created by Summer on 16/3/17.
@@ -42,6 +43,23 @@ public class Charts extends Controller {
         Long unfinished = houses.stream()
                 .filter(value -> value.getState().getName().equals("未完成"))
                 .count();
+
+
+//        Map<String, List<Area>> groupedTerritory = new HashMap<>();
+//
+//        Area.find.all().stream().forEach(area -> {
+//            Optional
+//                .ofNullable(area.getTerritory())
+//                .ifPresent(
+//                    territory -> {
+//                        if (groupedTerritory.containsKey(territory)) groupedTerritory.get(territory).add(area);
+//                        else groupedTerritory.put(territory, Arrays.asList(area));
+//                    });});
+//
+//        groupedTerritory.forEach(
+//                (k, v) ->{
+//
+//                });
 
         ChartData chartData = new ChartData();
         chartData.sold = sold;
