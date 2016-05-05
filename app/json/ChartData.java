@@ -18,7 +18,7 @@ public class ChartData {
     public List<House> houses = new ArrayList<>();
     public List<Territory> territory_data = new ArrayList<>();
 
-    private class Territory {
+    public static class Territory {
         public String name;
         public Long sold;
         public Long ordered;

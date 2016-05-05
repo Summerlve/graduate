@@ -21,6 +21,9 @@
             <div class="col-md-4 col-sm-4 hero-feature">
                 <h3>@house.getBuildingId().getArea().getName() - @house.getBuildingId().getBuildingKind().getName() [@house.getState().getName()]</h3>
             </div>
+            <div class="col-md-2 col-sm-3 hero-feature">
+                <h3> <button class="btn btn-default btn-block" id="help-btn">需要帮助</button></h3>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-4 col-sm-4 hero-feature">
@@ -55,7 +58,7 @@
                                     data-toggle="modal"
                                     data-target="#buy-modal">
 
-                                买买买!
+                                预订
                             </button>
                         }
 
@@ -153,6 +156,10 @@
                     }, 300);
                 }
             });
+        });
+
+        $("#help-btn").click(_ => {
+            alert("如需帮助,请拨打电话xxxxxxx");
         });
     </script>
 </body>

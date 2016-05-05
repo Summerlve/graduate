@@ -6,7 +6,7 @@
 GET                 /dashboard                                      controllers.backend.Dashboard.index()
 GET                 /dashboard/dashboard_data                       controllers.backend.Dashboard.data()
 GET                 /dashboard/charts                               controllers.backend.Charts.index()
-GET                 /dashboard/charts_data                          controllers.backend.Charts.data()
+GET                 /dashboard/charts_data                          controllers.backend.Charts.data(territory_name: String)
 GET                 /dashboard/login                                controllers.backend.Auth.index()
 POST                /dashboard/login                                controllers.backend.Auth.login()
 GET                 /dashboard/logout                               controllers.backend.Auth.logout()

@@ -29,6 +29,7 @@ import java.util.stream.Collectors;
 
 @Restrict(@Group("ADMIN"))
 public class Dashboard extends Controller {
+    @SuppressWarnings("unchecked")
     public F.Promise<Result> index () {
         Optional<Admin> user = (Optional) ctx().args.get("user");
         return F.Promise.promise(() -> Results.ok(dashboard.render("控制台", user.get())));
@@ -50,31 +51,19 @@ public class Dashboard extends Controller {
         List<House> houses = House.find.all();
 
         Long sold = houses.stream()
-                .filter(value -> {
-                    if (value.getState().getName().equals("已售出")) return true;
-                    else return false;
-                })
+                .filter(value -> value.getState().getName().equals("已售出"))
                 .count();
 
         Long ordered = houses.stream()
-                .filter(value -> {
-                    if (value.getState().getName().equals("已预订")) return true;
-                    else return false;
-                })
+                .filter(value -> value.getState().getName().equals("已预订"))
                 .count();
 
         Long unsold = houses.stream()
-                .filter(value -> {
-                    if (value.getState().getName().equals("未售出")) return true;
-                    else return false;
-                })
+                .filter(value -> value.getState().getName().equals("未售出"))
                 .count();
 
         Long unfinished = houses.stream()
-                .filter(value -> {
-                    if (value.getState().getName().equals("未完成")) return true;
-                    else return false;
-                })
+                .filter(value -> value.getState().getName().equals("未完成"))
                 .count();
 
         data.setTop_owner(topowner);
