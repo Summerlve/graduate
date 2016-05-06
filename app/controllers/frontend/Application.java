@@ -17,16 +17,22 @@ import views.html.frontend.buildings_of_area;
 import views.html.error.not_found;
 import play.Logger;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Summer on 16/3/17.
  */
 public class Application extends Controller {
+    @SuppressWarnings("unchecked")
     public Result index () {
         List areas = Area.find.all();
         List buildingKinds = BuildingKind.find.all();
+        List<String> territories = Area.find.all().stream()
+                .map(Area::getTerritory)
+                    .distinct()
+                        .collect(Collectors.toList());
 
-        return ok(index.render("买房子", areas, buildingKinds));
+        return ok(index.render("买房子", areas, buildingKinds, territories));
     }
 
     public Result search () {
@@ -36,6 +42,7 @@ public class Application extends Controller {
 
         String building_kind = searchForm.get().getBuilding_kind();
         String space_kind = searchForm.get().getSpace_kind();
+        String territory = searchForm.get().getTerritory();
 
         Logger.info(building_kind);
         Logger.info(space_kind);
@@ -50,10 +57,9 @@ public class Application extends Controller {
                         .forEach(building -> {
                             building
                                 .getHouses().stream()
-                                .filter(house -> {
-                                    if (house.getState().getName().equals("未售出")) return true;
-                                    else return false;
-                                }).forEach(house -> {
+                                .filter(house -> house.getState().getName().equals("未售出"))
+                                .filter(house -> house.getBuildingId().getArea().getTerritory().equals(territory))
+                                .forEach(house -> {
                                     Integer space = house.getSpace();
 
                                     if (space_kind.equals("<100")) {
@@ -68,9 +74,7 @@ public class Application extends Controller {
                                     else if (space_kind.equals(">200")) {
                                         if (space > 200) houses.add(house);
                                     }
-                                });
-                    });
-                });
+                                });});});
 
         return ok(search_result.render("搜索结果", houses));
     }

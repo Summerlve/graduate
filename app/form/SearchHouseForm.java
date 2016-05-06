@@ -12,6 +12,9 @@ public class SearchHouseForm {
     @Constraints.Required
     private String space_kind;
 
+    @Constraints.Required
+    private String territory;
+
     public String getBuilding_kind() {
         return building_kind;
     }
@@ -26,5 +29,13 @@ public class SearchHouseForm {
 
     public void setSpace_kind(String space_kind) {
         this.space_kind = space_kind;
+    }
+
+    public String getTerritory() {
+        return territory;
+    }
+
+    public void setTerritory(String territory) {
+        this.territory = territory;
     }
 }

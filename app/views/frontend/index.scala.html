@@ -1,4 +1,4 @@
-@(title: String)(areas: List[Area])(buildingKinds: List[BuildingKind])
+@(title: String)(areas: List[Area])(buildingKinds: List[BuildingKind])(territories: List[String])
 <!--所有小区的展示-->
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +20,14 @@
     <div class="container">
         @helper.form(action = controllers.frontend.routes.Application.search) {
             <div class="row">
-                <div class="col-md-offset-6 col-md-2 col-sm-3 hero-feature">
+                <div class="col-md-offset-3 col-md-3 col-sm-3 hero-feature">
+                    <select class="form-control" name="territory" required>
+                        @for(territory <- territories) {
+                        <option value="@territory">@territory</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2 col-sm-3 hero-feature">
                     <select class="form-control" name="building_kind" required>
                         @for(kind <- buildingKinds) {
                         <option value="@kind.getName()">@kind.getName()</option>

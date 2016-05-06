@@ -407,7 +407,7 @@
                                                                 <option selected="selected">-----</option>
                                                                 @for(area <- areas) {
                                                                 <option value="@area.getId()">
-                                                                    <a href="@area.getId()">@area.getName()</a>
+                                                                    <a href="@area.getId()">@area.getTerritory() - @area.getName()</a>
                                                                 </option>
                                                                 }
                                                             </select>
@@ -488,7 +488,7 @@
                                                                 <option selected="selected">-----</option>
                                                                 @for(building <- buildings) {
                                                                 <option value="@building.getId()">
-                                                                    <a href="@building.getId()">@building.getArea().getName() - @building.getId()</a>
+                                                                    <a href="@building.getId()">@building.getArea().getTerritory() - @building.getArea().getName() - @building.getId()</a>
                                                                 </option>
                                                                 }
                                                             </select>
@@ -589,7 +589,7 @@
                                                                 <option selected="selected">-----</option>
                                                                 @for(house <- houses) {
                                                                     <option value="@house.getId()">
-                                                                        <a href="@house.getId()">@house.getBuildingId().getArea().getName() - @house.getBuildingId().getId() - @house.getHouseNo()</a>
+                                                                        <a href="@house.getId()">@house.getBuildingId().getArea().getTerritory() - @house.getBuildingId().getArea().getName() - @house.getBuildingId().getId() - @house.getHouseNo()</a>
                                                                     </option>
                                                                 }
                                                             </select>
