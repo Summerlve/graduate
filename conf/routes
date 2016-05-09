@@ -18,6 +18,7 @@ GET                 /dashboard/data_manager/backup                  controllers.
 GET                 /dashboard/data_manager/restore                 controllers.backend.DataManager.restore()
 GET                 /dashboard/orders                               controllers.backend.OrderHandle.index()
 GET                 /dashboard/orders_state/:id                     controllers.backend.OrderHandle.handle(id: Long)
+GET                 /dashboard/delete_order/:id                     controllers.backend.OrderHandle.delete(id: Long)
 GET                 /dashboard/data_manager/get_area                controllers.backend.DataManager.getArea(id: Long)
 GET                 /dashboard/data_manager/get_building            controllers.backend.DataManager.getBuilding(id: Long)
 GET                 /dashboard/data_manager/get_house               controllers.backend.DataManager.getHouse(id: Long)

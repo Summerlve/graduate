@@ -94,8 +94,11 @@
                                                 <td>@house.getUser().getTelephone()</td>
                                                 <td>@house.getBuildingId().getArea().getTerritory() - @house.getBuildingId().getArea().getName() - @house.getBuildingId().getId() - @house.getHouseNo() </td>
                                                 <td>
-                                                    <a href="@controllers.backend.routes.OrderHandle.handle(house.getId())" class="btn btn-primary btn-block btn-xs order-finish-btn">
+                                                    <a href="@controllers.backend.routes.OrderHandle.handle(house.getId())" class="btn btn-primary btn-xs order-finish-btn">
                                                         完成
+                                                    </a>
+                                                    <a href="@controllers.backend.routes.OrderHandle.delete(house.getId())" class="btn btn-primary btn-xs order-delete-btn">
+                                                        删除
                                                     </a>
                                                 </td>
                                             </tr>
@@ -105,21 +108,26 @@
                                 </table>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="handled">
-                                @for(house <- houses) {
-                                    @if(house.getState().getName() == "预订已处理") {
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="well well-sm">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        门牌号: @house.getHouseNo(), 预订人: @house.getUser().getName(), 电话: @house.getUser().getTelephone()
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    }
-                                }
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>姓名</th>
+                                        <th>电话</th>
+                                        <th>预订房屋详情</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for(house <- houses) {
+                                            @if(house.getState().getName() == "已预订") {
+                                            <tr>
+                                                <td>@house.getUser().getName()</td>
+                                                <td>@house.getUser().getTelephone()</td>
+                                                <td>@house.getBuildingId().getArea().getTerritory() - @house.getBuildingId().getArea().getName() - @house.getBuildingId().getId() - @house.getHouseNo() </td>
+                                            </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

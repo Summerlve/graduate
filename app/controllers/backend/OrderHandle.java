@@ -62,4 +62,30 @@ public class OrderHandle extends Controller {
 
         return ok(Json.toJson(new OperationResult(200, 0, "操作成功")));
     }
+
+    public Result delete (Long id) {
+        Logger.info(String.valueOf(id));
+        House house = House.find.byId(id);
+
+        // 检查订单是否已经删除
+        if (!house.getState().getName().equals("已预订")) return badRequest(Json.toJson(new OperationResult(400, 1, "订单已经删除")));
+
+        Ebean.beginTransaction();
+        try {
+            house.setState(HouseState.find.where().eq("name", "未售出").findUnique());
+            house.setUser(null);
+            house.save();
+            Ebean.commitTransaction();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            Ebean.rollbackTransaction();
+            return internalServerError(Json.toJson(new OperationResult(500, 1, "服务器端错误")));
+        }
+        finally {
+            Ebean.endTransaction();
+        }
+
+        return ok(Json.toJson(new OperationResult(200, 0, "操作成功")));
+    }
 }
