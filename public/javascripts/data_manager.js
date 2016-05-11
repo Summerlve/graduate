@@ -4,8 +4,6 @@ $(".update-house-hidden").hide();
 
 $("#update-area-delete").hide();
 $("#update-building-delete").hide();
-$("#update-house-delete").hide();
-
 
 window.currentOption = {}; // this is update area
 window.currentUpdateBuildingOption = {};

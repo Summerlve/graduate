@@ -31,7 +31,7 @@ public class OrderHandle extends Controller {
         List<House> houses;
 
         if (ordered == null || ordered == null) houses = new ArrayList<>();
-        else  houses = House.find.where().in("house_state_id", new Object[]{ordered.getId(), orderHandled.getId()}).findList();
+        else houses = House.find.where().in("house_state_id", new Object[]{ordered.getId(), orderHandled.getId()}).findList();
 
         Logger.info(String.valueOf(houses.size()));
 

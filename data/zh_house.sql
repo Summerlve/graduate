@@ -41,7 +41,7 @@ CREATE TABLE `zh_house` (
   CONSTRAINT `fk_zh_house_buildingId_4` FOREIGN KEY (`building_id`) REFERENCES `zh_building` (`id`),
   CONSTRAINT `fk_zh_house_state_5` FOREIGN KEY (`house_state_id`) REFERENCES `zh_house_state` (`id`),
   CONSTRAINT `fk_zh_house_user_3` FOREIGN KEY (`user_id`) REFERENCES `zh_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,4 +63,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-11 12:56:55
+-- Dump completed on 2016-05-11 16:41:11

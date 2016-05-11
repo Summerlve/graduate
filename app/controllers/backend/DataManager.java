@@ -26,6 +26,8 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import play.mvc.Http.MultipartFormData.FilePart;
+import views.html.error.not_found;
+
 import javax.imageio.ImageIO;
 
 /**
@@ -652,6 +654,25 @@ public class DataManager extends Controller {
     }
 
     public Result deleteHouse(Long id) {
+        House house = House.find.byId(id);
+        if (house == null) return notFound(not_found.render("404", "你访问的房屋不存在"));
+
+        Ebean.beginTransaction();
+        try {
+            Integer origin = house.getBuildingId().getHouseNum();
+            Integer now = origin - 1;
+            house.getBuildingId().setHouseNum(now);
+            house.delete();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            Ebean.rollbackTransaction();
+            return internalServerError("服务端错误");
+        }
+        finally {
+            Ebean.commitTransaction();
+        }
+
         return redirect(controllers.backend.routes.DataManager.index());
     }
 }
