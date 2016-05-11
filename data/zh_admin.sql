@@ -32,7 +32,7 @@ CREATE TABLE `zh_admin` (
   UNIQUE KEY `uq_zh_admin_sfz` (`sfz`),
   UNIQUE KEY `uq_zh_admin_username` (`username`),
   UNIQUE KEY `uq_zh_admin_telephone` (`telephone`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-06 15:43:31
+-- Dump completed on 2016-05-11 12:56:55

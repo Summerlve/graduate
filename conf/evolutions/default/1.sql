@@ -57,7 +57,7 @@ create table zh_house (
   space                     integer,
   buy_date                  datetime(6),
   in_date                   datetime(6),
-  sell_price_per_square_meter integer,
+  price                     integer,
   img                       varchar(255) not null,
   constraint pk_zh_house primary key (id))
 ;

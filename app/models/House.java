@@ -59,7 +59,7 @@ public class House extends Model {
     @JsonProperty("in_date")
     private Calendar inDate;
 
-    @Column(name = "sell_price_per_square_meter")
+    @Column(name = "price")
     @JsonProperty("price_per_sm")
     private Integer pricePerSM;
 
