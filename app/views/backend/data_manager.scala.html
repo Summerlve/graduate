@@ -214,37 +214,37 @@
                                                     <div class="form-group">
                                                         <label for="add-area-name" class="col-sm-2 control-label">小区名字</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="add-area-name" name="area_name">
+                                                            <input type="text" class="form-control" id="add-area-name" name="area_name" required="required">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="add-area-territory" class="col-sm-2 control-label">小区所属地区</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="add-area-territory" name="territory">
+                                                            <input type="text" class="form-control" id="add-area-territory" name="territory" required="required">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="add-area-building-num" class="col-sm-2 control-label">楼栋数量</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="add-area-building-num" name="building_num">
+                                                            <input type="text" class="form-control" id="add-area-building-num" name="building_num" required="required" pattern="^(0|[1-9][0-9]*)$">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="add-area-description" class="col-sm-2 control-label">小区简介</label>
                                                         <div class="col-sm-10">
-                                                            <textarea class="form-control" rows="3" id="add-area-description" name="description"></textarea>
+                                                            <textarea class="form-control" rows="3" id="add-area-description" name="description" required="required"></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="add-area-management" class="col-sm-2 control-label">物业公司名称</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="add-area-management" name="management">
+                                                            <input type="text" class="form-control" id="add-area-management" name="management" required="required">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="add-area-img" class="col-sm-2 control-label">小区图片</label>
                                                         <div class="col-sm-10">
-                                                            <input type="file" id="add-area-img" name="img">
+                                                            <input type="file" id="add-area-img" name="img" required="required">
                                                         </div>
                                                     </div>
                                                     <hr>
@@ -280,19 +280,19 @@
                                                     <div class="form-group">
                                                         <label for="add-building-house-num" class="col-sm-2 control-label">房屋数量</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="add-building-house-num" name="house_num">
+                                                            <input type="text" class="form-control" id="add-building-house-num" name="house_num" required="required" pattern="^(0|[1-9][0-9]*)$">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="add-building-acreage" class="col-sm-2 control-label">楼栋占地面积</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="add-building-acreage" name="acreage">
+                                                            <input type="text" class="form-control" id="add-building-acreage" name="acreage" required="required" pattern="^(0|[1-9][0-9]*)$">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="add-building-description" class="col-sm-2 control-label">楼栋简介</label>
                                                         <div class="col-sm-10">
-                                                            <textarea class="form-control" rows="3" id="add-building-description" name="description"></textarea>
+                                                            <textarea class="form-control" rows="3" id="add-building-description" name="description" required="required"></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -330,13 +330,13 @@
                                                     <div class="form-group">
                                                         <label for="add-house-floor" class="col-sm-2 control-label">房屋所属楼层</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="add-house-floor" name="floor">
+                                                            <input type="text" class="form-control" id="add-house-floor" name="floor" pattern="^(0|[1-9][0-9]*)$">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="add-house-no" class="col-sm-2 control-label">房屋门牌号</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="add-house-no" name="no">
+                                                            <input type="text" class="form-control" id="add-house-no" name="no" pattern="^(0|[1-9][0-9]*)$" required="required">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -352,13 +352,13 @@
                                                     <div class="form-group">
                                                         <label for="add-house-space" class="col-sm-2 control-label">房屋面积</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="add-house-space" name="space">
+                                                            <input type="text" class="form-control" id="add-house-space" name="space" pattern="^(0|[1-9][0-9]*)$" required="required">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="add-house-price" class="col-sm-2 control-label">房屋每平方单价</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="add-house-price" name="price">
+                                                            <input type="text" class="form-control" id="add-house-price" name="price" pattern="^(0|[1-9][0-9]*)$" required="required">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">

@@ -114,7 +114,7 @@ public class DataManager extends Controller {
     @BodyParser.Of(BodyParser.MultipartFormData.class)
     public Result addArea () {
         Form<OperationOfArea> areaForm = Form.form(OperationOfArea.class).bindFromRequest();
-        if (areaForm.hasErrors()) return badRequest(Json.toJson(new OperationResult(400, 1, "表单数据错误")));
+        if (areaForm.hasErrors()) return badRequest("表单数据错误");
 
         // get data from form
         OperationOfArea data = areaForm.get();
@@ -129,7 +129,7 @@ public class DataManager extends Controller {
 
         // get img
         FilePart filepart = request().body().asMultipartFormData().getFile("img");
-        if (filepart == null) return badRequest(Json.toJson(new OperationResult(400, 1, "需要图片")));
+        if (filepart == null) return badRequest("需要图片");
         File image = filepart.getFile();
         String extensionName = filepart.getFilename().split("\\.")[1];
         String uuid = UUID.randomUUID().toString();
@@ -158,7 +158,7 @@ public class DataManager extends Controller {
         catch (Exception e) {
             e.printStackTrace();
             Ebean.rollbackTransaction();
-            return internalServerError(Json.toJson(new OperationResult(500, 1, "服务器端错误")));
+            return internalServerError("服务器端错误");
         }
         finally {
             Ebean.endTransaction();
@@ -170,7 +170,7 @@ public class DataManager extends Controller {
     @BodyParser.Of(BodyParser.MultipartFormData.class)
     public Result addBuilding () {
         Form<OperationOfBuilding> buildingForm = Form.form(OperationOfBuilding.class).bindFromRequest();
-        if (buildingForm.hasErrors()) return badRequest(Json.toJson(new OperationResult(400, 1, "表单数据错误")));
+        if (buildingForm.hasErrors()) return badRequest("表单数据错误");
 
         // get info from form data
         OperationOfBuilding data = buildingForm.get();
@@ -187,7 +187,7 @@ public class DataManager extends Controller {
             try {
                 completionDate.setTime(new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA).parse(timeString));
             } catch (Exception e) {
-                return badRequest(Json.toJson(new OperationResult(400, 1, "时间格式不对")));
+                return badRequest("时间格式不对");
             }
         }
 
@@ -196,7 +196,7 @@ public class DataManager extends Controller {
 
         // get image
         FilePart filepart = request().body().asMultipartFormData().getFile("img");
-        if (filepart == null) return badRequest(Json.toJson(new OperationResult(400, 1, "需要图片")));
+        if (filepart == null) return badRequest("需要图片");
         File image = filepart.getFile();
         String extensionName = filepart.getFilename().split("\\.")[1];
         String uuid = UUID.randomUUID().toString();
@@ -207,11 +207,11 @@ public class DataManager extends Controller {
 
         // get area ref
         Area area = Area.find.byId(areaId);
-        if (area == null) return badRequest(Json.toJson(new OperationResult(400, 1, "小区不存在")));
+        if (area == null) return badRequest("小区不存在");
 
         // get building kind ref
         BuildingKind buildingKind = BuildingKind.find.byId(buildingKindId);
-        if (buildingKind == null) return badRequest(Json.toJson(new OperationResult(400, 1, "楼栋类型不存在")));
+        if (buildingKind == null) return badRequest("楼栋类型不存在");
 
         // store to db
         Building building = new Building();
@@ -235,7 +235,7 @@ public class DataManager extends Controller {
         catch (Exception e) {
             e.printStackTrace();
             Ebean.rollbackTransaction();
-            return internalServerError(Json.toJson(new OperationResult(500, 1, "服务器端错误")));
+            return internalServerError("服务器端错误");
         }
         finally {
             Ebean.endTransaction();
@@ -247,7 +247,7 @@ public class DataManager extends Controller {
     @BodyParser.Of(BodyParser.MultipartFormData.class)
     public Result addHouse () {
         Form<OperationOfHouse> houseForm = Form.form(OperationOfHouse.class).bindFromRequest();
-        if (houseForm.hasErrors()) return badRequest(Json.toJson(new OperationResult(400, 1, "表单数据错误")));
+        if (houseForm.hasErrors()) return badRequest("表单数据错误");
 
         // get data from form
         OperationOfHouse data = houseForm.get();
@@ -260,18 +260,18 @@ public class DataManager extends Controller {
 
         // get of building ref
         Building building = Building.find.byId(buildingId);
-        if (building == null) return badRequest(Json.toJson(new OperationResult(400, 1, "楼栋不存在")));
+        if (building == null) return badRequest("楼栋不存在");
 
         // get house state ref
         HouseState state = HouseState.find.byId(stateId);
-        if (state == null) return badRequest(Json.toJson(new OperationResult(400, 1, "房屋状态不存在")));
+        if (state == null) return badRequest("房屋状态不存在");
 
         // get upload path
         String uploadPath = Play.application().configuration().getString("uploadPath");
 
         // get image
         FilePart filepart = request().body().asMultipartFormData().getFile("img");
-        if (filepart == null) return badRequest(Json.toJson(new OperationResult(400, 1, "需要图片")));
+        if (filepart == null) return badRequest("需要图片");
         File image = filepart.getFile();
         String extensionName = filepart.getFilename().split("\\.")[1];
         String uuid = UUID.randomUUID().toString();
@@ -301,7 +301,7 @@ public class DataManager extends Controller {
         catch (Exception e) {
             e.printStackTrace();
             Ebean.rollbackTransaction();
-            return internalServerError(Json.toJson(new OperationResult(500, 1, "服务器端错误")));
+            return internalServerError("服务器端错误");
         }
         finally {
             Ebean.endTransaction();
@@ -313,7 +313,7 @@ public class DataManager extends Controller {
     @BodyParser.Of(BodyParser.MultipartFormData.class)
     public Result updateArea (Long id) {
         Form<OperationOfArea> areaForm = Form.form(OperationOfArea.class).bindFromRequest();
-        if (areaForm.hasErrors()) return badRequest(Json.toJson(new OperationResult(400, 1, "表单数据错误")));
+        if (areaForm.hasErrors()) return badRequest("表单数据错误");
 
         // get data from form
         OperationOfArea data = areaForm.get();
@@ -349,7 +349,7 @@ public class DataManager extends Controller {
 
         // get area ref
         Area area = Area.find.byId(id);
-        if (area == null) return badRequest(Json.toJson(new OperationResult(400, 1, "小区不存在")));
+        if (area == null) return badRequest("小区不存在");
 
         // update value and store to db
         Ebean.beginTransaction();
@@ -371,7 +371,7 @@ public class DataManager extends Controller {
         catch (Exception e) {
             e.printStackTrace();
             Ebean.rollbackTransaction();
-            return internalServerError(Json.toJson(new OperationResult(500, 1, "服务器端错误")));
+            return internalServerError("服务器端错误");
         }
         finally {
             Ebean.endTransaction();
@@ -383,7 +383,7 @@ public class DataManager extends Controller {
     @BodyParser.Of(BodyParser.MultipartFormData.class)
     public Result updateBuilding (Long id) {
         Form<OperationOfBuilding> buildingForm = Form.form(OperationOfBuilding.class).bindFromRequest();
-        if (buildingForm.hasErrors()) return badRequest(Json.toJson(new OperationResult(400, 1, "表单数据错误")));
+        if (buildingForm.hasErrors()) return badRequest("表单数据错误");
 
         // get info from form data
         OperationOfBuilding data = buildingForm.get();
@@ -401,7 +401,7 @@ public class DataManager extends Controller {
             try {
                 completionDate.setTime(new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA).parse(timeString));
             } catch (Exception e) {
-                return badRequest(Json.toJson(new OperationResult(400, 1, "时间格式不对")));
+                return badRequest("时间格式不对");
             }
         }
 
@@ -431,20 +431,20 @@ public class DataManager extends Controller {
 
         // get building ref
         Building building = Building.find.byId(id);
-        if (building == null) return badRequest(Json.toJson(new OperationResult(400, 1, "楼栋不存在")));
+        if (building == null) return badRequest("楼栋不存在");
 
         // get area ref
         Area area = null;
         if (areaId != -1) {
             area = Area.find.byId(areaId);
-            if (area == null) return badRequest(Json.toJson(new OperationResult(400, 1, "小区不存在")));
+            if (area == null) return badRequest("小区不存在");
         }
 
         // get building kind ref
         BuildingKind buildingKind = null;
         if (buildingKindId != -1) {
             buildingKind = BuildingKind.find.byId(buildingKindId);
-            if (buildingKind == null) return badRequest(Json.toJson(new OperationResult(400, 1, "楼栋类型不存在")));
+            if (buildingKind == null) return badRequest("楼栋类型不存在");
         }
 
         // store to db
@@ -475,7 +475,7 @@ public class DataManager extends Controller {
         catch (Exception e) {
             e.printStackTrace();
             Ebean.rollbackTransaction();
-            return internalServerError(Json.toJson(new OperationResult(500, 1, "服务器端错误")));
+            return internalServerError("服务器端错误");
         }
         finally {
             Ebean.endTransaction();
@@ -487,7 +487,7 @@ public class DataManager extends Controller {
     @BodyParser.Of(BodyParser.MultipartFormData.class)
     public Result updateHouse (Long id) {
         Form<UpdateHouse> houseForm = Form.form(UpdateHouse.class).bindFromRequest();
-        if (houseForm.hasErrors()) return badRequest(Json.toJson(new OperationResult(400, 1, "表单数据错误")));
+        if (houseForm.hasErrors()) return badRequest("表单数据错误");
 
         // get data from form
         UpdateHouse data = houseForm.get();
@@ -504,7 +504,7 @@ public class DataManager extends Controller {
             try {
                 buyDateCal.setTime(new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA).parse(buyDate));
             } catch (Exception e) {
-                return badRequest(Json.toJson(new OperationResult(400, 1, "时间格式不对")));
+                return badRequest("时间格式不对");
             }
         }
 
@@ -514,7 +514,7 @@ public class DataManager extends Controller {
             try {
                 inDateCal.setTime(new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA).parse(inDate));
             } catch (Exception e) {
-                return badRequest(Json.toJson(new OperationResult(400, 1, "时间格式不对")));
+                return badRequest("时间格式不对");
             }
         }
 
@@ -522,7 +522,7 @@ public class DataManager extends Controller {
         HouseState state = null;
         if (stateId != -1) {
             state = HouseState.find.byId(stateId);
-            if (state == null) return badRequest(Json.toJson(new OperationResult(400, 1, "小区不存在")));
+            if (state == null) return badRequest("小区不存在");
         }
 
         // get upload path
@@ -551,7 +551,7 @@ public class DataManager extends Controller {
 
         // get house ref
         House house = House.find.byId(id);
-        if (house == null) return badRequest(Json.toJson(new OperationResult(400, 1, "房屋不存在")));
+        if (house == null) return badRequest("房屋不存在");
 
         // save to db
         Ebean.beginTransaction();
@@ -580,7 +580,7 @@ public class DataManager extends Controller {
         catch (Exception e) {
             e.printStackTrace();
             Ebean.rollbackTransaction();
-            return internalServerError(Json.toJson(new OperationResult(500, 1, "服务器端错误")));
+            return internalServerError("服务器端错误");
         }
         finally {
             Ebean.endTransaction();
@@ -591,14 +591,14 @@ public class DataManager extends Controller {
 
     public Result getArea (Long id) {
         Area area = Area.find.byId(id);
-        if (area == null) return notFound(Json.toJson(new OperationResult(404, 1, "未找到此小区")));
+        if (area == null) return notFound("未找到此小区");
 
         return ok(Json.toJson(area));
     }
 
     public Result getBuilding (Long id) {
         Building building = Building.find.byId(id);
-        if (building == null) return notFound(Json.toJson(new OperationResult(404, 1, "未找到此楼栋")));
+        if (building == null) return notFound("未找到此楼栋");
 
         BuildingData data = new BuildingData();
         data.setAcreage(building.getAcreage());
@@ -621,7 +621,7 @@ public class DataManager extends Controller {
 
     public Result getHouse (Long id) {
         House house = House.find.byId(id);
-        if (house == null) return notFound(Json.toJson(new OperationResult(404, 1, "未找到此房屋")));
+        if (house == null) return notFound("未找到此房屋");
 
         HouseData data = new HouseData();
         data.setFloor(house.getFloor());
