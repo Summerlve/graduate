@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.10, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.11, for osx10.11 (x86_64)
 --
 -- Host: localhost    Database: graduate
 -- ------------------------------------------------------
--- Server version	5.7.10
+-- Server version	5.7.11
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -41,7 +41,7 @@ CREATE TABLE `zh_admin` (
 
 LOCK TABLES `zh_admin` WRITE;
 /*!40000 ALTER TABLE `zh_admin` DISABLE KEYS */;
-INSERT INTO `zh_admin` VALUES (1,'2222222','test','e10adc3949ba59abbe56e057f20f883e','123123'),(2,'3333333','test2','e10adc3949ba59abbe56e057f20f883e','1231231');
+INSERT INTO `zh_admin` VALUES (1,'320586199301096118','test','e10adc3949ba59abbe56e057f20f883e','18652299074'),(2,'3333333','test2','e10adc3949ba59abbe56e057f20f883e','1231231');
 /*!40000 ALTER TABLE `zh_admin` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-18 14:00:32
+-- Dump completed on 2016-05-23 23:14:13

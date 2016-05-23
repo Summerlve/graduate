@@ -424,31 +424,31 @@
                                                     <div class="form-group update-area-hidden">
                                                         <label for="update-area-name" class="col-sm-2 control-label">小区名称</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="update-area-name" name="area_name">
+                                                            <input type="text" class="form-control" id="update-area-name" name="area_name" required="required">
                                                         </div>
                                                     </div>
                                                     <div class="form-group update-area-hidden">
                                                         <label for="update-area-territory" class="col-sm-2 control-label">小区所属地区</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="update-area-territory" name="territory">
+                                                            <input type="text" class="form-control" id="update-area-territory" name="territory" required="required">
                                                         </div>
                                                     </div>
                                                     <div class="form-group update-area-hidden">
                                                         <label for="update-area-description" class="col-sm-2 control-label">小区简介</label>
                                                         <div class="col-sm-10">
-                                                            <textarea class="form-control" rows="3" id="update-area-description" name="description"></textarea>
+                                                            <textarea class="form-control" rows="3" id="update-area-description" name="description" required="required"></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="form-group update-area-hidden">
                                                         <label for="update-area-management" class="col-sm-2 control-label">物业公司名称</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="update-area-management" name="management">
+                                                            <input type="text" class="form-control" id="update-area-management" name="management" required="required">
                                                         </div>
                                                     </div>
                                                     <div class="form-group update-area-hidden">
                                                         <label for="update-area-building-num" class="col-sm-2 control-label">楼栋数量</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="update-area-building-num" name="building_num">
+                                                            <input type="text" class="form-control" id="update-area-building-num" name="building_num" required="required" pattern="^(0|[1-9][0-9]*)$">
                                                         </div>
                                                     </div>
                                                     <div class="form-group update-area-hidden">
@@ -531,13 +531,13 @@
                                                     <div class="form-group update-building-hidden">
                                                         <label for="update-building-description" class="col-sm-2 control-label">楼栋简介</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="update-building-description" name="description">
+                                                            <input type="text" class="form-control" id="update-building-description" name="description" required="required">
                                                         </div>
                                                     </div>
                                                     <div class="form-group update-building-hidden">
                                                         <label for="update-building-acreage" class="col-sm-2 control-label">楼栋占地面积</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="update-building-acreage" name="acreage">
+                                                            <input type="text" class="form-control" id="update-building-acreage" name="acreage" required="required" pattern="^(0|[1-9][0-9]*)$">
                                                         </div>
                                                     </div>
                                                     <div class="form-group update-building-hidden">
@@ -549,7 +549,7 @@
                                                     <div class="form-group update-building-hidden">
                                                         <label for="update-building-house-num" class="col-sm-2 control-label">房屋数量</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="update-building-house-num" name="house_num">
+                                                            <input type="text" class="form-control" id="update-building-house-num" name="house_num" required="required" pattern="^(0|[1-9][0-9]*)$">
                                                         </div>
                                                     </div>
                                                     <div class="form-group update-building-hidden">
@@ -619,19 +619,19 @@
                                                     <div class="form-group update-house-hidden">
                                                         <label for="update-house-floor" class="col-sm-2 control-label">房屋所属楼层</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="update-house-floor" name="floor">
+                                                            <input type="text" class="form-control" id="update-house-floor" name="floor" pattern="^(0|[1-9][0-9]*)$" required="required">
                                                         </div>
                                                     </div>
                                                     <div class="form-group update-house-hidden">
                                                         <label for="update-house-no" class="col-sm-2 control-label">房屋门牌号</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="update-house-no" name="no">
+                                                            <input type="text" class="form-control" id="update-house-no" name="no" pattern="^(0|[1-9][0-9]*)$" required="required">
                                                         </div>
                                                     </div>
                                                     <div class="form-group update-house-hidden">
                                                         <label for="update-house-space" class="col-sm-2 control-label">房屋面积</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="update-house-space" name="space">
+                                                            <input type="text" class="form-control" id="update-house-space" name="space" pattern="^(0|[1-9][0-9]*)$" required="required">
                                                         </div>
                                                     </div>
                                                     <div class="form-group update-house-hidden">
@@ -649,7 +649,7 @@
                                                     <div class="form-group update-house-hidden">
                                                         <label for="update-house-price" class="col-sm-2 control-label">每平方售价</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="update-house-price" name="price">
+                                                            <input type="text" class="form-control" id="update-house-price" name="price" pattern="^(0|[1-9][0-9]*)$" required="required">
                                                         </div>
                                                     </div>
                                                     <div class="form-group update-house-hidden">

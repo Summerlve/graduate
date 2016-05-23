@@ -92,26 +92,26 @@
                             <div class="form-group">
                                 <label for="identifier"class="col-sm-2 control-label">身份证</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="identifier" placeholder="身份证">
+                                    <input type="text" class="form-control" id="identifier" placeholder="身份证" required="required" pattern="^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="name" class="col-sm-2 control-label">姓名</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="name" placeholder="姓名">
+                                    <input type="text" class="form-control" id="name" placeholder="姓名" required="required">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="phone" class="col-sm-2 control-label">电话号码</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="phone" placeholder="电话号码">
+                                    <input type="text" class="form-control" id="phone" placeholder="电话号码" required="required" pattern="((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)">
                                 </div>
                             </div>
                         }
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button id="buy-buy-buy" data-link="@controllers.frontend.routes.Application.order(house.getId())" type="button" class="btn btn-primary">预定</button>
+                        <button id="buy-buy-buy" data-link="@controllers.frontend.routes.Application.order(house.getId())" type="submit" form="buy-house" class="btn btn-primary">预定</button>
                     </div>
                 </div>
             </div>
@@ -124,7 +124,8 @@
 
     @general.import_js()
     <script>
-        $("#buy-buy-buy").click(function (event) {
+        $("#buy-house").submit(function (event) {
+            console.log("submit");
             event.preventDefault();
             event.stopPropagation();
 
@@ -158,9 +159,7 @@
             });
         });
 
-        $("#help-btn").click(_ => {
-            alert("如需帮助,请拨打电话xxxxxxx");
-        });
+        $("#help-btn").click(_ => alert("如需帮助,请拨打电话xxxxxxx"));
     </script>
 </body>
 </html>
