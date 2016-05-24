@@ -118,7 +118,7 @@
                                     </thead>
                                     <tbody>
                                         @for(house <- houses) {
-                                            @if(house.getState().getName() == "已预订") {
+                                            @if(house.getState().getName() == "预订已处理") {
                                             <tr>
                                                 <td>@house.getUser().getName()</td>
                                                 <td>@house.getUser().getTelephone()</td>

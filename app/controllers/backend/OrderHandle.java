@@ -12,7 +12,6 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.backend.order_handle;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -43,7 +42,7 @@ public class OrderHandle extends Controller {
         House house = House.find.byId(id);
 
         // 检查订单是否已经处理
-        if (house.getState().getName().equals("预订已处理")) return badRequest(Json.toJson(new OperationResult(400, 1, "订单已经处理")));
+        if (house.getState().getName().equals("预订已处理")) return badRequest("订单已经处理");
 
         Ebean.beginTransaction();
         try {
@@ -54,13 +53,13 @@ public class OrderHandle extends Controller {
         catch (Exception e) {
             e.printStackTrace();
             Ebean.rollbackTransaction();
-            return internalServerError(Json.toJson(new OperationResult(500, 1, "服务器端错误")));
+            return internalServerError("服务器端错误");
         }
         finally {
             Ebean.endTransaction();
         }
 
-        return ok(Json.toJson(new OperationResult(200, 0, "操作成功")));
+        return ok("操作成功");
     }
 
     public Result delete (Long id) {
@@ -80,12 +79,12 @@ public class OrderHandle extends Controller {
         catch (Exception e) {
             e.printStackTrace();
             Ebean.rollbackTransaction();
-            return internalServerError(Json.toJson(new OperationResult(500, 1, "服务器端错误")));
+            return internalServerError("服务器端错误");
         }
         finally {
             Ebean.endTransaction();
         }
 
-        return ok(Json.toJson(new OperationResult(200, 0, "操作成功")));
+        return ok("操作成功");
     }
 }

@@ -26,6 +26,7 @@ import java.util.Optional;
 
 @Restrict(@Group("ADMIN"))
 public class Info extends Controller {
+    @SuppressWarnings("unchecked")
     public F.Promise<Result> index () {
         Optional<Admin> user = (Optional) ctx().args.get("user");
         return F.Promise.promise(() -> Results.ok(info.render("个人信息", user.get())));

@@ -15,6 +15,9 @@
                 <li>
                     <a href="@controllers.backend.routes.OrderHandle.index"><i class="fa fa-fw fa-tasks"></i> 订单处理</a>
                 </li>
+                <li>
+                    <a href="@controllers.backend.routes.UserManager.index(1)"><i class="fa fa-fw fa-user"></i> 消费者管理</a>
+                </li>
             }
             case "charts" => {
                 <li>
@@ -29,6 +32,9 @@
                 <li>
                     <a href="@controllers.backend.routes.OrderHandle.index"><i class="fa fa-fw fa-tasks"></i> 订单处理</a>
                 </li>
+                <li>
+                    <a href="@controllers.backend.routes.UserManager.index(1)"><i class="fa fa-fw fa-user"></i> 消费者管理</a>
+                </li>
             }
             case "data" => {
                 <li>
@@ -42,6 +48,9 @@
                 </li>
                 <li>
                     <a href="@controllers.backend.routes.OrderHandle.index"><i class="fa fa-fw fa-tasks"></i> 订单处理</a>
+                </li>
+                <li>
+                    <a href="@controllers.backend.routes.UserManager.index(1)"><i class="fa fa-fw fa-user"></i> 消费者管理</a>
                 </li>
             }
 
@@ -58,6 +67,9 @@
                 <li>
                     <a href="@controllers.backend.routes.OrderHandle.index"><i class="fa fa-fw fa-tasks"></i> 订单处理</a>
                 </li>
+                <li>
+                    <a href="@controllers.backend.routes.UserManager.index(1)"><i class="fa fa-fw fa-user"></i> 消费者管理</a>
+                </li>
             }
 
             case "settings" => {
@@ -73,6 +85,9 @@
                 <li>
                     <a href="@controllers.backend.routes.OrderHandle.index"><i class="fa fa-fw fa-tasks"></i> 订单处理</a>
                 </li>
+                <li>
+                    <a href="@controllers.backend.routes.UserManager.index(1)"><i class="fa fa-fw fa-user"></i> 消费者管理</a>
+                </li>
             }
 
             case "orders" => {
@@ -87,6 +102,26 @@
                 </li>
                 <li class="active">
                     <a href="@controllers.backend.routes.OrderHandle.index"><i class="fa fa-fw fa-tasks"></i> 订单处理</a>
+                </li>
+                <li>
+                    <a href="@controllers.backend.routes.UserManager.index(1)"><i class="fa fa-fw fa-user"></i> 消费者管理</a>
+                </li>
+            }
+            case "user_manager" => {
+                <li>
+                    <a href="@controllers.backend.routes.Dashboard.index"><i class="fa fa-fw fa-dashboard"></i> 控制台</a>
+                </li>
+                <li>
+                    <a href="@controllers.backend.routes.Charts.index"><i class="fa fa-fw fa-bar-chart-o"></i> 图表</a>
+                </li>
+                <li>
+                    <a href="@controllers.backend.routes.DataManager.index"><i class="fa fa-fw fa-table"></i> 数据管理</a>
+                </li>
+                <li>
+                    <a href="@controllers.backend.routes.OrderHandle.index"><i class="fa fa-fw fa-tasks"></i> 订单处理</a>
+                </li>
+                <li class="active">
+                    <a href="@controllers.backend.routes.UserManager.index(1)"><i class="fa fa-fw fa-user"></i> 消费者管理</a>
                 </li>
             }
         }

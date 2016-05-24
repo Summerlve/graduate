@@ -31,6 +31,9 @@ POST                /dashboard/data_manager/update_house/:id        controllers.
 GET                 /dashboard/data_manager/delete_area/:id         controllers.backend.DataManager.deleteArea(id: Long)
 GET                 /dashboard/data_manager/delete_building/:id     controllers.backend.DataManager.deleteBuilding(id: Long)
 GET                 /dashboard/data_manager/delete_house/:id        controllers.backend.DataManager.deleteHouse(id: Long)
+GET                 /dashboard/user_manager                         controllers.backend.UserManager.index(page: Integer)
+POST                /dashboard/user_manager/change/:id              controllers.backend.UserManager.change(id: Long)
+GET                 /dashboard/user_manager/info/:id                controllers.backend.UserManager.info(id: Long)
 
 # frontend
 GET                 /                                               controllers.frontend.Application.index()
