@@ -40,11 +40,18 @@ public class Dashboard extends Controller {
 
         List<Pair<String, Integer>> topowner = User.find.all().stream()
             .sorted((pre, lat) -> {
-                if (pre.getHouses().size() > lat.getHouses().size()) return -1;
-                else if (pre.getHouses().size() < lat.getHouses().size()) return 1;
+                Integer preSize = pre.getHouses().stream()
+                        .filter(value -> value.getState().getName().equals("已售出")).collect(Collectors.toList()).size();
+
+                Integer latSize = lat.getHouses().stream()
+                        .filter(value -> value.getState().getName().equals("已售出")).collect(Collectors.toList()).size();
+
+                if (preSize > latSize) return -1;
+                else if (preSize < latSize) return 1;
                 else return 0;
             })
-            .map(value -> new Pair<>(value.getName(), value.getHouses().size()))
+            .map(user -> new Pair<>(user.getName(), user.getHouses().stream()
+                    .filter(house -> house.getState().getName().equals("已售出")).collect(Collectors.toList()).size()))
             .limit(4)
             .collect(Collectors.toList());
 
