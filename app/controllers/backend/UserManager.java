@@ -24,7 +24,7 @@ import java.util.Optional;
 
 @Restrict(@Group("ADMIN"))
 public class UserManager extends Controller {
-    private static final double pageSize = 8d;
+    private static final double pageSize = 10d;
 
     @SuppressWarnings("unchecked")
     public Result index(Integer page) {

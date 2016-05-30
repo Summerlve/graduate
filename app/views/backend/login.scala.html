@@ -13,9 +13,11 @@
     <div class="login-page">
         <div class="form">
             @helper.form(action = controllers.backend.routes.Auth.login, 'class -> "login-form", 'id -> "fake-login") {
-                <input type="text" placeholder="用户名" name="username"/>
-                <input type="password" placeholder="密码" name="password"/>
-                <button>登录</button>
+                <h3><label>房地产开发与销售信息管理系统</label></h3>
+                <hr>
+                <input type="text" placeholder="用户名" name="username" required="required" pattern="^[\S]{4,12}$"/>
+                <input type="password" placeholder="密码" name="password" required="required" pattern="^[a-zA-Z0-9]{6,12}$"/>
+                <button style="font-size: 17px;">登录</button>
             }
         </div>
     </div>
